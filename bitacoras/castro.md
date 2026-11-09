@@ -11,6 +11,28 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-09 — Assert de entropía en la celda 2.5
+
+### Qué se hizo
+
+No se cambió `entropy`. Se corrigieron los tres asserts de la celda 2.5, que le pasaban conteos.
+
+### Qué se probó
+
+Mauricio corrió la celda en Colab. Falló el primer assert: `entropy([1, 1])` no dio 1 bit.
+
+En local se midió la misma función. `entropy([1, 1])` da 0. `entropy([0, 1])` da 1. `entropy([0, 1, 2, 3])` da 2. Una serie categórica con diez `"a"` y la categoría `"b"` en cero da 0, sin NaN.
+
+### Resultado
+
+`[1, 1]` son dos etiquetas iguales, o sea una clase sola. La entropía de una clase pura es 0. Para 1 bit hacen falta dos etiquetas distintas, `[0, 1]`.
+
+`gain` llama a `entropy` con la columna de clase. Si la función pasara a leer conteos, un target numérico (0 y 1) se interpretaría mal.
+
+### Conclusión
+
+El fallo era del test, no del árbol. La celda 2.5 hay que volver a correrla: Iris, XOR y la comparación con sklearn no llegaron a ejecutarse.
+
 ## 2026-11-09 — Tarjetas 45 a 49, panel
 
 ### Qué se hizo
