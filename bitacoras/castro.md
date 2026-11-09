@@ -11,6 +11,60 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-09 — Tarjetas 45 a 49, panel
+
+### Qué se hizo
+
+En la celda 6.1 quedó el panel. Cuatro pestañas: Datos, Árbol, Bosque y Validación. Ejecutar parte un holdout con el tamaño de prueba y arma los folds solo sobre el entrenamiento. Bajar CSV escribe `figuras/panel_resultados.csv` con media, desvío y el valor del holdout. Las figuras del panel van a `panel_confusion.png` y `panel_barras.png`, aparte de las figuras del informe.
+
+El `cv` de 25 particiones no se reasigna. El tope del botón es 10 particiones. Profundidad «Sin límite» manda `None` al modelo; el control no usa un slider en `None`, que en ipywidgets no anda. Los comentarios de la celda están en las partes que no se leen solas.
+
+### Qué se probó
+
+En local, sin Colab, se armaron los controles contra Breast Cancer: la clase queda en `target`, los 30 atributos entran en el selector, y al cambiar la clase esa columna sale de los atributos. No se apretó Ejecutar. No se entrenó el árbol.
+
+### Resultado
+
+Pendiente de la corrida en Colab.
+
+### Cómo probarlo
+
+Hace falta que el kernel ya tenga `DecisionTreeC45`, `RandomForestWrap` y `metricas`. La celda de métricas, si se corre entera, entrena el árbol 25 veces antes de llegar al panel y tarda.
+
+1. Correr la celda 6.1. Tienen que verse las cuatro pestañas, Ejecutar y Bajar CSV. La celda imprime ipywidgets y «2 folds y 1 repetición».
+2. Sin cambiar nada, Ejecutar. Va a demorar: son 2 ajustes del árbol en los folds y uno más para el holdout. El bosque es rápido.
+3. En el panel tiene que quedar una tabla (media, desvío, holdout), dos matrices y un gráfico de barras. Una sola tanda, no dos pegadas.
+4. Ejecutar de nuevo. La salida anterior del panel se reemplaza.
+5. Bajar CSV. En Colab tiene que descargarse. El archivo también queda en `figuras/panel_resultados.csv`.
+6. Subir folds a 5 y repeticiones a 3 (15 particiones). Tiene que negarse y no entrenar. El tope es 10.
+7. En Árbol, profundidad «Sin límite» es el default. Probar una corrida corta con profundidad 2 si la primera ya salió bien: tiene que terminar más rápido.
+
+### Conclusión
+
+Pendiente. Sin esa corrida no se cierran las tarjetas 45 a 49.
+
+## 2026-11-09 — Tarjeta 11, corrida en Colab
+
+### Qué se hizo
+
+Mauricio ejecutó la celda 1.5 en Google Colab, dos veces.
+
+### Qué se probó
+
+Primera corrida. La celda imprime el fallback. El entorno dice Google Colab, ipywidgets 7.7.1, dropdown inicial `benign`. Un click deja: «ipywidgets responde. Click 1. Clase elegida: benign. Versión 7.7.1. Entorno: Google Colab.»
+
+Segunda corrida. Misma celda, de nuevo. El desplegable queda en `malignant` y el botón «Probar click» se ve. La salida del widget muestra una sola línea: «ipywidgets responde. Click 2. Clase elegida: malignant. Versión 7.7.1. Entorno: Google Colab.» El número 2 indica que hubo dos clicks en esa corrida y que `clear_output(wait=True)` se llevó la línea anterior.
+
+### Resultado
+
+El botón y el desplegable se dibujan. El click imprime dentro del `Output`. El segundo click reemplaza la línea y toma la clase del desplegable. El `print` de fallback queda en la celda igual. No hizo falta `pip install` ni reiniciar el runtime.
+
+Colab trae ipywidgets 7.7.1. En la máquina local el import había dado 8.1.9. El panel de las tarjetas 45–49 se escribe contra lo que corre en Colab.
+
+### Conclusión
+
+La tarjeta 11 cierra. ipywidgets en Colab sirve para la interfaz. Se mantiene el fallback por `print`, porque la consigna pide que el notebook siga siendo ejecutable si el widget no se ve. El siguiente paso de esta parte es el panel (45–49), con `Dropdown`, `Button`, `Output` y `VBox`, que es lo que esta corrida ya mostró.
+
 ## 2026-11-09 — Tarjeta 11, smoke test de ipywidgets
 
 ### Qué se hizo
@@ -25,22 +79,9 @@ Nada en Colab. En local, con ipywidgets 8.1.9 y Python 3.12.10, sin frontend de 
 
 El callback corrió las dos veces. La consola mostró «click 1» y «click 2», con secuencias de limpieza entre medio. `Output.outputs` quedó vacío: sin kernel, el `print` no entra al widget y sale por la consola. Eso no dice si Colab dibuja el botón ni si el segundo click reemplaza la línea de verdad.
 
-### Resultado en Colab
-
-Pendiente de prueba.
-
-### Cómo probarlo
-
-1. En Colab, correr desde la celda de setup (1.1) y después la 1.5. No hace falta correr el árbol.
-2. Anotar la versión que imprime la celda y si dice «Google Colab».
-3. Confirmar que se ven el desplegable y el botón.
-4. Click una vez: debajo tiene que aparecer una sola línea con «Click 1» y la clase elegida.
-5. Cambiar el desplegable y click de nuevo: la línea anterior desaparece, queda «Click 2» y la clase nueva.
-6. Si no se dibuja nada, el texto del fallback igual tiene que estar en la salida de la celda. En ese caso: `pip install ipywidgets`, reiniciar el runtime y repetir desde el setup.
-
 ### Conclusión
 
-Pendiente de la corrida de Mauricio. Sin ese click no se cierra la tarjeta ni se anota «qué onda tiene ipywidgets en Colab».
+La corrida de Colab está en la entrada de arriba. Esta entrada queda como el armado de la celda y la prueba local, que no alcanzaba para cerrar la tarjeta.
 
 ## 2026-11-09 — Lectura del tablero
 
@@ -72,15 +113,15 @@ Quedan 22 tarjetas con Mauricio fuera de Hecho. El núcleo propio, antes del inf
 
 | Tarjeta | Lista | Sola o compartida | Para qué |
 |---|---|---|---|
-| 11. Probar ipywidgets en Colab | Backlog | Sola | Ver si un botón con `Output` imprime. Si no renderiza, la UI igual tiene que imprimir en la celda. |
+| 11. Probar ipywidgets en Colab | Probada el 9/11, mover a Hecho | Sola | En Colab, ipywidgets 7.7.1: el botón se ve, el click imprime y el segundo click reemplaza la línea. El fallback por `print` también queda. |
 | 6. Instalar LaTeX y verificar `llncs.cls` | En revisión | Con Celeste Martín Rodich | `kpsewhich llncs.cls` y `kpsewhich splncs04.bst` tienen que devolver una ruta. |
 | 42. Figuras con nombre estable | Backlog | Sola | `figuras/`, gris legible, DPI alto, `plt.close()`. Hoy hay fig4, fig7, fig9 y fig10. |
 | 44. Tablas a `.tex` | Backlog | Sola | Media y desvío en columnas separadas. Hoy están la tabla 2 y la tabla 5. |
-| 45. UI: dataset, target y features | Backlog | Sola | Dropdowns. Al cambiar el dataset se repuebla el target. |
-| 46. UI: hiperparámetros DT y RF | Backlog | Sola | Incluye `max_depth` sin límite. `IntSlider(value=None)` no sirve. |
-| 47. UI: CV y tamaño de prueba | Backlog | Sola | `n_splits`, `n_repeats`, `test_size`, con un tope para no disparar una corrida eterna. |
-| 48. Botón Ejecutar | Backlog | Sola | Corre los dos modelos, muestra tabla, matrices y barras, y limpia la salida anterior. |
-| 49. Exportar resultados a CSV | Backlog | Sola | Descarga media y desvío. Fuera de Colab no tiene que romper. |
+| 45. UI: dataset, target y features | Celda lista, falta Colab | Sola | Dropdowns. Al cambiar el dataset se repuebla la clase. |
+| 46. UI: hiperparámetros DT y RF | Celda lista, falta Colab | Sola | Profundidad con «Sin límite», no con un slider en None. |
+| 47. UI: CV y tamaño de prueba | Celda lista, falta Colab | Sola | Folds, repeticiones y tamaño de prueba. Tope de 10 particiones. |
+| 48. Botón Ejecutar | Celda lista, falta Colab | Sola | Tabla, matrices y barras. La segunda corrida limpia el panel. |
+| 49. Exportar resultados a CSV | Celda lista, falta Colab | Sola | Media, desvío y holdout. Fuera de Colab no rompe: deja el archivo. |
 | 50. `main.tex` LNCS | Backlog | Sola | Siete secciones, español, autores e instituto. Tiene que compilar aunque el texto esté corto. |
 | 51. Incrustar figuras y tablas | Backlog | Sola | `\includegraphics` e `\input`. Antes de redactar largo, para ver las 12 carillas. |
 | 52. Secciones 1 y 2 | Backlog | Con Celeste y Nadine | Introducción y algoritmos. |
