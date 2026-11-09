@@ -1,0 +1,38 @@
+{
+  "firma": {
+    "n_train": 455,
+    "n_test": 114,
+    "clases": [
+      "benign",
+      "malignant"
+    ],
+    "modelos": [
+      "DecisionTreeC45",
+      "RandomForestWrap"
+    ]
+  },
+  "filas": [
+    {
+      "accuracy": 0.9298245614035088,
+      "precision_macro": 0.9246031746031746,
+      "precision_weighted": 0.9298245614035088,
+      "recall_macro": 0.9246031746031746,
+      "recall_weighted": 0.9298245614035088,
+      "f1_macro": 0.9246031746031746,
+      "f1_weighted": 0.9298245614035088,
+      "roc_auc": 0.9246031746031745,
+      "modelo": "DecisionTreeC45"
+    },
+    {
+      "accuracy": 0.9736842105263158,
+      "precision_macro": 0.98,
+      "precision_weighted": 0.9747368421052632,
+      "recall_macro": 0.9642857142857143,
+      "recall_weighted": 0.9736842105263158,
+      "f1_macro": 0.9712773998488284,
+      "f1_weighted": 0.9734654095556351,
+      "roc_auc": 0.9928902116402116,
+      "modelo": "RandomForestWrap"
+    }
+  ]
+}

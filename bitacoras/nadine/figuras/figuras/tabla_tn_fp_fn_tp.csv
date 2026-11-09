@@ -1,0 +1,5 @@
+modelo,clase_positiva,TP,FP,TN,FN
+DecisionTreeC45,benign,68,4,38,4
+DecisionTreeC45,malignant,38,4,68,4
+RandomForestWrap,benign,72,3,39,0
+RandomForestWrap,malignant,39,0,72,3
