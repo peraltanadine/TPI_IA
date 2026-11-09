@@ -11,6 +11,24 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-09 — NameError de DecisionTreeC45 en la prueba del núcleo
+
+### Qué se hizo
+
+La prueba del núcleo estaba en la sección 2.5, antes de la celda que define `DecisionTreeC45`. Se movió esa prueba para que quede inmediatamente después de la clase.
+
+### Qué se probó
+
+Mauricio corrió la celda en Colab. La entropía ya pasaba. En Iris falló con `NameError: name 'DecisionTreeC45' is not defined`.
+
+### Resultado
+
+La clase no existía todavía en el kernel: se define más abajo, en la celda de interoperabilidad con scikit-learn.
+
+### Conclusión
+
+Hay que volver a correr desde la celda que define `DecisionTreeC45` y seguir con la prueba, que ahora está debajo. Iris, XOR y sklearn siguen sin una corrida que llegue al final.
+
 ## 2026-11-09 — Assert de entropía en la celda 2.5
 
 ### Qué se hizo
