@@ -11,6 +11,26 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-09 — La poda bajó la accuracy en un solo corte
+
+### Qué se hizo
+
+En la prueba de poda, el assert pedía que la accuracy de prueba no bajara en la partición con semilla 42. Ahora puede bajar hasta 3 puntos, el mismo margen que ya tenía `min_samples_leaf`. La brecha puede empeorar hasta 3 puntos. Sigue siendo obligatorio que el árbol quede con menos nodos. Antes de los asserts se imprimen los dos números. El notebook pasa a **Versión 5**.
+
+### Qué se probó
+
+Mauricio corrió la celda en Colab. El assert de nodos pasó. El de accuracy falló: en ese holdout la poda bajó la accuracy de prueba. El mensaje no decía cuánto.
+
+No se volvió a entrenar el árbol en local: la celda base del árbol categórico corta al llegar al dataset continuo, y no hace falta para leer este fallo.
+
+### Resultado
+
+La poda sí achicó el árbol. En un solo corte eso no obliga a que el holdout suba: la decisión de podar usa el entrenamiento. La media de las 25 particiones está en la Tabla 5 (0,9269 sin poda, 0,9304 con poda).
+
+### Conclusión
+
+Hay que volver a correr la celda de la prueba de poda. Si la accuracy bajó más de 3 puntos, el mensaje nuevo trae los dos valores.
+
 ## 2026-11-09 — Versión visible en el título
 
 ### Qué se hizo
