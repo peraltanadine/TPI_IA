@@ -11,6 +11,20 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-09 — Versión visible en el título
+
+### Qué se hizo
+
+Debajo del título del notebook quedó **Versión 4**. Sirve para ver en Colab si el archivo que se abrió es el último. Esta versión incluye el arreglo de `predict` con etiquetas numéricas.
+
+### Qué se probó
+
+Nada. Es un texto en la primera celda.
+
+### Conclusión
+
+Si en Colab no dice Versión 4, no se actualizó el notebook.
+
 ## 2026-11-09 — Iris: predict devolvía etiquetas que sklearn no lee
 
 ### Qué se hizo
