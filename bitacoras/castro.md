@@ -11,6 +11,26 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-09 — Iris: predict devolvía etiquetas que sklearn no lee
+
+### Qué se hizo
+
+`predict` devolvía las clases en un array de dtype `object`, también cuando eran los números 0, 1 y 2 de Iris. Ahora, si ese array es `object`, se vuelve a armar para que los números queden como números. Las etiquetas de texto siguen siendo texto.
+
+### Qué se probó
+
+Mauricio llegó a `accuracy_score` en Iris y Colab cortó con `ValueError: mix of multiclass and unknown targets`. El `fit` sí había corrido.
+
+En local se reprodujo el mismo error con `np.array([0, 1, 2, 0], dtype=object)`. sklearn lo clasifica como `unknown`. El mismo vector, sin forzar `object`, es `multiclass` y `accuracy_score` da 1.
+
+### Resultado
+
+El árbol no estaba devolviendo basura: devolvía los números en un tipo que sklearn no acepta como etiqueta.
+
+### Conclusión
+
+Hay que volver a correr la celda que define `DecisionTreeC45` y después la prueba. Si solo se corre la prueba, el kernel sigue con la clase vieja. Iris, XOR y sklearn todavía no tienen un resultado de accuracy.
+
 ## 2026-11-09 — NameError de DecisionTreeC45 en la prueba del núcleo
 
 ### Qué se hizo
