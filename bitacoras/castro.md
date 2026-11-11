@@ -11,6 +11,42 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-11 — Una sola pasada en la celda de métricas
+
+### Qué se hizo
+
+El notebook pasa a **Versión 12**. La celda de métricas ya no entrena el árbol dos veces. Una pasada arma la tabla. El cruce usa 2 procesos como máximo: con 8 la máquina se queda sin memoria. La semilla 42 deja la corrida fija.
+
+### Qué se probó
+
+No se volvió a entrenar. El cambio es el recorrido de la celda.
+
+### Resultado
+
+En Colab la doble pasada fueron 50 minutos y cortó por el nombre `DT`. Con una pasada y 2 procesos el árbol queda cerca de 15 minutos.
+
+### Conclusión
+
+Hay que correr la celda en Versión 12. Hasta que imprima `✓ DecisionTreeC45` no hay más texto: los ajustes van en otros procesos.
+
+## 2026-11-11 — La segunda pasada comparaba el nombre
+
+### Qué se hizo
+
+El notebook pasa a **Versión 11**. La primera pasada guardaba el modelo como `DT` y `evaluar_cv` lo nombra `DecisionTreeC45`. El assert cortaba ahí, con las dos pasadas ya calculadas. Ahora las dos usan el nombre de la clase.
+
+### Qué se probó
+
+El traceback de Colab, 50 minutos, columna `modelo` distinta en el 100 % de las filas. No se volvió a entrenar.
+
+### Resultado
+
+No había diferencia de métricas en el mensaje: el primer valor que no coincidía era `DT` contra `DecisionTreeC45`.
+
+### Conclusión
+
+Hay que volver a correr la celda en Versión 11. El árbol otra vez son dos pasadas.
+
 ## 2026-11-11 — La celda de métricas quedaba en blanco
 
 ### Qué se hizo
