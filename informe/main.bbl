@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{breiman2001}
+Breiman, L.: Random forests. Machine Learning  \textbf{45}(1),  5--32 (2001)
+
+\bibitem{liu2011}
+Liu, B.: Web Data Mining: Exploring Hyperlinks, Contents, and Usage Data.
+  Springer, 2 edn. (2011)
+
+\bibitem{pedregosa2011}
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel,
+  O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J.,
+  Passos, A., Cournapeau, D., Brucher, M., Perrot, M., Duchesnay, {\'E}.:
+  Scikit-learn: Machine learning in {P}ython. Journal of Machine Learning
+  Research  \textbf{12},  2825--2830 (2011)
+
+\bibitem{quinlan1993}
+Quinlan, J.R.: {C4.5}: Programs for Machine Learning. Morgan Kaufmann, San
+  Mateo, CA (1993)
+
+\bibitem{breastcancer}
+Wolberg, W.H., Street, W.N., Mangasarian, O.L.: Breast cancer {W}isconsin
+  (diagnostic). UCI Machine Learning Repository (1995)
+
+\end{thebibliography}

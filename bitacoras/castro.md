@@ -11,6 +11,34 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-10 — Cierre del notebook y del informe
+
+### Qué se hizo
+
+El notebook pasa a **Versión 6**.
+
+La celda de Drive ya no llama a `drive.mount`. Imprime que sigue con `data/dataset.csv` o con el respaldo, y un Run all no se queda esperando el permiso.
+
+La celda de figuras copia a `figuras/` lo ya medido: `fig4_dt_vs_rf.png`, `fig7_brecha_train_test.png`, `fig9_matrices_confusion.png`, `fig10_roc_por_clase.png`, `tabla2_dt_vs_rf.tex`, `tabla5_poda.tex`, `tabla_tn_fp_fn_tp.csv` y `holdout_final.json`. No reentrena y no arma otra Tabla 2. Esos archivos también quedaron copiados en el repo. En los `.tex` se escapó el guion bajo y la tabla se escala al ancho de la página. Los números son los de la corrida anterior.
+
+La demo 6.2 lee `holdout_final.json` si existe y lo muestra. Si no está, dice que el camino es Ejecutar en el panel. No lanza las 25 particiones.
+
+El informe está en `informe/main.tex`, con `referencias.bib`. Español, clase `llncs`, los cinco autores y una sola filiación (UTN FRRe). Entran la Tabla 2, la Tabla 5 y las figuras 4, 7, 9 y 10. El texto sale de las secciones ya escritas y de la bitácora del árbol. Dice que los barridos E2–E11 no se corrieron, que los números son de Breast Cancer y que el árbol no es un C4.5 completo: un solo corte por atributo continuo, poda sin subtree raising y factor `t` propio.
+
+### Qué se probó
+
+Compilación en esta máquina, con MiKTeX. `pdflatex` cargó `llncs.cls` 2.26 desde `C:\Users\castr\AppData\Local\Programs\MiKTeX\tex\latex\llncs\llncs.cls`. BibTeX usó `splncs04.bst` en `C:\Users\castr\AppData\Local\Programs\MiKTeX\bibtex\bst\llncs\splncs04.bst`. Salieron 8 páginas (`informe/main.pdf`, 756396 bytes). Las cinco citas resuelven: Quinlan (AddErrs, pp. 278–279), Liu p. 67, Breiman 2001, Pedregosa et al. 2011 y Breast Cancer Wisconsin. El log de la segunda pasada no marca cajas que se salgan del margen.
+
+No corrí el notebook en Colab. No apreté Ejecutar en el panel. No volví a entrenar la poda.
+
+### Resultado
+
+El PDF entra en las 12 carillas. En la Tabla 2 el F1 macro sigue en 0,9221 ± 0,0236 para el árbol y 0,9530 ± 0,0251 para el bosque. La Tabla 5 sigue en 47,64 nodos sin poda y 30,68 con poda.
+
+### Conclusión
+
+Queda para Mauricio: abrir el notebook y confirmar que el título dice Versión 6; correr la celda de poda; en el panel, Ejecutar, una segunda corrida y Bajar CSV; el Run all cuando pueda dejar la máquina (la celda de métricas entrena el árbol 25 veces, dos pasadas); leer el PDF; pasar en el Trello a Hecho la 11 y, cuando vea el panel, la 45–49; subir el PDF a la cátedra. El tablero en vivo no se tocó.
+
 ## 2026-11-09 — La poda bajó la accuracy en un solo corte
 
 ### Qué se hizo
@@ -208,24 +236,24 @@ Quedan 22 tarjetas con Mauricio fuera de Hecho. El núcleo propio, antes del inf
 | Tarjeta | Lista | Sola o compartida | Para qué |
 |---|---|---|---|
 | 11. Probar ipywidgets en Colab | Probada el 9/11, mover a Hecho | Sola | En Colab, ipywidgets 7.7.1: el botón se ve, el click imprime y el segundo click reemplaza la línea. El fallback por `print` también queda. |
-| 6. Instalar LaTeX y verificar `llncs.cls` | En revisión | Con Celeste Martín Rodich | `kpsewhich llncs.cls` y `kpsewhich splncs04.bst` tienen que devolver una ruta. |
-| 42. Figuras con nombre estable | Backlog | Sola | `figuras/`, gris legible, DPI alto, `plt.close()`. Hoy hay fig4, fig7, fig9 y fig10. |
-| 44. Tablas a `.tex` | Backlog | Sola | Media y desvío en columnas separadas. Hoy están la tabla 2 y la tabla 5. |
+| 6. Instalar LaTeX y verificar `llncs.cls` | Compiló en esta máquina | Con Celeste Martín Rodich | `llncs.cls` 2.26 y `splncs04.bst` están en el MiKTeX de esta PC. El PDF salió. |
+| 42. Figuras con nombre estable | Archivos en `figuras/` | Sola | fig4, fig7, fig9 y fig10 copiadas, sin regenerar. La celda de copia falta correrla en Colab. |
+| 44. Tablas a `.tex` | Archivos en `figuras/` | Sola | Tabla 2 y Tabla 5, media y desvío en columnas separadas. Mismos números. |
 | 45. UI: dataset, target y features | Celda lista, falta Colab | Sola | Dropdowns. Al cambiar el dataset se repuebla la clase. |
 | 46. UI: hiperparámetros DT y RF | Celda lista, falta Colab | Sola | Profundidad con «Sin límite», no con un slider en None. |
 | 47. UI: CV y tamaño de prueba | Celda lista, falta Colab | Sola | Folds, repeticiones y tamaño de prueba. Tope de 10 particiones. |
 | 48. Botón Ejecutar | Celda lista, falta Colab | Sola | Tabla, matrices y barras. La segunda corrida limpia el panel. |
 | 49. Exportar resultados a CSV | Celda lista, falta Colab | Sola | Media, desvío y holdout. Fuera de Colab no rompe: deja el archivo. |
-| 50. `main.tex` LNCS | Backlog | Sola | Siete secciones, español, autores e instituto. Tiene que compilar aunque el texto esté corto. |
-| 51. Incrustar figuras y tablas | Backlog | Sola | `\includegraphics` e `\input`. Antes de redactar largo, para ver las 12 carillas. |
-| 52. Secciones 1 y 2 | Backlog | Con Celeste y Nadine | Introducción y algoritmos. |
-| 53. Sección 3 | Backlog | Con Camila, Celeste y Matías | Solución y problemas encontrados. |
-| 54. Secciones 4 y 5 | Backlog | Con Nadine | Metodología y resultados. |
-| 55. Secciones 6 y 7 | Backlog | Todo el equipo | Discusión y conclusiones. |
-| 56. `referencias.bib` | Backlog | Todo el equipo | Cada cita verificada contra la fuente. Una cita que no coincide desaprueba el trabajo. |
+| 50. `main.tex` LNCS | Escrito y compilado | Sola | `informe/main.tex`. Siete secciones, español, cinco autores, UTN FRRe. 8 carillas. |
+| 51. Incrustar figuras y tablas | Hecho en el tex | Sola | Entran fig4, fig7, fig9, fig10, Tabla 2 y Tabla 5. |
+| 52. Secciones 1 y 2 | Redactadas | Con Celeste y Nadine | Introducción y algoritmos, a partir del texto ya medido. Falta la lectura del equipo. |
+| 53. Sección 3 | Redactada | Con Camila, Celeste y Matías | Solución, el cambio de `fit(X, y)` y las tres diferencias con C4.5. |
+| 54. Secciones 4 y 5 | Redactadas | Con Nadine | Metodología y resultados con los números de las tablas. |
+| 55. Secciones 6 y 7 | Redactadas | Todo el equipo | Discusión (respaldo, sin barridos, poda en 25 particiones) y conclusiones. |
+| 56. `referencias.bib` | Cinco citas, usadas | Todo el equipo | Quinlan 1993, Liu p. 67, Breiman 2001, Pedregosa 2011, Breast Cancer Wisconsin. |
 | 57. Coloquio | Backlog | Todo el equipo | Demo de 5 minutos y reparto de preguntas. A él le tocan la UI, ipywidgets en Colab y las figuras. |
-| 58. Restart and Run all | Backlog | Sola | Runtime limpio, sin clicks a mano. Fecha interna del tablero: 10/11. |
-| 59. PDF de hasta 12 carillas | Backlog | Sola | Sin achicar márgenes ni interlineado de Springer. |
+| 58. Restart and Run all | Drive ya no frena | Sola | Falta correrlo en Colab. La celda de métricas entrena el árbol 25 veces, dos pasadas. |
+| 59. PDF de hasta 12 carillas | 8 carillas | Sola | `informe/main.pdf`. Márgenes de `llncs`, sin achicarlos. |
 | 60. Ortografía | Backlog | Sola | Una pasada humana además del corrector. |
 | 61. Subir código y cerrar tarjetas | Backlog | Sola | El tablero tiene que coincidir con el repo. |
 | 62. Entregar | Backlog | Sola en la asignación | 11/11, 23:59. Checklist de las tarjetas 47, 56, 58, 59, 60 y 61. |
