@@ -11,6 +11,24 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-11 — La celda de métricas quedaba en blanco
+
+### Qué se hizo
+
+El notebook pasa a **Versión 10**. La celda de métricas ajustaba el árbol tres veces, 25 particiones cada una, con 4 procesos y sin texto hasta el final. Un cruce de 20 filas con 4 procesos tardó 53 segundos solo en arrancar. Ahora va en un proceso, imprime `ajuste 1/25` y la tabla reutiliza la primera pasada. La segunda pasada sigue, para comprobar que coincide.
+
+### Qué se probó
+
+El arranque en 4 procesos, con un árbol de sklearn y 20 filas. No se volvieron a entrenar las 25 particiones de Heart Disease.
+
+### Resultado
+
+Ese arranque devolvió a los 53 segundos, sin imprimir nada antes. La celda ya tenía la Tabla 2 de la corrida del 11 de noviembre. El aviso de E5 sigue al final, a propósito.
+
+### Conclusión
+
+Hay que frenar la corrida vieja y volver a correr la celda en Versión 10. La primera pasada del árbol son unos 25 minutos, con una línea por ajuste.
+
 ## 2026-11-11 — Tipos y menú sin nombres fijos
 
 ### Qué se hizo
