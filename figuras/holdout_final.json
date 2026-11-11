@@ -1,10 +1,10 @@
 {
   "firma": {
-    "n_train": 455,
-    "n_test": 114,
+    "n_train": 736,
+    "n_test": 184,
     "clases": [
-      "benign",
-      "malignant"
+      "ausencia",
+      "presencia"
     ],
     "modelos": [
       "DecisionTreeC45",
@@ -13,25 +13,25 @@
   },
   "filas": [
     {
-      "accuracy": 0.9298245614035088,
-      "precision_macro": 0.9246031746031746,
-      "precision_weighted": 0.9298245614035088,
-      "recall_macro": 0.9246031746031746,
-      "recall_weighted": 0.9298245614035088,
-      "f1_macro": 0.9246031746031746,
-      "f1_weighted": 0.9298245614035088,
-      "roc_auc": 0.9246031746031745,
+      "accuracy": 0.7880434782608695,
+      "precision_macro": 0.7907889816776767,
+      "precision_weighted": 0.7894815990982448,
+      "recall_macro": 0.7789335246293639,
+      "recall_weighted": 0.7880434782608695,
+      "f1_macro": 0.7818513451892385,
+      "f1_weighted": 0.7858462697515811,
+      "roc_auc": 0.81922525107604,
       "modelo": "DecisionTreeC45"
     },
     {
-      "accuracy": 0.9736842105263158,
-      "precision_macro": 0.98,
-      "precision_weighted": 0.9747368421052632,
-      "recall_macro": 0.9642857142857143,
-      "recall_weighted": 0.9736842105263158,
-      "f1_macro": 0.9712773998488284,
-      "f1_weighted": 0.9734654095556351,
-      "roc_auc": 0.9928902116402116,
+      "accuracy": 0.8641304347826086,
+      "precision_macro": 0.8649714771210097,
+      "precision_weighted": 0.8644107822287425,
+      "recall_macro": 0.8595169775227164,
+      "recall_weighted": 0.8641304347826086,
+      "f1_macro": 0.8615750353585507,
+      "f1_weighted": 0.8636193548977972,
+      "roc_auc": 0.9218675274988044,
       "modelo": "RandomForestWrap"
     }
   ]

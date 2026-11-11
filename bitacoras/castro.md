@@ -11,6 +11,92 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-11 — Tipos y menú sin nombres fijos
+
+### Qué se hizo
+
+El notebook pasa a **Versión 9**. Se sacó la lista `sex`, `cp`, `fbs` y el resto. Un atributo es categoría si es texto, bool, o un entero con hasta 10 valores distintos. El menú del panel toma los CSV de `data/`. La clase es la columna `target` si existe y, si no, la última.
+
+### Qué se probó
+
+Se corrió esa regla sobre los tres CSV, sin entrenar.
+
+### Resultado
+
+Heart Disease sigue en cinco continuas y ocho códigos. Iris queda en cuatro continuas. Play Tennis queda en cuatro categorías, `windy` incluido. El menú ya no nombra esos archivos en el código.
+
+### Conclusión
+
+Los modelos no dependen del nombre de las columnas. El lector de las cuatro sedes sí: esos archivos no traen encabezado. Las tablas del informe no se recalcularon.
+
+## 2026-11-11 — Tres datasets en el menú del panel
+
+### Qué se hizo
+
+El notebook pasa a **Versión 8**. El desplegable del panel ofrece Play Tennis (`data/play+tennis+dataset/weather.csv`, clase `play`), Iris (`data/iris+dataset/iris.csv`, clase `species`) y Heart Disease (`data/dataset.csv`, clase `target`). Breast Cancer sigue como respaldo. Un bool, como `windy`, se trata como categoría. El informe no se reentrenó.
+
+### Qué se probó
+
+Se cargaron los tres CSV y se miró el tipo de cada columna después del preprocess, pasando la clase de cada archivo. No se apretó Ejecutar. No se abrió Colab.
+
+### Resultado
+
+Play Tennis queda todo discreto, con `windy` en true/false. Iris queda con las cuatro medidas continuas y `species` como clase. Heart Disease sigue mezclado: cinco continuas y ocho códigos. El menú arranca en Heart Disease.
+
+### Conclusión
+
+Las tablas del paper siguen siendo las del mezclado. Para ver el menú hay que correr la celda 6.1 en Colab. Play Tennis tiene 14 filas: sirve para probar el panel, no para una tabla del informe.
+
+## 2026-11-11 — El apartado de problemas del paper
+
+### Qué se hizo
+
+La sección «Solución y problemas» de `informe/main.tex` contaba las tres diferencias con C4.5 y casi no contaba los fallos que hubo que corregir. Ahora incluye, con el arreglo al lado, lo que está en esta bitácora y en la de la solución: la firma `fit(X, y)`, la entropía sobre etiquetas, la prueba que corría antes de existir la clase, `predict` con dtype `object` en Iris, el ROC de dos clases, el assert de la poda, el piso 0,85 que era de Breast Cancer, el texto de pandas 3 y el nodo sin clase mayoritaria, y el diálogo de Drive.
+
+### Qué se probó
+
+Recompilación con MiKTeX. No se volvió a entrenar.
+
+### Resultado
+
+Queda en el PDF de esta fecha. Los números de las tablas no se tocaron.
+
+### Conclusión
+
+El apartado ahora explica qué se rompió y qué se dejó. Sigue faltando la pasada de ortografía.
+
+## 2026-11-11 — Heart Disease, cuatro sedes, corrida local
+
+### Qué se hizo
+
+El notebook pasa a **Versión 7**. La celda 1.2 arma el dataset adentro del notebook: lee `processed.cleveland.data`, `processed.hungarian.data`, `processed.switzerland.data` y `processed.va.data`, trata `?` como faltante y mapea `num` 0 a ausencia y 1–4 a presencia. Escribe `data/dataset.csv`. No quedó un script aparte.
+
+La celda 1.4 corre antes del EDA. Los códigos (sexo, dolor, `fbs`, electrocardiograma, angina, pendiente, `ca`, `thal`) quedan como categoría. Las continuas quedan como float. No se imputa. El colesterol 0 se deja: el archivo de nombres no lo define como faltante.
+
+Los barridos E2–E11 miran solo el entrenamiento del holdout 80/20 con semilla 42. La exportación no copia el archivo de Breast Cancer encima de un resultado de esta corrida. El cruce validado usa 4 procesos: con 8, la máquina de 8 GB se quedaba sin memoria.
+
+### Qué se probó
+
+`python` ejecutó todas las celdas de código, en orden, y guardó el notebook con las salidas. Semilla 42. `RepeatedStratifiedKFold` de 5 por 5. Dataset: 920 filas (303, 294, 123 y 200), 411 ausencia y 509 presencia, 1759 faltantes, 172 colesteroles en 0.
+
+Pasaron la entropía, Iris (0,973), XOR, la poda en el holdout (448 a 71 nodos) y el bosque (accuracy de holdout 0,8641 en el valor por defecto).
+
+### Resultado
+
+Tabla 2, 25 particiones. F1 macro: árbol 0,7809 ± 0,0271, bosque 0,8157 ± 0,0308. Accuracy: 0,7850 ± 0,0265 y 0,8187 ± 0,0305. ROC-AUC: 0,8195 ± 0,0295 y 0,8839 ± 0,0254. Nodos: 452,00 ± 36,44 y 28876,48 ± 664,66. Altura del árbol: 13,00 ± 0,00. Ajuste: 50,59 ± 9,80 s y 0,484 ± 0,041 s.
+
+Tabla 5. Sin poda: 452 nodos, accuracy de prueba 0,7850, brecha 0,1435, train 0,9285. Con poda (CF 0,25): 71,20 nodos, accuracy de prueba 0,7741, brecha 0,0922. En el único holdout la poda sube la accuracy de prueba de 0,7880 a 0,7989.
+
+Holdout por defecto, 736 / 184, positiva presencia. Árbol: accuracy 0,7880, F1 macro 0,7819, ROC-AUC 0,8192, TN/FP/FN/TP 57/25/14/88. Bosque: 0,8641, 0,8616, 0,9219, 67/15/10/92.
+
+Barridos, regla del más chico dentro de un desvío del máximo. Profundidad 2, hoja 50, gain ratio 0,1, 10 árboles, `log2`. Profundidad, gain ratio y cantidad de árboles siguen subiendo en el valor más complejo. El holdout de esa combinación, elegida de a un parámetro, da F1 macro 0,7926 en el árbol y 0,8336 en el bosque. El bosque por defecto, en el mismo corte, queda en 0,8616.
+
+`informe/main.pdf` compiló en 9 carillas, sin cajas que se salgan del margen.
+
+### Conclusión
+
+Los números de Breast Cancer no se reutilizan. El árbol no es un C4.5 completo: un solo corte por atributo, poda sin subtree raising y factor `t` propio. Queda para Mauricio la pasada de ortografía, subir el PDF y mover el Trello. Colab no se abrió. El botón Ejecutar del panel no se apretó.
+
 ## 2026-11-10 — Cierre del notebook y del informe
 
 ### Qué se hizo

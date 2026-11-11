@@ -149,7 +149,7 @@
     <p class="kicker">Inteligencia Artificial · 5º ISI · UTN FRRe · 2026</p>
     <h1>Decision Tree (C4.5) y Random Forest<br>Informe de avance del trabajo</h1>
     <p class="meta">Equipo Buy(Milk) · Celeste Martin Rodich, Matías Emmanuel Machado Benítez, Camila Aylen Zeniquel Martinelli, Nadine Andrea Peralta Ruiz, Mauricio Nicolás Castro</p>
-    <p class="meta">Lectura del 9 de noviembre de 2026, sobre el notebook, las bitácoras, el tablero Trello, la consigna, el ejemplo de informe y los capítulos de Quinlan que están en el repositorio.</p>
+    <p class="meta">Actualizado el 11 de noviembre de 2026. Notebook en Versión 7. El informe LNCS compiló: <span class="mono">informe/main.pdf</span>, 9 carillas.</p>
     <div class="deadline">Entrega: 11/11/2026, 23:59. Después, y hasta el 18/11, se acepta sin recuperatorio.</div>
   </div>
 </header>
@@ -171,28 +171,28 @@
 
 <section id="estado">
   <h2>1. Dónde está el trabajo</h2>
-  <p class="lead">El algoritmo propio ya clasifica, el bosque de scikit-learn ya se mide con el mismo protocolo, y hay números de una comparación. Eso es el centro del práctico. Alrededor de ese centro faltan tres cosas que la consigna pide de forma explícita: la interfaz, las pruebas al cambiar la parametrización, y el informe LNCS de hasta 12 carillas.</p>
+  <p class="lead">El notebook corrió en esta máquina, de punta a punta, sobre Heart Disease: las cuatro sedes, 920 filas, clase ausencia/presencia. Los barridos E2–E11 salieron del entrenamiento. El PDF tiene 9 carillas y usa solo esos números.</p>
   <div class="grid">
-    <div class="stat"><b>6 / 62</b><span>tarjetas en Hecho. Son las de arranque: repo, tablero, idioma, roles, notebook en Colab.</span></div>
-    <div class="stat"><b>29</b><span>tarjetas en revisión. Ahí está casi todo el C4.5, el bosque, las métricas y las tablas que ya se calcularon.</span></div>
-    <div class="stat"><b>4</b><span>tarjetas bloqueadas: los barridos de hiperparámetros, la curva de aprendizaje y las importancias.</span></div>
-    <div class="stat"><b>22</b><span>en backlog: interfaz, figuras definitivas, informe LNCS, coloquio y entrega.</span></div>
+    <div class="stat"><b>Versión 7</b><span>la carga de las cuatro sedes está en la celda 1.2. Drive no se monta. La demo lee el holdout y no relanza las 25 particiones.</span></div>
+    <div class="stat"><b>9 carillas</b><span><span class="mono">informe/main.pdf</span>. F1 macro 0,7809 el árbol y 0,8157 el bosque, en 25 particiones.</span></div>
+    <div class="stat"><b>Barridos corridos</b><span>profundidad 2, hoja 50 y gain ratio 0,1 en el árbol; 10 árboles y log2 en el bosque. Tres grillas siguen subiendo al final.</span></div>
+    <div class="stat"><b>Trello quieto</b><span>el export sigue en 6/62 Hecho. El tablero en vivo no se tocó.</span></div>
   </div>
   <table>
     <thead><tr><th>Entregable de la consigna</th><th>Estado</th><th>Lectura</th></tr></thead>
     <tbody>
       <tr><td>Árbol de decisión desarrollado por el equipo</td><td><span class="tag ok">Armado</span></td><td>Hay nodo, entropía, gain ratio, cortes continuos, faltantes fraccionales, poda pesimista y una clase <code>DecisionTreeC45</code> compatible con scikit-learn. Quedan desvíos respecto de C4.5, detallados más abajo.</td></tr>
       <tr><td>Random Forest, con biblioteca permitida</td><td><span class="tag ok">Armado</span></td><td><code>RandomForestWrap</code> sobre <code>RandomForestClassifier</code>. Misma firma <code>fit / predict / predict_proba / score</code>.</td></tr>
-      <tr><td>Comparar rendimiento al cambiar parámetros</td><td><span class="tag mid">A medias</span></td><td>Hay una comparación de defaults, poda sí/no, brecha train/test, matrices y un holdout. No hay barridos de profundidad, hoja mínima, cantidad de árboles ni <code>max_features</code>.</td></tr>
-      <tr><td>Interfaz para correr pruebas y ver resultados</td><td><span class="tag bad">Sin empezar</span></td><td>Las celdas de widgets, panel y demo terminan en <code>pass</code>. El apunte de la cátedra muestra ipywidgets, gradio y Graphviz.</td></tr>
-      <tr><td>Notebook en Colab, ejecutable de punta a punta</td><td><span class="tag mid">Riesgo</span></td><td>El archivo tiene 65 celdas. Hay un <code>drive.mount</code> en el medio. Las celdas que producen la Tabla 2, la Tabla 5, las figuras 7, 9 y 10 y el holdout están guardadas sin salida.</td></tr>
-      <tr><td>Informe LNCS, hasta 12 carillas, con referencias</td><td><span class="tag bad">Borrador suelto</span></td><td>Existen <code>seccion3.md</code> y <code>seccion4.md</code>. No hay <code>main.tex</code>, ni <code>.bib</code>, ni las secciones 1, 2, 5, 6 y 7.</td></tr>
-      <tr><td>Trello revisable por la cátedra</td><td><span class="tag mid">Desactualizado</span></td><td>El tablero existe y cuenta la historia del plan. No cuenta la historia de lo que ya se codeó: casi nada está en Hecho y los labels no tienen nombre.</td></tr>
-      <tr><td>Dataset de la cátedra</td><td><span class="tag mid">Respaldo</span></td><td>No está <code>data/dataset.csv</code>. Todo número de este informe es Breast Cancer Wisconsin: 569 filas, 30 atributos continuos, sin faltantes, 357 benign / 212 malignant.</td></tr>
+      <tr><td>Comparar rendimiento al cambiar parámetros</td><td><span class="tag ok">Medido</span></td><td>E2–E4, E6–E8, E10 y E11 corrieron sobre las 736 filas de entrenamiento. La regla elige el modelo más chico dentro de un desvío del máximo. Profundidad, gain ratio y cantidad de árboles siguen subiendo en el extremo.</td></tr>
+      <tr><td>Interfaz para correr pruebas y ver resultados</td><td><span class="tag mid">Armada</span></td><td>La prueba de ipywidgets pasó en Colab. El panel se construye en el Run all local. Ejecutar, en el sentido de apretar el botón, no se hizo: el kernel no tiene esa pantalla.</td></tr>
+      <tr><td>Notebook ejecutable de punta a punta</td><td><span class="tag ok">Corrido en local</span></td><td>Versión 7. Las celdas corrieron el 11 de noviembre en esta máquina y el archivo guardó las salidas. Colab no se abrió.</td></tr>
+      <tr><td>Informe LNCS, hasta 12 carillas, con referencias</td><td><span class="tag ok">Compilado</span></td><td>Nueve carillas. Cita a Janosi, Steinbrunn, Pfisterer y Detrano, además de Quinlan, Liu, Breiman y Pedregosa. Falta la pasada de ortografía y subirlo.</td></tr>
+      <tr><td>Trello revisable por la cátedra</td><td><span class="tag mid">Desactualizado</span></td><td>El tablero en vivo no se movió. El export sigue contando el plan, no esta corrida.</td></tr>
+      <tr><td>Dataset</td><td><span class="tag ok">Heart Disease</span></td><td>920 filas de Cleveland, Hungría, Suiza y Long Beach. Clase binaria: 411 ausencia y 509 presencia. 1759 faltantes, sin imputar en el cuadro. El colesterol 0 se dejó: son 172.</td></tr>
     </tbody>
   </table>
-  <div class="call bad">
-    Faltan dos días para la fecha con recuperatorio. El código de medición que ya está escrito, corrido sobre el árbol sin tope de profundidad, tarda unos 26 segundos por partición. Una validación de 25 particiones del árbol solo ya se va a unos 11 minutos. Un “Restart and Run all” con los barridos todavía no escritos puede no entrar en una demo.
+  <div class="call">
+    La entrega es el 11/11 a las 23:59. El notebook ya corrió en local y el PDF ya está. Queda leerlo, pasarlo por ortografía y subirlo. El Trello no se actualizó desde acá.
   </div>
 </section>
 
@@ -201,7 +201,7 @@
   <p><code>TP-IA-2026.pdf</code> es una carilla. El trabajo es implementar el árbol, comparar su rendimiento de clasificación con un Random Forest al cambiar la parametrización, y escribir el informe. El árbol tiene que ser del equipo. Para el bosque, el enunciado dice, con esa grafía: «para el algoritmo RF se podrá utilizar un modelo de la libraría Scikit-learn». La base teórica que cita es C4.5 de Quinlan, vía Liu, <em>Web Data Mining</em>, p. 67, y Breiman, <em>Random Forests</em>, Machine Learning 45, 2001.</p>
   <p>El informe digital tiene que traer introducción, descripción breve de los algoritmos, solución implementada con los problemas encontrados, simulaciones y resultados, conclusiones y referencias. Formato LNCS, máximo 12 carillas. La nota mira prolijidad, redacción y ortografía. Si una referencia no coincide con lo desarrollado, el práctico se desaprueba sin recuperatorio. También piden interfaz de operación completa, entregas parciales al estilo ágil, y Trello. El código corre en Colab.</p>
   <p>El apartado «Sobre el uso de IA» figura en el PDF y no tiene texto extraíble. Conviene confirmar con la cátedra qué quedó escrito ahí antes de entregar.</p>
-  <p><code>EjemploInforme.pdf</code> es un paper LNCS de la cátedra (Sampallo, Gramajo, González Thomas y Varone) sobre madurez de naranjas con Naive Bayes y KNN. No es una plantilla del enunciado de este año: está en inglés y el equipo ya resolvió que el informe va en español. Sirve como muestra de género. Tiene resumen, introducción con aporte, métodos con fórmulas, modelo propuesto con algoritmos numerados, simulaciones en tablas, discusión de en qué imágenes fallan los dos métodos, conclusiones y referencias. El borrador actual del equipo es una bitácora técnica, todavía no ese texto.</p>
+  <p><code>EjemploInforme.pdf</code> es un paper LNCS de la cátedra (Sampallo, Gramajo, González Thomas y Varone) sobre madurez de naranjas con Naive Bayes y KNN. No es una plantilla del enunciado de este año: está en inglés y el equipo ya resolvió que el informe va en español. Sirve como muestra de género. El texto de entrega está en <code>informe/main.tex</code>, en español, y compiló. Las secciones 3 y 4 de la bitácora de Nadine siguen siendo la fuente de los números; ya no son el único borrador.</p>
   <p>El apunte <code>Librerias_Python_para_COLAB.pdf</code> marca NumPy, pandas, Matplotlib, Graphviz para dibujar el árbol, ipywidgets o, como alternativa, Gradio. Como datos de prueba nombra Iris, Breast Cancer Wisconsin y Play Tennis. Usar Breast Cancer mientras no llegue el dataset oficial está alineado con ese apunte. Play Tennis serviría para mostrar ramas categóricas; hoy el número publicado no las ejercita, porque el respaldo es todo continuo y completo.</p>
 </section>
 
@@ -213,12 +213,12 @@
     <tbody>
       <tr><td>Hecho</td><td class="num">6</td><td>1 repo, 2 tablero, 3 consulta del dataset, 4 idioma español, 5 roles, 10 notebook en Colab. Varias siguen con el checklist interno sin tildar.</td></tr>
       <tr><td>En curso</td><td class="num">1</td><td>12. Adaptar al dataset real cuando llegue. Sigue abierta: no hay CSV de la cátedra.</td></tr>
-      <tr><td>En revisión</td><td class="num">29</td><td>Setup, EDA, árbol base (13–18), tests (19), continuos (21), parada, faltantes, factor <em>t</em>, poda, <code>u()</code>, API sklearn, <code>predict_proba</code> (22–29), wrapper RF, métricas, ROC, CV 5×5, Tabla 2, Tabla 5, Fig. 7, Fig. 9 y el holdout (30–35, 39, 41, 43). También la 6, instalar LaTeX: en el repo no hay <code>main.tex</code>.</td></tr>
+      <tr><td>En revisión</td><td class="num">29</td><td>Setup, EDA, árbol base (13–18), tests (19), continuos (21), parada, faltantes, factor <em>t</em>, poda, <code>u()</code>, API sklearn, <code>predict_proba</code> (22–29), wrapper RF, métricas, ROC, CV 5×5, Tabla 2, Tabla 5, Fig. 7, Fig. 9 y el holdout (30–35, 39, 41, 43). La 6, instalar LaTeX, sigue en esta lista en el export: en esta máquina <code>llncs.cls</code> 2.26 y <code>splncs04.bst</code> compilaron el PDF.</td></tr>
       <tr><td>Bloqueado</td><td class="num">4</td><td>36 barridos del árbol (E2–E4), 37 barridos del bosque (E6–E7), 38 learning curve (E8), 40 importancias y tamaño contra accuracy (E10–E11).</td></tr>
-      <tr><td>Ideas / Backlog</td><td class="num">22</td><td>Prueba de ipywidgets, <code>export_text</code> en el informe, higiene de figuras, tablas LaTeX, todo el panel (selectores, hiperparámetros, CV, botón, CSV), las siete secciones del paper, bibliografía, coloquio, Run all, las 12 carillas, ortografía y la entrega.</td></tr>
+      <tr><td>Ideas / Backlog</td><td class="num">22</td><td>En el export siguen acá la prueba de ipywidgets, el panel, las figuras, el paper y la entrega. En el repo, la 11 ya se probó en Colab, el panel está en la celda 6.1, las figuras y las tablas están en <code>figuras/</code>, y <code>informe/main.tex</code> compiló. El coloquio, el Run all, la ortografía y la subida siguen sin hacer.</td></tr>
     </tbody>
   </table>
-  <p>Las tarjetas 36 a 40 no están bloqueadas por una dependencia de código. La bitácora del 6 de noviembre lo dice: <code>DecisionTreeC45</code> ya tiene <code>max_depth</code>, <code>min_samples_leaf</code> y <code>min_gain_ratio</code>, y el <code>cv</code> compartido ya existe. Lo que falta es correrlos sobre el entrenamiento del holdout, no sobre las 569 filas, y escribir la celda que hoy es un <code>pass</code>.</p>
+  <p>El export es una foto del tablero. El 10 de noviembre el código fue más adelante y las listas no se movieron. Las tarjetas 36 a 40 no están bloqueadas por una dependencia de código: <code>DecisionTreeC45</code> ya tiene <code>max_depth</code>, <code>min_samples_leaf</code> y <code>min_gain_ratio</code>, y el <code>cv</code> compartido ya existe. La celda de barridos sigue en <code>pass</code>. Si se escriben, tienen que ver solo el entrenamiento del holdout, no las 569 filas.</p>
   <p>Los documentos que las tarjetas citan —<code>docs/technical.md</code>, <code>docs/informe-lncs.md</code>, <code>ROADMAP.md</code>— no están en este repositorio. Las bitácoras lo anotan cada vez. El plan fino vive en el texto de Trello y en el notebook.</p>
 </section>
 
@@ -238,48 +238,47 @@
   </ul>
   <h3>Medición</h3>
   <p>Un solo <code>RepeatedStratifiedKFold(n_splits=5, n_repeats=5, random_state=42)</code>. <code>evaluar_cv</code> usa ese objeto, <code>return_train_score=True</code> y rechaza otro splitter. En el respaldo, los 25 pliegues de test tienen las dos clases. El bosque imputa numéricas con la mediana, categóricas con la moda, y aplica one-hot dentro de <code>fit</code> y <code>predict</code>, para que la comparación reciba las mismas columnas.</p>
-  <p>Quedaron calculados, y guardados en <code>bitacoras/figuras/figuras/</code>: Tabla 2 (DT vs RF), Tabla 5 (poda), Fig. 4, Fig. 7, Fig. 9, Fig. 10, la tabla TN/FP/FN/TP y <code>holdout_final.json</code>. El esquema anti-fuga elegido es la opción A: un holdout estratificado 80/20, 455 y 114 filas, evaluado una sola vez.</p>
+  <p>Quedaron calculados una vez, y no se volvieron a entrenar el 10 de noviembre. Están en <code>figuras/</code> y en <code>bitacoras/nadine/figuras/figuras/</code>: Tabla 2 (DT vs RF), Tabla 5 (poda), Fig. 4, Fig. 7, Fig. 9, Fig. 10, la tabla TN/FP/FN/TP y <code>holdout_final.json</code>. El esquema anti-fuga elegido es la opción A: un holdout estratificado 80/20, 455 y 114 filas, evaluado una sola vez.</p>
+  <h3>Interfaz y cierre del 10 de noviembre</h3>
+  <p>La prueba mínima de ipywidgets corrió en Colab: versión 7.7.1, el botón se ve, el primer click imprime y el segundo reemplaza la línea. El panel de la celda 6.1 (datos, hiperparámetros, validación, Ejecutar y CSV) está escrito y no se ejecutó. La demo 6.2 lee el holdout guardado. <code>drive.mount</code> salió del camino del Run all. El título del notebook dice Versión 7. La corrida de punta a punta fue local, el 11 de noviembre.</p>
   <h3>Texto ya redactado</h3>
-  <p>La bitácora larga documenta las tareas 7–9 y 13–27: problemas del loader, la decisión de gain ratio frente a ganancia, el reparto fraccional y la correspondencia de <code>u()</code> con AddErrs. <code>informe/seccion3.md</code> y <code>informe/seccion4.md</code> ya pueden alimentar las secciones de solución y metodología. Registran, además, un problema real de interfaz: el wrapper primero entrenaba como el árbol mínimo (<code>fit(df, nombre)</code>) y hubo que pasarlo a <code>fit(X, y)</code> para que los dos modelos entren al mismo <code>evaluar_cv</code>.</p>
+  <p>La bitácora larga documenta las tareas 7–9 y 13–27. <code>informe/main.tex</code> y <code>referencias.bib</code> arman el paper: introducción, algoritmos, solución y problemas, metodología, resultados, discusión y conclusiones. Compiló a 9 carillas con Quinlan 1993 (AddErrs, pp. 278–279), Liu p. 67, Breiman 2001, Pedregosa et al. 2011, Heart Disease (Janosi, Steinbrunn, Pfisterer y Detrano) y Detrano et al. 1989. El texto usa los números de esa corrida y dice que el árbol no es un C4.5 completo. El problema de firma del wrapper —de <code>fit(df, nombre)</code> a <code>fit(X, y)</code>— quedó en la sección de solución.</p>
 </section>
 
 <section id="falta">
   <h2>5. Qué falta</h2>
   <p>Ordenado por lo que la consigna puede descontar, no por el número de tarjeta.</p>
   <ol>
-    <li><strong>Interfaz.</strong> Tarjetas 11 y 45–49, y las celdas 1.5, 6.1 y 6.2. Hoy son <code>pass</code>. La consigna pide operación completa: elegir datos, target, atributos, hiperparámetros de los dos modelos, tamaño del conjunto de prueba, correr y ver tabla, matrices y barras. Tiene que quedar un camino impreso en la celda por si ipywidgets no renderiza en el Colab de la cátedra.</li>
-    <li><strong>Barridos.</strong> E2–E4 (profundidad, <code>min_samples_leaf</code>, <code>min_gain_ratio</code>), E6–E7 (<code>n_estimators</code>, incluyendo 1, y <code>max_features</code>), E8 (learning curve estratificada) y E10–E11 (importancias y tamaño contra accuracy). La celda de la sección 5 del notebook sigue en <code># TODO — barridos E2–E11</code>. Sin eso, el informe no muestra «métricas al cambiar la parametrización», que es el objetivo 2 del enunciado. La grilla propuesta en la bitácora del 6/11: profundidad 1, 2, 3, 5, 8 y sin tope; hoja mínima 1, 2, 5, 10, 20, 50; gain ratio mínimo 0, 0,01, 0,05, 0,1, 0,2. El óptimo no es el pico de accuracy: es el modelo más chico cuya media queda a menos de un desvío del máximo.</li>
-    <li><strong>Informe LNCS.</strong> Falta el esqueleto <code>llncs</code> en español, autores e instituto, figuras y tablas incrustadas, introducción, algoritmos con fórmulas, resultados, discusión (sesgo y varianza, tamaño contra accuracy, limitaciones) y conclusiones. Falta <code>referencias.bib</code> verificado contra la fuente: Quinlan 1993, Liu p. 67, Breiman 1984 si se usa CART, Breiman 2001, Pedregosa et al. 2011, y UCI / Wolberg para Breast Cancer. La tarjeta 56 trata una cita inventada como causa de desaprobación.</li>
-    <li><strong>Figuras y tablas de entrega.</strong> Hay cuatro PNG y dos <code>.tex</code>. Faltan los nombres estables del resto (Fig. 2 de EDA, Fig. 5, Fig. 6, Fig. 8), blanco y negro o marcadores que se lean en gris, DPI suficiente, y las seis tablas con media y desvío en columnas separadas. La exportación general sigue en <code>pass</code>. La Fig. 2b, treinta histogramas, no entra en 12 carillas; la propia bitácora sugiere quedarse con la distribución de clases y la correlación.</li>
-    <li><strong>Run all en runtime limpio.</strong> Tarjeta 58, fecha interna 10/11. Hay que sacar o condicionar <code>drive.mount</code>, confirmar que el orden de celdas no depende de estado viejo, y guardar el notebook con las salidas de las celdas de resultados.</li>
-    <li><strong>Dataset oficial.</strong> Tarjeta 12, única en curso. Si llega un CSV con categóricas o faltantes, el EDA, los barridos y las tablas se regeneran. El árbol ya tiene ramas para esos casos; el bosque los resuelve con imputación y one-hot. Esa diferencia de preprocesamiento hay que escribirla, porque si no los dos modelos no ven el mismo problema.</li>
-    <li><strong>Cierre de tablero y coloquio.</strong> Pasar a Hecho lo que ya corre, nombrar los labels, y repartir la demo: GainRatio y poda (A y B), protocolo (C), interfaz y figuras (D), LNCS y citas (E). <code>export_text</code> existe en el árbol categórico base; la tarjeta 20 pide que el árbol que se publica también se vuelque a texto con profundidad acotada.</li>
-    <li><strong>Limpieza open–closed.</strong> La celda 1.4 es un <code>pass</code>. Con el respaldo no cambia el número. Con otro dataset, sí.</li>
+    <li><strong>Lectura y entrega del PDF.</strong> <code>informe/main.pdf</code> tiene 9 carillas. Falta una pasada de ortografía y subirlo a la cátedra. El coloquio no está armado.</li>
+    <li><strong>El botón del panel.</strong> El Run all local construye el panel y no lo aprieta. Ejecutar, la segunda corrida y bajar el CSV siguen siendo un click en la pantalla.</li>
+    <li><strong>Colab.</strong> La corrida de punta a punta fue en esta máquina. Colab no se abrió.</li>
+    <li><strong>Cierre del tablero.</strong> El export sigue desactualizado. El tablero en vivo no se movió.</li>
   </ol>
 </section>
 
 <section id="flojo">
   <h2>6. Qué está hecho, pero flojo</h2>
+  <p>Los párrafos de esta sección hablan del borrador de Breast Cancer del 10 de noviembre. La corrida que vale es la del 11, en la sección 9 y en <span class="mono">informe/main.pdf</span>.</p>
   <h3>Los números principales no son una sola corrida</h3>
   <p>La sección 3.5 de la bitácora midió el árbol con <code>max_depth=2</code>. Accuracy de test 0,9283 ± 0,0239 y una brecha de 0,0174. La Tabla 2, posterior, usa <code>DecisionTreeC45(random_state=SEED)</code> sin ese tope: accuracy 0,9269 ± 0,0219, F1 macro 0,9221 ± 0,0236, y el árbol memoriza el train (accuracy 1, brecha 0,0731). El propio texto avisa que no hay que mezclar 0,9162 / 0,9893 de ROC de aquella corrida con el holdout. En el informe tiene que quedar una sola configuración, dicha antes de la tabla.</p>
   <p>Las tablas 2 y 5 y las figuras 7 y 9 se calcularon sobre las 569 filas, antes de fijar el corte 80/20. El holdout (F1 macro 0,9246 contra 0,9713) es la evaluación que no se usó para elegir nada, porque los barridos todavía no existen. Cuando los barridos corran sobre las 25 particiones de todo el dataset y después se publique ese mismo número, el resultado queda elegido sobre el dato que lo mide. La bitácora de la tarjeta 36 ya marca esa trampa: la curva puede salir del entrenamiento; el número final sale del holdout, una vez.</p>
   <h3>El notebook guardado no muestra esas corridas</h3>
-  <p>Las celdas de métricas, Tabla 5, matrices, Fig. 7 y holdout están en el archivo con cero salidas. Los números viven en los Markdown, en los <code>.tex</code> y en <code>holdout_final.json</code>. Puede haber deriva entre el código actual y la tabla pegada. Antes de citarlas en el PDF hay que regenerarlas y dejar la salida en el notebook.</p>
+  <p>Las celdas de métricas, Tabla 5, matrices, Fig. 7 y holdout siguen en el archivo sin la salida de una corrida nueva. Los números viven en los Markdown, en los <code>.tex</code> de <code>figuras/</code> y en <code>holdout_final.json</code>. El PDF los cita tal cual. Puede haber deriva entre el código actual y la tabla pegada. Un Run all en Colab es la forma de volver a verlos en el notebook; no hace falta regenerarlos para el PDF que ya está.</p>
   <h3>La poda hace poco, y el test no la afirma</h3>
-  <p>En 25 particiones la poda baja de 47,6 a 30,7 nodos, sube la accuracy de test de 0,9269 a 0,9304 y baja la brecha de 0,0731 a 0,0598. El efecto va para el lado esperado. La tarjeta 39 esperaba una caída de unos 9 puntos a unos 3. Acá la baja es de 7,3 a 6,0. Conviene decirlo así, no redondearlo a «la poda controla el sobreajuste».</p>
-  <p>La tarjeta de test de poda sigue abierta a propósito. En el ejemplo chico de clima y viento el árbol pasa de 7 nodos a 3, la accuracy no se mueve (train 0,667, test 0,500) y no hay un <code>assert</code>. No está medido que <code>min_samples_leaf</code> grande achique el árbol, ni que podar conserve la mayoría de las predicciones. El estimador no expone <code>n_nodes()</code>; el tamaño se cuenta recorriendo <code>arbol_.raiz</code> desde afuera.</p>
+  <p>En 25 particiones la poda baja de 47,6 a 30,7 nodos, sube la accuracy de test de 0,9269 a 0,9304 y baja la brecha de 0,0731 a 0,0598. El efecto va para el lado esperado. La tarjeta 39 esperaba una caída de unos 9 puntos a unos 3. Acá la baja es de 7,3 a 6,0. El PDF lo dice así.</p>
+  <p>En un holdout de la misma semilla la poda achicó el árbol y la accuracy de prueba bajó: de 0,9298 a 0,9211, de 53 a 31 nodos. La decisión de podar mira el entrenamiento. El assert del notebook, desde la Versión 5, acepta una baja de hasta 3 puntos y exige que los nodos bajen. Mauricio tiene que volver a correr esa celda en la Versión 6.</p>
   <h3>El árbol propio es lento para una demo</h3>
-  <p>En la Tabla 2, ajustar el árbol lleva 26,0 ± 4,8 s por partición. El bosque de 100 árboles lleva 0,19 ± 0,04 s. Predecir es barato en los dos (0,025 s y 0,039 s). El contraste de tamaño es el inverso: unos 48 nodos contra unos 3.500. Esa asimetría es un resultado, y también un problema de la solución: el informe tiene que explicarlo, y la interfaz no puede lanzar 25 particiones del árbol sin un aviso de tiempo.</p>
+  <p>En la Tabla 2, ajustar el árbol lleva 26,0 ± 4,8 s por partición. El bosque de 100 árboles lleva 0,19 ± 0,04 s. Predecir es barato en los dos (0,025 s y 0,039 s). El contraste de tamaño es el inverso: unos 48 nodos contra unos 3.500. El PDF lo explica como costo de esta implementación en Python frente a la biblioteca. El panel, además, no arma las 25 particiones: el producto de folds por repeticiones queda en 10.</p>
   <h3>Gain ratio del núcleo viejo</h3>
   <p>En <code>gain_ratio</code> del árbol base, si <code>split_info</code> es 0 la función devuelve 0,0. La tarjeta 16 pedía <code>None</code>, para no elegir un atributo que no parte. El seleccionador del núcleo hace <code>max</code> sobre esos ratios. El árbol que realmente se evalúa, <code>_candidatos</code>, vuelve a calcular el ratio y también usa 0,0 cuando el split info es 0; con <code>min_gain_ratio=0</code> ese corte puede entrar. En Breast Cancer, con cortes binarios, el caso es raro. Sigue siendo un borde distinto del que la tarjeta cerró.</p>
   <h3>Empates al azar, no por nombre</h3>
   <p>Si dos cortes empatan en gain ratio, el árbol parametrizable desempata con <code>random_state</code>. La tarjeta pedía un orden fijo, alfabético o por índice, para que el árbol no dependa de una semilla. Con <code>SEED</code> la corrida se repite. Sin semilla, no.</p>
   <h3>Dos árboles en el mismo notebook</h3>
   <p><code>ArbolC45.fit(df, target)</code> sigue vivo al lado de <code>DecisionTreeC45.fit(X, y)</code>. El primero no ve columnas numéricas. Una celda de prueba todavía menciona el fallback a Iris, que es todo continuo, y en esa versión el árbol avisa que no puede usarlo. Quien lea el notebook de arriba hacia abajo puede creer que el modelo entregable es el de la sección 2. El que entra a las tablas es el de la sección 3.</p>
-  <h3>El holdout y las figuras no están en la escala del paper</h3>
-  <p>La Fig. 9 normaliza por fila. En el test de 114 filas el árbol se equivoca 4 de 72 benign (5,6 %) y 4 de 42 malignant (9,5 %). El bosque no marca ningún benign como malignant y deja pasar 3 de 42 malignant (7,1 %). El patrón está descrito en la sección 3 y todavía no en una discusión. Las figuras no están verificadas en gris, a 122 mm y a 300 dpi, que es la regla Springer que la tarjeta 42 copia.</p>
+  <h3>Las figuras ya están en el PDF, no rehechas</h3>
+  <p>La Fig. 9 normaliza por fila. En el test de 114 filas el árbol se equivoca 4 de 72 benign (5,6 %) y 4 de 42 malignant (9,5 %). El bosque no marca ningún benign como malignant y deja pasar 3 de 42 malignant (7,1 %). Ese patrón está en la discusión del PDF. Las cuatro figuras se incrustaron como estaban: no se pasaron a gris ni se midieron a 122 mm. La Fig. 2 del EDA, y las figuras de los barridos que no se corrieron, no entran.</p>
   <h3>El tablero no se puede mostrar así</h3>
-  <p>La tarjeta 61 dice que el Trello es parte del entregable. Hoy un docente ve el C4.5 en «en revisión», la instalación de LaTeX en el mismo lugar, y la interfaz todavía como idea. Los checks de las descripciones están casi todos sin tildar, incluso en tarjetas cuyo código ya corre.</p>
+  <p>La tarjeta 61 dice que el Trello es parte del entregable. Quien abra el tablero sigue viendo el C4.5 en «en revisión», LaTeX en el mismo lugar y la interfaz como idea, aunque el repo ya tenga el panel y el PDF. Los checks de las descripciones están casi todos sin tildar.</p>
 </section>
 
 <section id="quinlan">
@@ -318,7 +317,7 @@
 
 <section id="tecnico">
   <h2>8. Informe técnico, con lo que ya se puede sostener</h2>
-  <p>Esta sección junta el contenido que ya está medido. No reemplaza el PDF LNCS: le faltan fórmulas compuestas, la discusión cerrada y las referencias verificadas.</p>
+  <p>Esta sección junta el contenido que ya está medido y que el PDF de <code>informe/main.pdf</code> cita. El paper es más corto: no repite cada fila de la Tabla 2 en prosa.</p>
 
   <h3>8.1 Problema</h3>
   <p>Hay que clasificar con un árbol de decisión escrito por el equipo, al estilo C4.5, y con un Random Forest de scikit-learn, sobre el mismo dataset y el mismo protocolo. Se comparan accuracy, precisión, recall y F1 en promedio macro y ponderado, ROC-AUC, tiempo y tamaño. La métrica que decide es F1 macro, porque en el respaldo la clase benign es el 62,7 %.</p>
@@ -335,7 +334,7 @@
     <li>Scikit-learn 1.6 no guarda <code>n_splits</code> como atributo de <code>RepeatedStratifiedKFold</code>. El conteo de 25 sale de <code>get_n_splits()</code>.</li>
     <li>Con dos clases, <code>roc_auc_score(..., multi_class="ovr")</code> rechaza la matriz de dos columnas. El AUC de dos clases usa la columna de la clase positiva. Con tres o más clases, el macro one-vs-rest sigue disponible. La Fig. 10 dibuja una curva por clase.</li>
     <li>El núcleo categórico no podía entrenar el respaldo. Los umbrales continuos tuvieron que entrar antes de cualquier número serio. Siguen sin reutilizarse en la misma rama.</li>
-    <li>La poda con la fórmula pesimista achica el árbol y casi no mueve la accuracy. El test automático que lo exigiría no está escrito; el efecto se ve en la Tabla 5, no en un assert.</li>
+    <li>La poda con la fórmula pesimista achica el árbol y casi no mueve la accuracy media. En un solo holdout la accuracy de prueba bajó de 0,9298 a 0,9211. La Tabla 5 es la medición de las 25 particiones, no una garantía de cada corte.</li>
   </ol>
 
   <h3>8.4 Metodología</h3>
@@ -345,7 +344,7 @@
 
 <section id="resultados">
   <h2>9. Resultados ya calculados</h2>
-  <p>Respaldo Breast Cancer. Árbol sin tope de profundidad, sin poda, salvo donde se indica. Bosque con los defaults del wrapper. Media ± desvío en 25 particiones.</p>
+  <p>Heart Disease, cuatro sedes, 920 filas, clase ausencia/presencia. Corrida local del 11 de noviembre, semilla 42. Árbol sin tope de profundidad y sin poda, salvo donde se indica. Bosque con 100 árboles y <code>max_features=sqrt</code>. Media ± desvío en 25 particiones.</p>
 
   <h3>Tabla 2. Árbol contra bosque</h3>
   <table>
@@ -353,84 +352,77 @@
       <tr><th>Métrica</th><th class="num">DT</th><th class="num">RF</th></tr>
     </thead>
     <tbody>
-      <tr><td>Accuracy</td><td class="num">0,9269 ± 0,0219</td><td class="num">0,9564 ± 0,0232</td></tr>
-      <tr><td>Precisión macro</td><td class="num">0,9212 ± 0,0222</td><td class="num">0,9573 ± 0,0232</td></tr>
-      <tr><td>Precisión ponderada</td><td class="num">0,9285 ± 0,0218</td><td class="num">0,9581 ± 0,0220</td></tr>
-      <tr><td>Recall macro</td><td class="num">0,9246 ± 0,0256</td><td class="num">0,9511 ± 0,0277</td></tr>
-      <tr><td>Recall ponderado</td><td class="num">0,9269 ± 0,0219</td><td class="num">0,9564 ± 0,0232</td></tr>
-      <tr><td>F1 macro</td><td class="num">0,9221 ± 0,0236</td><td class="num">0,9530 ± 0,0251</td></tr>
-      <tr><td>F1 ponderado</td><td class="num">0,9270 ± 0,0220</td><td class="num">0,9562 ± 0,0234</td></tr>
-      <tr><td>ROC-AUC</td><td class="num">0,9246 ± 0,0256</td><td class="num">0,9893 ± 0,0092</td></tr>
-      <tr><td>Tiempo de ajuste (s)</td><td class="num">26,04 ± 4,78</td><td class="num">0,191 ± 0,043</td></tr>
-      <tr><td>Tiempo de predicción (s)</td><td class="num">0,025 ± 0,011</td><td class="num">0,039 ± 0,025</td></tr>
-      <tr><td>Nodos</td><td class="num">47,6 ± 6,0</td><td class="num">3513 ± 170</td></tr>
-      <tr><td>Hojas</td><td class="num">24,3 ± 3,0</td><td class="num">1806 ± 85</td></tr>
-      <tr><td>Altura</td><td class="num">13,2 ± 1,9</td><td class="num">10,2 ± 1,0</td></tr>
+      <tr><td>Accuracy</td><td class="num">0,7850 ± 0,0265</td><td class="num">0,8187 ± 0,0305</td></tr>
+      <tr><td>Precisión macro</td><td class="num">0,7848 ± 0,0275</td><td class="num">0,8185 ± 0,0317</td></tr>
+      <tr><td>Precisión ponderada</td><td class="num">0,7856 ± 0,0269</td><td class="num">0,8192 ± 0,0307</td></tr>
+      <tr><td>Recall macro</td><td class="num">0,7796 ± 0,0270</td><td class="num">0,8145 ± 0,0303</td></tr>
+      <tr><td>Recall ponderado</td><td class="num">0,7850 ± 0,0265</td><td class="num">0,8187 ± 0,0305</td></tr>
+      <tr><td>F1 macro</td><td class="num">0,7809 ± 0,0271</td><td class="num">0,8157 ± 0,0308</td></tr>
+      <tr><td>F1 ponderado</td><td class="num">0,7840 ± 0,0266</td><td class="num">0,8182 ± 0,0304</td></tr>
+      <tr><td>ROC-AUC</td><td class="num">0,8195 ± 0,0295</td><td class="num">0,8839 ± 0,0254</td></tr>
+      <tr><td>Tiempo de ajuste (s)</td><td class="num">50,59 ± 9,80</td><td class="num">0,484 ± 0,041</td></tr>
+      <tr><td>Tiempo de predicción (s)</td><td class="num">0,151 ± 0,032</td><td class="num">0,136 ± 0,023</td></tr>
+      <tr><td>Nodos</td><td class="num">452,0 ± 36,4</td><td class="num">28876 ± 665</td></tr>
+      <tr><td>Hojas</td><td class="num">247,4 ± 18,6</td><td class="num">14488 ± 332</td></tr>
+      <tr><td>Altura</td><td class="num">13,0 ± 0,0</td><td class="num">23,0 ± 1,3</td></tr>
     </tbody>
   </table>
-  <p>En F1 macro el bosque queda arriba (0,9530 frente a 0,9221). La diferencia más grande no es la accuracy: es el ROC-AUC (0,925 frente a 0,989) y el tamaño. El árbol es interpretable y chico. El bosque afina las probabilidades. El ajuste del árbol propio es dos órdenes de magnitud más lento que el bosque de biblioteca; eso no se puede presentar como «el árbol es el modelo rápido».</p>
+  <p>En F1 macro el bosque queda arriba (0,8157 frente a 0,7809). El árbol tiene 452 nodos y altura 13. El bosque suma unos 28&nbsp;900. Ajustar el árbol lleva unos 51 segundos por partición y el bosque menos de medio segundo.</p>
   <figure>
-    <img src="bitacoras/figuras/figuras/fig4_dt_vs_rf.png" alt="Barras de métricas de test, árbol contra bosque, con desvío">
-    <figcaption>Fig. 4. Métricas de test, media y desvío en las 25 particiones. Archivo del repositorio; no está rehecha para la escala LNCS.</figcaption>
+    <img src="figuras/fig4_dt_vs_rf.png" alt="Barras de métricas de test, árbol contra bosque, con desvío">
+    <figcaption>Fig. 4. Métricas de test, media y desvío en las 25 particiones. Está en el PDF, con el archivo tal cual se midió.</figcaption>
   </figure>
 
   <h3>Tabla 5. Poda pesimista, CF = 0,25</h3>
   <table>
     <thead><tr><th></th><th class="num">Sin poda</th><th class="num">Con poda</th></tr></thead>
     <tbody>
-      <tr><td>Nodos</td><td class="num">47,64 ± 5,96</td><td class="num">30,68 ± 5,09</td></tr>
-      <tr><td>Hojas</td><td class="num">24,32 ± 2,98</td><td class="num">15,84 ± 2,54</td></tr>
-      <tr><td>Altura</td><td class="num">13,20 ± 1,94</td><td class="num">10,64 ± 2,23</td></tr>
-      <tr><td>Accuracy train</td><td class="num">1,0000 ± 0,0000</td><td class="num">0,9902 ± 0,0058</td></tr>
-      <tr><td>Accuracy test</td><td class="num">0,9269 ± 0,0219</td><td class="num">0,9304 ± 0,0204</td></tr>
-      <tr><td>Brecha</td><td class="num">0,0731 ± 0,0219</td><td class="num">0,0598 ± 0,0215</td></tr>
+      <tr><td>Nodos</td><td class="num">452,00 ± 36,44</td><td class="num">71,20 ± 15,74</td></tr>
+      <tr><td>Hojas</td><td class="num">247,36 ± 18,63</td><td class="num">39,04 ± 8,43</td></tr>
+      <tr><td>Altura</td><td class="num">13,00 ± 0,00</td><td class="num">8,84 ± 0,90</td></tr>
+      <tr><td>Accuracy train</td><td class="num">0,9285 ± 0,0086</td><td class="num">0,8663 ± 0,0151</td></tr>
+      <tr><td>Accuracy test</td><td class="num">0,7850 ± 0,0265</td><td class="num">0,7741 ± 0,0284</td></tr>
+      <tr><td>Brecha</td><td class="num">0,1435 ± 0,0310</td><td class="num">0,0922 ± 0,0353</td></tr>
     </tbody>
   </table>
   <figure>
-    <img src="bitacoras/figuras/figuras/fig7_brecha_train_test.png" alt="Accuracy de train y de test para el árbol sin poda, con poda y el bosque">
-    <figcaption>Fig. 7. Train y test. Sin poda el árbol acierta todo el entrenamiento. Con poda la brecha baja de 7,3 a 6,0 puntos. El bosque queda en 4,4 puntos, con accuracy de train también en 1.</figcaption>
+    <img src="figuras/fig7_brecha_train_test.png" alt="Accuracy de train y de test para el árbol sin poda, con poda y el bosque">
+    <figcaption>Fig. 7. Train y test. Sin poda la brecha del árbol es 0,1435. Con poda baja a 0,0922 y la accuracy de prueba también baja. El bosque acierta todo el train y la brecha queda en 0,1813.</figcaption>
   </figure>
 
   <h3>Holdout final, una sola vez</h3>
-  <p>455 entrenamiento, 114 prueba. Este corte no se usó para elegir hiperparámetros, porque no hubo búsqueda. La clase positiva de la matriz es <code>malignant</code>, la segunda del archivo.</p>
+  <p>736 entrenamiento, 184 prueba. La clase positiva es presencia. Este corte no eligió los valores por defecto. Los barridos sí usaron las 736, y el holdout de la combinación elegida está en el PDF, aparte de esta tabla.</p>
   <table>
     <thead><tr><th></th><th class="num">Accuracy</th><th class="num">F1 macro</th><th class="num">ROC-AUC</th><th class="num">TN</th><th class="num">FP</th><th class="num">FN</th><th class="num">TP</th></tr></thead>
     <tbody>
-      <tr><td>DecisionTreeC45</td><td class="num">0,9298</td><td class="num">0,9246</td><td class="num">0,9246</td><td class="num">68</td><td class="num">4</td><td class="num">4</td><td class="num">38</td></tr>
-      <tr><td>RandomForestWrap</td><td class="num">0,9737</td><td class="num">0,9713</td><td class="num">0,9929</td><td class="num">72</td><td class="num">0</td><td class="num">3</td><td class="num">39</td></tr>
+      <tr><td>DecisionTreeC45</td><td class="num">0,7880</td><td class="num">0,7819</td><td class="num">0,8192</td><td class="num">57</td><td class="num">25</td><td class="num">14</td><td class="num">88</td></tr>
+      <tr><td>RandomForestWrap</td><td class="num">0,8641</td><td class="num">0,8616</td><td class="num">0,9219</td><td class="num">67</td><td class="num">15</td><td class="num">10</td><td class="num">92</td></tr>
     </tbody>
   </table>
-  <p>En las 72 benign y 42 malignant del test, el árbol reparte 4 errores en cada clase. El bosque concentra los 3 errores en malignant. No es el mismo patrón de falla, y es el material de la discusión: el bosque es más preciso en la probabilidad y más conservador con la clase mayoritaria.</p>
+  <p>En las 82 ausencia y 102 presencia del test, el árbol se equivoca en 25 ausencia y 14 presencia. El bosque, en 15 y 10.</p>
   <figure>
-    <img src="bitacoras/figuras/figuras/fig9_matrices_confusion.png" alt="Matrices de confusión del árbol y del bosque">
+    <img src="figuras/fig9_matrices_confusion.png" alt="Matrices de confusión del árbol y del bosque">
     <figcaption>Fig. 9. Matrices del holdout, normalizadas por fila.</figcaption>
   </figure>
   <figure>
-    <img src="bitacoras/figuras/figuras/fig10_roc_por_clase.png" alt="Curvas ROC por clase">
-    <figcaption>Fig. 10. ROC por clase. AUC macro del holdout: 0,9246 el árbol, 0,9929 el bosque.</figcaption>
+    <img src="figuras/fig10_roc_por_clase.png" alt="Curvas ROC por clase">
+    <figcaption>Fig. 10. ROC por clase. AUC macro del holdout: 0,8192 el árbol, 0,9219 el bosque.</figcaption>
   </figure>
 
-  <h3>Lo que estos números no dicen</h3>
-  <ul>
-    <li>No dicen qué profundidad conviene. No hay curva de <code>max_depth</code>.</li>
-    <li>No dicen si 100 árboles alcanzan, ni si <code>sqrt</code> le gana a usar todos los atributos. Breiman queda citado en el enunciado y todavía no está conectado con una tabla propia.</li>
-    <li>No dicen si el árbol podado gana con pocos datos. No hay learning curve.</li>
-    <li>No dicen si los dos modelos miran los mismos atributos. No hay importancias.</li>
-    <li>No dicen nada de un dataset con categorías o con nulos. El capítulo de Quinlan que más costó implementar no aparece en la tabla.</li>
-  </ul>
+  <h3>Barridos, solo el entrenamiento</h3>
+  <p>La regla elige el modelo más chico cuya accuracy de prueba queda a menos de un desvío del máximo. Profundidad 2 (la accuracy sigue subiendo hasta sin tope, 0,7677). Hoja mínima 50. Gain ratio 0,1 (con 0,2 el árbol queda en un nodo y la accuracy baja a 0,5530). Diez árboles (sigue subiendo hasta 200, 0,8134). <code>log2</code>. Juntos, en el holdout, el F1 macro es 0,7926 y 0,8336. El bosque por defecto, en el mismo corte, queda en 0,8616. No fue una grilla cruzada.</p>
 </section>
 
 <section id="cierre">
-  <h2>10. Orden razonable de acá al 11/11</h2>
+  <h2>10. Lo que queda para entregar</h2>
   <ol>
-    <li>Sacar el <code>drive.mount</code> del camino de Run all y volver a correr, en el entrenamiento del holdout, la Tabla 2, la Tabla 5 y las figuras que se vayan a imprimir. Una configuración, una semilla, salidas guardadas en el notebook.</li>
-    <li>Escribir la celda de barridos sobre <code>X_tr</code> solamente. Si el tiempo no entra, publicar una grilla corta (profundidad 1, 3, 8 y sin tope; bosque con 1, 10, 100 y 200 árboles) y decir que es una grilla reducida. El holdout se toca al final, una vez, con los valores elegidos.</li>
-    <li>Un panel mínimo que cambie dataset, target, profundidad del árbol, cantidad de árboles y tamaño del test, y que imprima la tabla aunque el widget no se vea. Graphviz o <code>export_text</code> con profundidad máxima, para la demo.</li>
-    <li>Armar <code>main.tex</code> en español con las secciones que ya existen, las limitaciones del apartado 7 de este HTML escritas como problemas encontrados, y un <code>.bib</code> corto verificado. Recortar a 12 carillas sin tocar márgenes de Springer.</li>
-    <li>Actualizar el tablero el mismo día: lo que corre, a Hecho; lo que no se va a alcanzar, dejado explícito, no en «en revisión».</li>
+    <li>Leer <code>informe/main.pdf</code>. Son 9 carillas. La ortografía es una pasada humana.</li>
+    <li>Subir el PDF y el notebook. El título dice Versión 7.</li>
+    <li>En el Trello, pasar a Hecho lo que esta corrida ya midió. El tablero no se movió desde acá.</li>
+    <li>Si se abre el panel, Ejecutar es un click aparte: el Run all local no lo aprieta.</li>
   </ol>
   <div class="call ok">
-    El trabajo no está en cero. El árbol clasifica por encima de 0,92, el bosque por encima de 0,95, el protocolo de 25 particiones es uno solo, y los problemas de firma, de ROC binario y de dataset ausente ya están escritos. Lo que la cátedra todavía no puede recibir es la interfaz, la variación de parámetros y el PDF.
+    En Heart Disease el F1 macro queda en 0,7809 para el árbol y 0,8157 para el bosque. El notebook corrió en local y el PDF tiene 9 carillas. Falta la lectura del texto, la subida y el Trello.
   </div>
 </section>
 
@@ -442,13 +434,15 @@
   <span class="mono">Librerias_Python_para_COLAB.pdf</span>,
   los tres recortes de Quinlan en <span class="mono">libros/</span>,
   <span class="mono">bitacoras/TPI - Inteligencia Artificial (1).md</span>,
-  <span class="mono">bitacoras/informe/informe/seccion3.md</span>,
+  <span class="mono">bitacoras/nadine/informe/informe/seccion3.md</span>,
   <span class="mono">seccion4.md</span>,
-  las tarjetas en <span class="mono">bitacoras/docs/docs/</span>,
-  las figuras y tablas en <span class="mono">bitacoras/figuras/figuras/</span>,
+  las tarjetas en <span class="mono">bitacoras/nadine/docs/docs/</span>,
+  las figuras y tablas en <span class="mono">figuras/</span>,
+  <span class="mono">informe/main.tex</span>,
+  <span class="mono">informe/main.pdf</span>
   y el export de Trello <span class="mono">mYvQVOWz - ia.json</span>.
   El PDF completo de Quinlan no tiene texto seleccionable; no se releyó AddErrs desde ese archivo.
-  Generado el 9 de noviembre de 2026 como estado del repositorio, no como el informe LNCS de entrega.
+  Actualizado el 11 de noviembre de 2026. Este HTML es el estado del repositorio. El informe de entrega es <span class="mono">informe/main.pdf</span>.
 </footer>
 </body>
 </html>

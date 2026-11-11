@@ -1,0 +1,38 @@
+{
+  "firma": {
+    "n_train": 736,
+    "n_test": 184,
+    "clases": [
+      "ausencia",
+      "presencia"
+    ],
+    "modelos": [
+      "DecisionTreeC45_elegido",
+      "RandomForestWrap_elegido"
+    ]
+  },
+  "filas": [
+    {
+      "accuracy": 0.7934782608695652,
+      "precision_macro": 0.7924349881796691,
+      "precision_weighted": 0.7976513516291499,
+      "recall_macro": 0.795791487326638,
+      "recall_weighted": 0.7934782608695652,
+      "f1_macro": 0.7925961082107262,
+      "f1_weighted": 0.7940663626421246,
+      "roc_auc": 0.805714968914395,
+      "modelo": "DecisionTreeC45_elegido"
+    },
+    {
+      "accuracy": 0.8369565217391305,
+      "precision_macro": 0.8377192982456141,
+      "precision_weighted": 0.8372425629290617,
+      "recall_macro": 0.8314203730272597,
+      "recall_weighted": 0.8369565217391305,
+      "f1_macro": 0.833634719710669,
+      "f1_weighted": 0.8361899520402547,
+      "roc_auc": 0.8923362027737924,
+      "modelo": "RandomForestWrap_elegido"
+    }
+  ]
+}

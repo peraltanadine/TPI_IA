@@ -10,7 +10,7 @@
 
 \begin{document}
 
-\title{Árbol tipo C4.5 y bosque aleatorio sobre Breast Cancer Wisconsin}
+\title{Árbol tipo C4.5 y bosque aleatorio sobre Heart Disease}
 \titlerunning{Árbol tipo C4.5 y bosque aleatorio}
 \authorrunning{Rodich et al.}
 \author{Celeste Martin Rodich\inst{1} \and
@@ -22,7 +22,7 @@ Mauricio Nicolás Castro\inst{1}}
 \maketitle
 
 \begin{abstract}
-Se compara un árbol de decisión escrito por el equipo con un bosque aleatorio de scikit-learn. El archivo de la cátedra no estaba disponible, así que los números son del respaldo Breast Cancer Wisconsin (diagnóstico): 569 casos, 30 atributos continuos, sin faltantes, 357 benign y 212 malignant. La métrica que decide es el F1 macro. En 25 particiones estratificadas el bosque llega a \(0{,}9530 \pm 0{,}0251\) y el árbol a \(0{,}9221 \pm 0{,}0236\). La poda pesimista, con factor de confianza 0,25, baja el árbol de 47,64 a 30,68 nodos y la brecha de accuracy de 0,0731 a 0,0598. No se corrieron barridos de hiperparámetros. El árbol no es un C4.5 completo: un atributo continuo se corta una sola vez, la poda solo reemplaza un subárbol por una hoja y el factor \(t\) es propio del equipo.
+Se compara un árbol de decisión escrito por el equipo con un bosque aleatorio de scikit-learn sobre Heart Disease \cite{heartdisease}: las cuatro sedes juntas, 920 filas, clase binaria ausencia/presencia y 1759 faltantes sin imputar en el cuadro. La métrica que decide es el F1 macro. En 25 particiones estratificadas el bosque llega a \(0{,}8157 \pm 0{,}0308\) y el árbol a \(0{,}7809 \pm 0{,}0271\). La poda pesimista, con factor de confianza 0,25, baja el árbol de 452 a 71,2 nodos y la brecha de accuracy de 0,1435 a 0,0922; la accuracy media de prueba baja de 0,7850 a 0,7741. Los barridos se hicieron solo sobre el entrenamiento. El árbol no es un C4.5 completo: un atributo se corta una sola vez, la poda solo reemplaza un subárbol por una hoja y el factor \(t\) es propio del equipo.
 \keywords{árbol de decisión \and C4.5 \and random forest \and gain ratio \and poda pesimista}
 \end{abstract}
 
@@ -31,37 +31,53 @@ Se compara un árbol de decisión escrito por el equipo con un bosque aleatorio 
 
 El trabajo pide comparar dos clasificadores sobre el mismo protocolo. El árbol de decisión lo escribe el equipo. Para el bosque, el enunciado habilita un modelo de biblioteca: ``para el algoritmo RF se podrá utilizar un modelo de la libraría Scikit-learn''. Se conserva la grafía \emph{libraría} porque así figura en la consigna.
 
-La pregunta es concreta: con los mismos datos y la misma semilla, cuál modelo clasifica mejor, de qué tamaño queda y cuánto tarda en ajustarse. La respuesta de este informe vale para el respaldo Breast Cancer Wisconsin \cite{breastcancer}, que es el dataset con el que se midió. El CSV de la cátedra no estaba en el repositorio.
+La pregunta es concreta: con los mismos datos y la misma semilla, cuál modelo clasifica mejor, de qué tamaño queda y cuánto tarda en ajustarse. Los datos son las cuatro sedes de Heart Disease \cite{heartdisease}. Los investigadores que reunieron cada sede son Andras Janosi (Instituto Húngaro de Cardiología, Budapest), William Steinbrunn (Hospital Universitario de Zúrich), Matthias Pfisterer (Hospital Universitario de Basilea) y Robert Detrano (Centro Médico de Long Beach y Cleveland Clinic). El donante del archivo es David W. Aha (julio de 1988). Detrano y sus coautores publicaron, sobre sedes separadas, una discriminación logística de alrededor del 77\,\% \cite{detrano1989}. Ese número es de ellos. Los de este informe salen de la corrida del 11 de noviembre de 2026.
 
-La numeración de figuras y tablas es la del notebook. Entran la Tabla~\ref{tab:dt-vs-rf}, la Tabla~\ref{tab:poda} y las Figuras~\ref{fig:barras}, \ref{fig:brecha}, \ref{fig:confusion} y~\ref{fig:roc}.
+La numeración de figuras y tablas es la del notebook. Entran la Tabla~\ref{tab:dt-vs-rf}, la Tabla~\ref{tab:poda} y las Figuras~\ref{fig:barras}, \ref{fig:profundidad}, \ref{fig:brecha}, \ref{fig:aprendizaje}, \ref{fig:confusion} y~\ref{fig:roc}.
 
 \section{Algoritmos}
 \label{sec:algoritmos}
 
 \subsection{Árbol}
 
-El árbol elige el corte con gain ratio: la ganancia de información dividida por la información de la partición, para no premiar a un atributo solo porque abre muchas ramas \cite[p.~67]{liu2011}. La entropía se calcula sobre las etiquetas de la clase. Dos filas de la misma clase aportan entropía 0.
+El árbol elige el corte con gain ratio: la ganancia de información dividida por la información de la partición, para no premiar a un atributo solo porque abre muchas ramas \cite[p.~67]{liu2011}. La entropía se calcula sobre las etiquetas de la clase.
 
-Un atributo categórico abre una rama por valor. Un continuo se parte en dos, con rama izquierda \(\le\) umbral y rama derecha \(>\) umbral. Los candidatos son los puntos medios entre valores ordenados donde cambia la clase. En este respaldo, esos umbrales coincidieron con los de revisar todos los puntos medios: 3\,527 candidatos en lugar de 11\,002, y los 30 umbrales elegidos fueron los mismos. Después de usar un atributo, el árbol lo saca de la lista. Un continuo no se vuelve a cortar más abajo en la misma rama.
+Un atributo categórico abre una rama por valor. Un continuo se parte en dos, con rama izquierda \(\le\) umbral y rama derecha \(>\) umbral. Los candidatos son los puntos medios entre valores ordenados donde cambia la clase. En esta corrida esos umbrales coincidieron con los de revisar todos los puntos medios: 374 candidatos en lugar de 454. Después de usar un atributo, el árbol lo saca de la lista, también si es continuo. En cada rama hay un solo corte por columna.
 
-Si falta el valor del atributo que parte, el caso se reparte entre las ramas conocidas en proporción a la masa de cada rama. En este respaldo no hubo faltantes, así que esa rama del código no entra en los números de la Sección~\ref{sec:resultados}.
+Si falta el valor del atributo que parte, el caso se reparte entre las ramas conocidas en proporción a la masa de cada rama. Cada nodo guarda \(t = n_{\mathrm{conocidos}} / n_{\mathrm{total}}\). En una hoja, \(t = 1\). Ese factor lo agrega el equipo para la poda con masa fraccionaria. No forma parte de la rutina AddErrs.
 
-Cada nodo guarda \(t = n_{\mathrm{conocidos}} / n_{\mathrm{total}}\), la proporción de peso para la que se conoce el atributo elegido. En una hoja, \(t = 1\). Ese factor lo agrega el equipo para la poda con masa fraccionaria. No forma parte de la rutina AddErrs.
-
-La poda es pesimista y corre después de crecer el árbol. En cada nodo se compara el error estimado de dejar el subárbol con el de reemplazarlo por una hoja. Si la hoja no es peor, el nodo se convierte en hoja. El error estimado es \(e + u(e, N, \mathit{CF})\), con \(\mathit{CF} = 0{,}25\). La función \(u\) sigue la rutina AddErrs de Quinlan \cite[pp.~278--279]{quinlan1993}: interpola con \(\mathit{CF}\) y, para 0,25, obtiene \(z = 0{,}6925\). El código no usa la convención \(\mathit{CF}/2\) de la nota al pie de la sección 4.2 de ese libro.
+La poda es pesimista y corre después de crecer el árbol. En cada nodo se compara el error estimado de dejar el subárbol con el de reemplazarlo por una hoja. Si la hoja no es peor, el nodo se convierte en hoja. El error estimado es \(e + u(e, N, \mathit{CF})\), con \(\mathit{CF} = 0{,}25\). La función \(u\) sigue AddErrs \cite[pp.~278--279]{quinlan1993}: interpola con \(\mathit{CF}\) y, para 0,25, obtiene \(z = 0{,}6925\). El código no usa la convención \(\mathit{CF}/2\).
 
 \subsection{Bosque}
 
 El bosque es el de Breiman \cite{breiman2001}. Se toma de scikit-learn \cite{pedregosa2011}, en la clase \texttt{RandomForestClassifier}, y queda envuelto en \texttt{RandomForestWrap}. La corrida publicada usa 100 árboles y la semilla 42. Cada árbol ve la raíz cuadrada de los atributos, con remuestreo y hoja mínima de 1. No hay tope de profundidad.
 
-Scikit-learn no recibe columnas categóricas en crudo. El wrapper imputa las numéricas con la mediana y las categóricas con la moda, y aplica one-hot a estas últimas. Ese paso ocurre dentro de \texttt{fit} y de \texttt{predict}. Quien compara los modelos les pasa las mismas columnas.
+El wrapper imputa las numéricas con la mediana y las categóricas con la moda, y aplica one-hot a estas últimas. Ese paso ocurre dentro de \texttt{fit} y de \texttt{predict}. El cuadro que ve el árbol no se imputa. Quien compara los modelos les pasa las mismas columnas.
 
 \section{Solución y problemas}
 \label{sec:solucion}
 
-Los dos modelos exponen \texttt{fit(X, y)}, \texttt{predict}, \texttt{predict\_proba} y \texttt{score}. \texttt{X} es un \texttt{DataFrame}. La primera versión del wrapper entrenaba con la firma del árbol mínimo: un \texttt{DataFrame} y el nombre de la clase en el mismo argumento. Con esa firma y la de \texttt{DecisionTreeC45} no había una sola función de evaluación. El wrapper pasó a \texttt{fit(X, y)}.
+Los dos modelos exponen \texttt{fit(X, y)}, \texttt{predict}, \texttt{predict\_proba} y \texttt{score}. \texttt{X} es un \texttt{DataFrame}. Estos son los problemas que hubo que cerrar para que esa interfaz y las pruebas midieran el árbol que dice el código.
 
-El árbol que se mide no es un C4.5 completo. Tres diferencias están en el código y hay que leerlas como tales:
+La primera versión del bosque entrenaba con \texttt{fit(df, nombre)}, la firma del árbol mínimo, que recibe el cuadro y el nombre de la columna clase. El árbol que entra a las tablas separa atributos y clase. Con las dos firmas, una sola función de evaluación no podía llamar a los dos. El bosque pasó a \texttt{fit(X, y)}.
+
+La entropía lee etiquetas, no conteos. Un test le pasaba \texttt{[1, 1]} y esperaba 1 bit. Esas dos etiquetas son la misma clase, y la entropía de una clase sola es 0. Para 1 bit hacen falta dos etiquetas distintas, \texttt{[0, 1]}. Se dejó la función y se corrigió el test. \texttt{gain} le pasa la columna de clase: si la entropía hubiera pasado a leer conteos, un target 0/1 se habría interpretado al revés.
+
+La prueba del núcleo llamaba a \texttt{DecisionTreeC45} en una celda anterior a la que define la clase. En el kernel el nombre todavía no existía. La prueba quedó inmediatamente debajo de esa definición.
+
+\texttt{predict} devolvía las clases en un arreglo de tipo objeto. Con las etiquetas 0, 1 y 2 de Iris, scikit-learn las toma como destino desconocido y corta el cálculo de la accuracy, aunque el ajuste hubiera terminado bien. Si ese arreglo es de tipo objeto, se rearma: los números quedan como números y el texto sigue siendo texto.
+
+El ROC macro con varias clases usa \texttt{multi\_class="ovr"} sobre la matriz de probabilidades. Con dos clases scikit-learn rechaza esa firma cuando la matriz tiene dos columnas. El valor publicado es el promedio de una curva por clase, que es lo que dibuja la Figura~\ref{fig:roc}.
+
+Un control de la poda exigía que, en el holdout de la semilla 42, la accuracy de prueba no bajara. La poda elige mirando el entrenamiento. El control ahora admite una baja de hasta 3 puntos y sigue exigiendo que el árbol quede con menos nodos. En esta corrida las dos lecturas conviven: la media de las 25 particiones baja de 0,7850 a 0,7741 y ese holdout sube de 0,7880 a 0,7989.
+
+Otro control pedía que un solo corte continuo superara 0,85 de accuracy. Ese piso lo cumplía un atributo de Breast Cancer. En Heart Disease el mejor corte, \texttt{chol} \(\le 42{,}50\), da 0,5978. El control informa el número.
+
+Pandas 3 guarda el texto como \texttt{StringDtype}. Ese tipo no entra en la pregunta «¿es \texttt{object} o \texttt{category}?», y el árbol categórico mínimo no encontraba columnas. Además, un nodo interno no guardaba la clase mayoritaria: un valor que no estaba en el entrenamiento devolvía vacío y se mezclaba con las etiquetas de texto. El texto cuenta ahora como categoría, y todo nodo guarda la clase mayoritaria. Ahí cae una rama no vista.
+
+Un Run all no puede quedar esperando el permiso de Drive. Esa celda avisa y sigue: los archivos se leen desde el disco.
+
+El árbol que se mide no es un C4.5 completo. Tres diferencias están en el código:
 
 \begin{itemize}
   \item Un atributo, también si es continuo, se usa una sola vez. C4.5 puede volver a cortar un continuo más abajo, con otro umbral.
@@ -69,25 +85,23 @@ El árbol que se mide no es un C4.5 completo. Tres diferencias están en el cód
   \item El factor \(t\) es una decisión del equipo para ponderar la masa conocida. No hay que atribuirlo a AddErrs.
 \end{itemize}
 
-El criterio por defecto no impone un gain ratio mínimo (\texttt{min\_gain\_ratio} vale 0) y \texttt{min\_samples\_leaf} vale 1. La poda viene apagada: \texttt{pruning=False}. La Tabla~\ref{tab:poda} la enciende a propósito, con \(\mathit{CF} = 0{,}25\).
+El criterio por defecto no impone un gain ratio mínimo y \texttt{min\_samples\_leaf} vale 1. La poda viene apagada. La Tabla~\ref{tab:poda} la enciende a propósito, con \(\mathit{CF} = 0{,}25\). Los códigos de sexo, tipo de dolor, electrocardiograma, angina, pendiente, número de vasos y \texttt{thal} se tratan como categorías, no como magnitudes.
 
 \section{Metodología}
 \label{sec:metodologia}
 
-La semilla global es 42. El validador compartido es una validación estratificada repetida, \texttt{RepeatedStratifiedKFold}, con 5 pliegues y 5 repeticiones: 25 scores. Cada pliegue mantiene la proporción de clases. Sobre este respaldo, los 25 pliegues de prueba tienen las dos clases. \texttt{evaluar\_cv} usa ese objeto y rechaza otro splitter. Pide también el score de entrenamiento. La brecha es ese score menos el de prueba.
+La celda de carga junta los cuatro archivos procesados: Cleveland (303 filas), Hungría (294), Suiza (123) y Long Beach (200). El signo de pregunta queda como faltante. La clase 0 pasa a ausencia (411 filas, 44,7\,\%) y las clases 1 a 4 pasan a presencia (509, 55,3\,\%). La línea base de «siempre presencia» es 55,3\,\%. Hay 1759 faltantes. \texttt{ca} falta en el 66,4\,\% de las filas, \texttt{thal} en el 52,8\,\% y \texttt{slope} en el 33,6\,\%. El colesterol 0 aparece 172 veces; el archivo de nombres no lo define como faltante, así que se deja. Lo mismo vale para el mínimo 0 de la presión arterial, que no se recodificó.
 
-La métrica de comparación es el F1 macro: cada clase pesa igual. Accuracy y las medias ponderadas se publican y no eligen al ganador. Con dos clases, la positiva para la matriz y para el ROC es la segunda de \texttt{classes\_}. En este archivo es \texttt{malignant}.
+La semilla global es 42. El validador compartido repite 5 veces un pliegue estratificado de 5: son 25 scores. \texttt{evaluar\_cv} usa ese objeto y rechaza otro splitter. La métrica de comparación es el F1 macro. Con dos clases, la positiva para la matriz y para el ROC es la segunda de \texttt{classes\_}. En este archivo es presencia.
 
-El corte final es un holdout estratificado 80/20, una sola vez, con la misma semilla. En el respaldo son 455 filas de entrenamiento y 114 de prueba. El resultado queda en \texttt{figuras/holdout\_final.json}. No se usa validación cruzada anidada.
+El corte final es un holdout estratificado 80/20, una sola vez, con la misma semilla: 736 filas de entrenamiento y 184 de prueba. Los barridos ven solo esas 736. Cada grilla mueve un parámetro y deja el resto en el valor por defecto. El elegido es el modelo más chico cuya accuracy media de prueba queda a menos de un desvío estándar del máximo de esa grilla. Si la accuracy sigue subiendo hasta el valor más complejo, la grilla no tiene un óptimo asentado: el informe lo dice y igual aplica la regla. Los tres parámetros del árbol, y los dos del bosque, se eligieron de a uno. El holdout de esa combinación se mide una vez y no se usa para volver a elegir.
 
-Los barridos de hiperparámetros (experimentos E2 a E11) no se corrieron. Los modelos de las tablas usan los valores por defecto del párrafo anterior. Cuando esos barridos se hagan, tienen que ver solo el entrenamiento: el holdout no entra a elegir un parámetro.
-
-La Tabla~\ref{tab:dt-vs-rf}, la Tabla~\ref{tab:poda} y las Figuras~\ref{fig:brecha} y~\ref{fig:confusion} se calcularon sobre todas las filas, antes de fijar el holdout. Describen el comportamiento de los modelos. El holdout de la Sección~\ref{sec:resultados} es la evaluación final. Una corrida anterior del árbol con \texttt{max\_depth=2} no se mezcla con estas tablas: el árbol de la Tabla~\ref{tab:dt-vs-rf} no tiene tope de profundidad.
+La Tabla~\ref{tab:dt-vs-rf}, la Tabla~\ref{tab:poda} y la Figura~\ref{fig:brecha} se calcularon sobre las 920 filas. El holdout de la Sección~\ref{sec:resultados} es la evaluación final de los valores por defecto. El cruce validado corre en 4 procesos: con 8, la máquina de 8\,GB se quedaba sin memoria y la corrida se frenaba. El splitter no cambia.
 
 \section{Resultados}
 \label{sec:resultados}
 
-En F1 macro el bosque queda arriba: \(0{,}9530 \pm 0{,}0251\) contra \(0{,}9221 \pm 0{,}0236\) del árbol. La accuracy de prueba es \(0{,}9564 \pm 0{,}0232\) y \(0{,}9269 \pm 0{,}0219\). El ROC-AUC es \(0{,}9893 \pm 0{,}0092\) y \(0{,}9246 \pm 0{,}0256\). El árbol tiene unos 48 nodos; el bosque, sumando sus 100 árboles, unos 3\,513. Ajustar el árbol lleva \(26{,}04 \pm 4{,}78\) segundos por pliegue y el bosque \(0{,}191 \pm 0{,}043\). Predecir es barato en los dos. La Tabla~\ref{tab:dt-vs-rf} trae media y desvío en columnas separadas. La Figura~\ref{fig:barras} muestra las métricas de prueba con el desvío como barra de error.
+En F1 macro el bosque queda arriba: \(0{,}8157 \pm 0{,}0308\) contra \(0{,}7809 \pm 0{,}0271\) del árbol. La accuracy de prueba es \(0{,}8187 \pm 0{,}0305\) y \(0{,}7850 \pm 0{,}0265\). El ROC-AUC es \(0{,}8839 \pm 0{,}0254\) y \(0{,}8195 \pm 0{,}0295\). El árbol tiene 452 nodos y altura 13 en las 25 particiones, con desvío de altura 0: hay 13 atributos y cada uno sale de la lista después del corte, así que el camino más largo usa una vez cada columna. El bosque, sumando sus 100 árboles, tiene unos 28\,876 nodos. Ajustar el árbol lleva \(50{,}59 \pm 9{,}80\) segundos por pliegue y el bosque \(0{,}484 \pm 0{,}041\). La Tabla~\ref{tab:dt-vs-rf} y la Figura~\ref{fig:barras} traen el resto.
 
 \setcounter{table}{1}
 \input{../figuras/tabla2_dt_vs_rf}
@@ -95,12 +109,22 @@ En F1 macro el bosque queda arriba: \(0{,}9530 \pm 0{,}0251\) contra \(0{,}9221 
 \setcounter{figure}{3}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.92\textwidth]{../figuras/fig4_dt_vs_rf.png}
+\includegraphics[width=0.88\textwidth]{../figuras/fig4_dt_vs_rf.png}
 \caption{Métricas de prueba, media y desvío, en las 25 particiones.}
 \label{fig:barras}
 \end{figure}
 
-Sin poda el árbol acierta todo el entrenamiento (accuracy 1) y la brecha es 0,0731. Con poda pesimista baja a 30,68 nodos y 15,84 hojas, la accuracy de entrenamiento a 0,9902 y la de prueba sube a 0,9304. La brecha queda en 0,0598. El bosque, sin poda que regularice cada árbol por separado, tiene brecha 0,0436. La baja de 0,0731 a 0,0598 achica el sobreajuste y no llega a una brecha de unos 3 puntos. La Tabla~\ref{tab:poda} y la Figura~\ref{fig:brecha} usan las mismas 25 particiones.
+Los barridos se midieron sobre las 736 filas de entrenamiento. En profundidad la accuracy de prueba sube de 0,6127 con tope 1 hasta 0,7677 sin tope, y sigue subiendo en el último punto: no hay un óptimo asentado. La regla igual elige el más chico dentro de un desvío del máximo, que es profundidad 2 (0,7286 \(\pm\) 0,0344, 7 nodos). La Figura~\ref{fig:profundidad} muestra esa grilla. En gain ratio también sube hasta el umbral 0; el elegido es 0,1 (0,7432 \(\pm\) 0,0293). Con umbral 0,2 el árbol queda en un nodo y la accuracy baja a 0,5530. En cantidad de árboles sube hasta 200 (0,8134 \(\pm\) 0,0322); el elegido es 10 (0,7859 \(\pm\) 0,0347). La hoja mínima y los atributos por corte sí se frenan: el máximo de la hoja está en 5 ejemplos (0,7772) y la regla elige 50; el máximo de atributos por corte es \texttt{sqrt} y la regla elige \texttt{log2}.
+
+\setcounter{figure}{5}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.72\textwidth]{../figuras/fig6a_profundidad.png}
+\caption{Accuracy de prueba según la profundidad, solo sobre el entrenamiento.}
+\label{fig:profundidad}
+\end{figure}
+
+Sin poda la accuracy de entrenamiento es 0,9285, no 1. La brecha es 0,1435. Con poda pesimista el árbol baja a 71,2 nodos, 39,0 hojas y altura 8,84. La accuracy de entrenamiento queda en 0,8663 y la de prueba en 0,7741. La brecha queda en 0,0922. El bosque memoriza el entrenamiento (accuracy 1) y su brecha es 0,1813, más ancha que la del árbol, con una accuracy de prueba más alta. La Tabla~\ref{tab:poda} y la Figura~\ref{fig:brecha} usan las mismas 25 particiones. En un solo corte de la misma semilla, la poda pasó de 448 a 71 nodos y la accuracy de prueba de 0,7880 a 0,7989. La brecha de ese corte pasó de 0,1250 a 0,0557. El 90,2\,\% de las predicciones de prueba coincidió. Con hoja mínima de 10, ese mismo corte tuvo accuracy de prueba 0,8370.
 
 \setcounter{table}{4}
 \input{../figuras/tabla5_poda}
@@ -108,17 +132,27 @@ Sin poda el árbol acierta todo el entrenamiento (accuracy 1) y la brecha es 0,0
 \setcounter{figure}{6}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.78\textwidth]{../figuras/fig7_brecha_train_test.png}
+\includegraphics[width=0.72\textwidth]{../figuras/fig7_brecha_train_test.png}
 \caption{Accuracy de entrenamiento y de prueba. La brecha es la diferencia de las medias.}
 \label{fig:brecha}
 \end{figure}
 
-En el holdout, con la positiva \texttt{malignant}, el árbol tiene accuracy 0,9298, F1 macro 0,9246 y ROC-AUC 0,9246. El bosque tiene 0,9737, 0,9713 y 0,9929. La matriz del árbol es 68, 4, 4 y 38 (TN, FP, FN, TP). La del bosque es 72, 0, 3 y 39. En las 114 filas de prueba hay 72 benign y 42 malignant. El árbol se equivoca en 4 de 72 benign (5,6\%) y en 4 de 42 malignant (9,5\%). El bosque no marca ningún benign como malignant y deja pasar 3 de 42 malignant (7,1\%). El árbol reparte el error. El bosque lo concentra en la clase chica. Las Figuras~\ref{fig:confusion} y~\ref{fig:roc} salen de este corte. La matriz de la figura está normalizada por fila.
+La curva de aprendizaje usa fracciones del entrenamiento. Con 147 filas el árbol tiene accuracy de prueba 0,707 y el bosque 0,771. El bosque llega a 0,823 con 441 filas y cierra en 0,813 con las 736. El árbol cierra en 0,768. La Figura~\ref{fig:aprendizaje} es esa curva. En el árbol ajustado sobre las 736 filas, el atributo que más importa al bosque es \texttt{cp} (0,150), seguido de \texttt{chol} (0,132) y \texttt{exang} (0,116). El árbol usa \texttt{exang} en 35 nodos y \texttt{cp} en uno. Juntos, y sin haberlos buscado en una grilla cruzada, los valores elegidos dan en el holdout un árbol con accuracy 0,7935, F1 macro 0,7926 y ROC-AUC 0,8057, y un bosque de 10 árboles con \texttt{log2} de 0,8370, 0,8336 y 0,8923.
+
+\setcounter{figure}{7}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.72\textwidth]{../figuras/fig8_learning_curve.png}
+\caption{Accuracy de prueba según las filas de entrenamiento.}
+\label{fig:aprendizaje}
+\end{figure}
+
+En el holdout de los valores por defecto, con la positiva presencia, el árbol tiene accuracy 0,7880, F1 macro 0,7819 y ROC-AUC 0,8192. El bosque tiene 0,8641, 0,8616 y 0,9219, por encima del bosque chico del párrafo anterior. En las 184 filas de prueba hay 82 ausencia y 102 presencia. La matriz del árbol, con positiva presencia, es TN 57, FP 25, FN 14 y TP 88: se equivoca en 25 de 82 ausencia (30,5\,\%) y en 14 de 102 presencia (13,7\,\%). La del bosque es 67, 15, 10 y 92: 15 de 82 ausencia (18,3\,\%) y 10 de 102 presencia (9,8\,\%). Las Figuras~\ref{fig:confusion} y~\ref{fig:roc} salen de este corte. El mejor corte continuo de un solo atributo, en un test del 30\,\%, es \texttt{chol} \(\le 42{,}50\), con gain ratio 0,122 y accuracy 0,5978. El umbral cae entre el 0 y el resto de los colesteroles.
 
 \setcounter{figure}{8}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{../figuras/fig9_matrices_confusion.png}
+\includegraphics[width=0.92\textwidth]{../figuras/fig9_matrices_confusion.png}
 \caption{Matrices de confusión del holdout, normalizadas por fila.}
 \label{fig:confusion}
 \end{figure}
@@ -126,7 +160,7 @@ En el holdout, con la positiva \texttt{malignant}, el árbol tiene accuracy 0,92
 \setcounter{figure}{9}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=\textwidth]{../figuras/fig10_roc_por_clase.png}
+\includegraphics[width=0.92\textwidth]{../figuras/fig10_roc_por_clase.png}
 \caption{Curva ROC por clase en el holdout. El título de cada panel es el ROC-AUC macro.}
 \label{fig:roc}
 \end{figure}
@@ -135,23 +169,25 @@ En el holdout, con la positiva \texttt{malignant}, el árbol tiene accuracy 0,92
 \section{Discusión}
 \label{sec:discusion}
 
-Estos números describen un solo dataset de respaldo. No dicen qué va a pasar con el CSV de la cátedra, que puede traer categóricas, faltantes y otra proporción de clases. El manejo fraccional de faltantes y el factor \(t\) quedaron escritos y no tuvieron casos que partir en esta medición.
+El bosque gana el F1 macro, la accuracy y el ROC-AUC, y se ajusta en una fracción del tiempo. El árbol queda dos órdenes de magnitud más chico. La brecha del bosque es más ancha porque la accuracy de entrenamiento es 1 y la de prueba, aunque mejor, no cierra esa diferencia. La del árbol es más chica porque el entrenamiento tampoco llega a 1: con un solo corte por atributo y con faltantes repartidos, las hojas no quedan todas puras.
 
-Tampoco hubo barridos. Profundidad, cantidad de árboles, cantidad de atributos por corte y tamaño mínimo de hoja están en el valor por defecto. Una elección hecha sobre el entrenamiento podría mover la diferencia de F1. Hasta que eso se corra, la comparación es la de las implementaciones con sus valores por defecto.
+La poda se juzga por la media de las 25 particiones. Ahí achica el árbol y la brecha, y la accuracy de prueba baja cerca de un punto. En el holdout de la misma semilla la accuracy de prueba sube de 0,7880 a 0,7989. Las dos lecturas conviven: la decisión de podar mira el entrenamiento, y un corte solo no repite la media.
 
-La poda se juzga por la media de las 25 particiones. En un holdout de la misma semilla, el mismo árbol pasó de 53 a 31 nodos y la accuracy de prueba bajó de 0,9298 a 0,9211. La decisión de podar mira el entrenamiento. Un corte solo no garantiza que el holdout suba, aunque la media de las 25 particiones sí suba de 0,9269 a 0,9304.
+Tres grillas siguen subiendo en el extremo más complejo. Publicar profundidad 2, gain ratio 0,1 o 10 árboles como «el» óptimo sería más de lo que la regla dice. La regla pide el más chico dentro de la banda, y el informe deja constancia de que la banda llega hasta el final. Además esos cinco valores se eligieron de a uno. El holdout de la combinación no mejora al bosque por defecto.
 
-El tiempo de ajuste no se lee como una propiedad del algoritmo en abstracto. El árbol está escrito en Python y recorre candidatos en el intérprete. El bosque llama a una implementación compilada. Los 26 segundos frente a 0,19 segundos son el costo medido en esta corrida.
+\texttt{ca} y \texttt{thal} faltan en más de la mitad de las filas, sobre todo fuera de Cleveland. El árbol reparte esa masa. El bosque imputa la moda, que sale de las filas donde el valor sí está. Los dos modelos reciben las mismas columnas y no resuelven el faltante del mismo modo. El colesterol 0, dejado a propósito, alcanza para ser el mejor corte de un solo atributo. Ese corte no se lee como un umbral clínico.
+
+El tiempo de ajuste no se lee como una propiedad del algoritmo en abstracto. El árbol está escrito en Python. El bosque llama a una implementación compilada. Los 50,6 segundos frente a 0,48 segundos son el costo medido en esta corrida, con 4 procesos.
 
 \FloatBarrier
 \section{Conclusiones}
 \label{sec:conclusiones}
 
-En Breast Cancer Wisconsin, con semilla 42 y sin buscar hiperparámetros, el bosque de scikit-learn supera al árbol del equipo en F1 macro, en accuracy y en ROC-AUC, y se ajusta en una fracción del tiempo. El árbol queda dos órdenes de magnitud más chico.
+En Heart Disease, con las cuatro sedes, clase binaria, semilla 42 y los valores por defecto, el bosque de scikit-learn supera al árbol del equipo en F1 macro, en accuracy y en ROC-AUC, y se ajusta mucho más rápido. El árbol queda en 452 nodos de altura 13. El bosque, en unos 28\,900.
 
-La poda pesimista con \(\mathit{CF} = 0{,}25\) reduce nodos, hojas, altura y la brecha entre entrenamiento y prueba, y sube un poco la accuracy media de prueba. Eso es un resultado de 25 particiones. En un holdout, la accuracy de prueba puede bajar.
+La poda pesimista con \(\mathit{CF} = 0{,}25\) reduce nodos, hojas, altura y la brecha. En las 25 particiones la accuracy media de prueba baja. En el holdout de la semilla 42, sube.
 
-El árbol implementa gain ratio, umbrales continuos, faltantes fraccionarios y la estimación AddErrs. Sigue en deuda con un C4.5 completo en tres puntos ya dichos: un solo corte por atributo continuo, poda sin \emph{subtree raising} y un factor \(t\) propio. Cerrar la comparación pide el dataset de la cátedra y los barridos que todavía no se corrieron.
+El árbol implementa gain ratio, umbrales continuos, faltantes fraccionarios y la estimación AddErrs. Sigue en deuda con un C4.5 completo en tres puntos: un solo corte por atributo, poda sin \emph{subtree raising} y un factor \(t\) propio. Los barridos se corrieron sobre el entrenamiento. Donde la accuracy sigue subiendo hasta el modelo más grande, el valor elegido por la regla del más chico dentro de un desvío no queda como un óptimo cerrado.
 
 \bibliographystyle{splncs04}
 \bibliography{referencias}

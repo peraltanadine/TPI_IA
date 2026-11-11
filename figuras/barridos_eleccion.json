@@ -1,0 +1,43 @@
+{
+  "elecciones": {
+    "e2": {
+      "etiqueta": "2",
+      "accuracy_test": 0.7285603971318259,
+      "accuracy_desvio": 0.03438004775724055,
+      "sube_sin_freno": true
+    },
+    "e3": {
+      "etiqueta": "50",
+      "accuracy_test": 0.7652601581173009,
+      "accuracy_desvio": 0.03209424968196976,
+      "sube_sin_freno": false
+    },
+    "e4": {
+      "etiqueta": "0.1",
+      "accuracy_test": 0.7432322118036404,
+      "accuracy_desvio": 0.02927833303855306,
+      "sube_sin_freno": true
+    },
+    "e6": {
+      "etiqueta": "10",
+      "accuracy_test": 0.7859054973340688,
+      "accuracy_desvio": 0.03469379940101322,
+      "sube_sin_freno": true
+    },
+    "e7": {
+      "etiqueta": "log2",
+      "accuracy_test": 0.8092811178525463,
+      "accuracy_desvio": 0.03535613451217653,
+      "sube_sin_freno": false
+    }
+  },
+  "dt": {
+    "max_depth": 2,
+    "min_samples_leaf": 50,
+    "min_gain_ratio": 0.1
+  },
+  "rf": {
+    "n_estimators": 10,
+    "max_features": "log2"
+  }
+}

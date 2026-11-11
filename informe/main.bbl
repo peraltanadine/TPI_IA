@@ -6,6 +6,16 @@
 \bibitem{breiman2001}
 Breiman, L.: Random forests. Machine Learning  \textbf{45}(1),  5--32 (2001)
 
+\bibitem{detrano1989}
+Detrano, R., Janosi, A., Steinbrunn, W., Pfisterer, M., Schmid, J., Sandhu, S.,
+  Guppy, K., Lee, S., Froelicher, V.: International application of a new
+  probability algorithm for the diagnosis of coronary artery disease. American
+  Journal of Cardiology  \textbf{64},  304--310 (1989)
+
+\bibitem{heartdisease}
+Janosi, A., Steinbrunn, W., Pfisterer, M., Detrano, R.: Heart disease. UCI
+  Machine Learning Repository (1988), donante: David W. Aha
+
 \bibitem{liu2011}
 Liu, B.: Web Data Mining: Exploring Hyperlinks, Contents, and Usage Data.
   Springer, 2 edn. (2011)
@@ -20,9 +30,5 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel,
 \bibitem{quinlan1993}
 Quinlan, J.R.: {C4.5}: Programs for Machine Learning. Morgan Kaufmann, San
   Mateo, CA (1993)
-
-\bibitem{breastcancer}
-Wolberg, W.H., Street, W.N., Mangasarian, O.L.: Breast cancer {W}isconsin
-  (diagnostic). UCI Machine Learning Repository (1995)
 
 \end{thebibliography}

@@ -1,24 +1,24 @@
 \begin{table}
-\caption{DT vs RF: media y desvío en test, tiempos (s) y tamaño.}
+\caption{DT y RF: media y desvío en las 25 particiones.}
 \label{tab:dt-vs-rf}
-\resizebox{\linewidth}{!}{%
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lrrrr}
 \toprule
-metrica & DecisionTreeC45 media & DecisionTreeC45 desvio & RandomForestWrap media & RandomForestWrap desvio \\
+métrica & DT media & DT desvío & RF media & RF desvío \\
 \midrule
-accuracy & 0.9269 & 0.0219 & 0.9564 & 0.0232 \\
-precision\_macro & 0.9212 & 0.0222 & 0.9573 & 0.0232 \\
-precision\_weighted & 0.9285 & 0.0218 & 0.9581 & 0.0220 \\
-recall\_macro & 0.9246 & 0.0256 & 0.9511 & 0.0277 \\
-recall\_weighted & 0.9269 & 0.0219 & 0.9564 & 0.0232 \\
-f1\_macro & 0.9221 & 0.0236 & 0.9530 & 0.0251 \\
-f1\_weighted & 0.9270 & 0.0220 & 0.9562 & 0.0234 \\
-roc\_auc & 0.9246 & 0.0256 & 0.9893 & 0.0092 \\
-tiempo\_fit & 26.0373 & 4.7815 & 0.1912 & 0.0430 \\
-tiempo\_predict & 0.0254 & 0.0108 & 0.0386 & 0.0252 \\
-nodos & 47.6400 & 5.9643 & 3512.9600 & 169.9550 \\
-hojas & 24.3200 & 2.9822 & 1806.4800 & 84.9775 \\
-altura & 13.2000 & 1.9365 & 10.2000 & 0.9574 \\
+accuracy & 0.7850 & 0.0265 & 0.8187 & 0.0305 \\
+precision macro & 0.7848 & 0.0275 & 0.8185 & 0.0317 \\
+precision weighted & 0.7856 & 0.0269 & 0.8192 & 0.0307 \\
+recall macro & 0.7796 & 0.0270 & 0.8145 & 0.0303 \\
+recall weighted & 0.7850 & 0.0265 & 0.8187 & 0.0305 \\
+F1 macro & 0.7809 & 0.0271 & 0.8157 & 0.0308 \\
+F1 weighted & 0.7840 & 0.0266 & 0.8182 & 0.0304 \\
+ROC-AUC & 0.8195 & 0.0295 & 0.8839 & 0.0254 \\
+tiempo de ajuste (s) & 50.5863 & 9.7970 & 0.4842 & 0.0406 \\
+tiempo de predicción (s) & 0.1510 & 0.0324 & 0.1355 & 0.0228 \\
+nodos & 452.0000 & 36.4406 & 28876.4800 & 664.6569 \\
+hojas & 247.3600 & 18.6299 & 14488.2400 & 332.3284 \\
+altura & 13.0000 & 0.0000 & 23.0400 & 1.3064 \\
 \bottomrule
 \end{tabular}}
 \end{table}
