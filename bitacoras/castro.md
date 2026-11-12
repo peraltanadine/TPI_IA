@@ -11,6 +11,42 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-12 — Gradio y Graphviz en el setup
+
+### Qué se hizo
+
+El notebook pasa a **Versión 14**. La celda de setup instala `gradio` y `graphviz`. En Colab también corre `apt-get install -y graphviz`, que es el programa `dot`. En Windows ese comando no existe y se saltea.
+
+### Qué se probó
+
+La celda de setup, en local, con Python 3.12. `apt-get` no está, así que no se llamó.
+
+### Resultado
+
+Imprimió `gradio 6.31.0` y `graphviz 0.21  dot=sí`. El setup terminó con `✓ Setup listo`.
+
+### Conclusión
+
+En Colab hay que volver a correr el setup. Ahí sí corre `apt-get install -y graphviz`.
+
+## 2026-11-11 — El panel pasa a Gradio y dibuja el árbol
+
+### Qué se hizo
+
+El notebook pasa a **Versión 13**. La pantalla de las tarjetas 45–49 deja ipywidgets y pasa a Gradio. **Ver árbol** entrena una sola vez y dibuja el C4.5 con Graphviz: entero si tiene menos de 30 nodos, y si no los primeros 3 niveles más el tamaño total. Una fila marca el camino que recorrió. **Comparar** sigue con el tope de 10 particiones y no toca el cv del informe.
+
+### Qué se probó
+
+Play Tennis (`weather.csv`): 8 nodos, el dibujo es el árbol entero, y la fila 0 (outlook sunny, temperature hot) llega a la hoja `no`, igual que `predict`. Un árbol de prueba de 63 nodos se corta en 3 niveles. Heart Disease, un solo ajuste sobre las 736 filas de entrenamiento: 448 nodos, así que el dibujo muestra 3 niveles. La fila 0 (age 63) sigue la rama `> 30.50` y predice ausencia, que es la clase real. No se volvieron a correr las 25 particiones.
+
+### Resultado
+
+El menú local lista `dataset.csv`, Iris y Play Tennis. El camino queda marcado en el dibujo. Si Graphviz no está, el dibujo cae a matplotlib y la celda no corta el notebook.
+
+### Conclusión
+
+En Colab, para el dibujo de Graphviz: `pip install gradio graphviz` y `apt-get install -y graphviz`. Si `data/` no está en esa sesión, el menú sigue mostrando solo Breast Cancer.
+
 ## 2026-11-11 — Una sola pasada en la celda de métricas
 
 ### Qué se hizo
