@@ -11,6 +11,24 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-12 — Tres conjuntos en el paper
+
+### Qué se hizo
+
+El informe gana la sección «Discretos, continuos y mixtos». Play Tennis e Iris se leen con el mismo árbol y la semilla 42, aparte de las tablas de Heart Disease. El notebook pasa a **Versión 15** con esa celda. La figura nueva es `figuras/fig11_play_tennis.png`.
+
+### Qué se probó
+
+Play Tennis, las 14 filas, y dejar una fila afuera. Iris, ajuste completo y 25 particiones del árbol y del bosque. En Heart Disease, solo el holdout que ya estaba publicado: 448 nodos y accuracy 0,7880. No se rehicieron las 25 particiones.
+
+### Resultado
+
+Play Tennis: 8 nodos, altura 2, accuracy de ajuste 1, y 12 de 14 al dejar una fila afuera. El primer corte es `outlook`; `temperature` no se usa. Iris: 13 nodos, altura 4, accuracy de ajuste 0,9733. F1 macro 0,9518 ± 0,0349 el árbol y 0,9532 ± 0,0334 el bosque. El primer corte del holdout de corazón es `age` ≤ 30,50. El PDF queda en 12 páginas.
+
+### Conclusión
+
+Esos dos conjuntos muestran el corte. No reemplazan el F1 de Heart Disease.
+
 ## 2026-11-12 — Gradio y Graphviz en el setup
 
 ### Qué se hizo

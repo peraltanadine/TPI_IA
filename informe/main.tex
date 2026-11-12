@@ -22,7 +22,7 @@ Mauricio Nicolás Castro\inst{1}}
 \maketitle
 
 \begin{abstract}
-Se compara un árbol de decisión escrito por el equipo con un bosque aleatorio de scikit-learn sobre Heart Disease \cite{heartdisease}: las cuatro sedes juntas, 920 filas, clase binaria ausencia/presencia y 1759 faltantes sin imputar en el cuadro. La métrica que decide es el F1 macro. En 25 particiones estratificadas el bosque llega a \(0{,}8157 \pm 0{,}0308\) y el árbol a \(0{,}7809 \pm 0{,}0271\). La poda pesimista, con factor de confianza 0,25, baja el árbol de 452 a 71,2 nodos y la brecha de accuracy de 0,1435 a 0,0922; la accuracy media de prueba baja de 0,7850 a 0,7741. Los barridos se hicieron solo sobre el entrenamiento. El árbol no es un C4.5 completo: un atributo se corta una sola vez, la poda solo reemplaza un subárbol por una hoja y el factor \(t\) es propio del equipo.
+Se compara un árbol de decisión escrito por el equipo con un bosque aleatorio de scikit-learn sobre Heart Disease \cite{heartdisease}: las cuatro sedes juntas, 920 filas, clase binaria ausencia/presencia y 1759 faltantes sin imputar en el cuadro. La métrica que decide es el F1 macro. En 25 particiones estratificadas el bosque llega a \(0{,}8157 \pm 0{,}0308\) y el árbol a \(0{,}7809 \pm 0{,}0271\). La poda pesimista, con factor de confianza 0,25, baja el árbol de 452 a 71,2 nodos y la brecha de accuracy de 0,1435 a 0,0922; la accuracy media de prueba baja de 0,7850 a 0,7741. Los barridos se hicieron solo sobre el entrenamiento. El mismo árbol, fuera de esa comparación, separa las 14 filas de Play Tennis y en Iris queda en altura 4. El árbol no es un C4.5 completo: un atributo se corta una sola vez, la poda solo reemplaza un subárbol por una hoja y el factor \(t\) es propio del equipo.
 \keywords{árbol de decisión \and C4.5 \and random forest \and gain ratio \and poda pesimista}
 \end{abstract}
 
@@ -31,9 +31,9 @@ Se compara un árbol de decisión escrito por el equipo con un bosque aleatorio 
 
 El trabajo pide comparar dos clasificadores sobre el mismo protocolo. El árbol de decisión lo escribe el equipo. Para el bosque, el enunciado habilita un modelo de biblioteca: ``para el algoritmo RF se podrá utilizar un modelo de la libraría Scikit-learn''. Se conserva la grafía \emph{libraría} porque así figura en la consigna.
 
-La pregunta es concreta: con los mismos datos y la misma semilla, cuál modelo clasifica mejor, de qué tamaño queda y cuánto tarda en ajustarse. Los datos son las cuatro sedes de Heart Disease \cite{heartdisease}. Los investigadores que reunieron cada sede son Andras Janosi (Instituto Húngaro de Cardiología, Budapest), William Steinbrunn (Hospital Universitario de Zúrich), Matthias Pfisterer (Hospital Universitario de Basilea) y Robert Detrano (Centro Médico de Long Beach y Cleveland Clinic). El donante del archivo es David W. Aha (julio de 1988). Detrano y sus coautores publicaron, sobre sedes separadas, una discriminación logística de alrededor del 77\,\% \cite{detrano1989}. Ese número es de ellos. Los de este informe salen de la corrida del 11 de noviembre de 2026.
+La pregunta es concreta: con los mismos datos y la misma semilla, cuál modelo clasifica mejor, de qué tamaño queda y cuánto tarda en ajustarse. Los datos de esa comparación son las cuatro sedes de Heart Disease \cite{heartdisease}. Play Tennis e Iris se leen aparte, para ver el corte cuando todas las columnas son categorías y cuando todas son continuas. No entran en las tablas de Heart Disease. Los investigadores que reunieron cada sede son Andras Janosi (Instituto Húngaro de Cardiología, Budapest), William Steinbrunn (Hospital Universitario de Zúrich), Matthias Pfisterer (Hospital Universitario de Basilea) y Robert Detrano (Centro Médico de Long Beach y Cleveland Clinic). El donante del archivo es David W. Aha (julio de 1988). Detrano y sus coautores publicaron, sobre sedes separadas, una discriminación logística de alrededor del 77\,\% \cite{detrano1989}. Ese número es de ellos. Los de este informe salen de la corrida del 11 de noviembre de 2026.
 
-La numeración de figuras y tablas es la del notebook. Entran la Tabla~\ref{tab:dt-vs-rf}, la Tabla~\ref{tab:poda} y las Figuras~\ref{fig:barras}, \ref{fig:profundidad}, \ref{fig:brecha}, \ref{fig:aprendizaje}, \ref{fig:confusion} y~\ref{fig:roc}.
+La numeración de figuras y tablas de Heart Disease es la del notebook. Entran la Tabla~\ref{tab:dt-vs-rf}, la Tabla~\ref{tab:poda} y las Figuras~\ref{fig:barras}, \ref{fig:profundidad}, \ref{fig:brecha}, \ref{fig:aprendizaje}, \ref{fig:confusion} y~\ref{fig:roc}. La Tabla~\ref{tab:tipos} y la Figura~\ref{fig:tenis} son la lectura aparte del 12 de noviembre.
 
 \section{Algoritmos}
 \label{sec:algoritmos}
@@ -166,6 +166,43 @@ En el holdout de los valores por defecto, con la positiva presencia, el árbol t
 \end{figure}
 
 \FloatBarrier
+\section{Discretos, continuos y mixtos}
+\label{sec:tipos}
+
+El código no elige el corte por el nombre de la columna. Mira el valor: el texto y el bool son categorías, un entero con hasta 10 valores distintos es un código, y el resto numérico es continuo. Para ver cada caso con el árbol por defecto y la semilla 42, el 12 de noviembre se ajustó ese árbol sobre Play Tennis y sobre Iris. Esos dos archivos no rehacen la Tabla~\ref{tab:dt-vs-rf}. Play Tennis tiene 14 filas: un cruce de 25 particiones no se compara con el de las 920. Ahí se deja una fila afuera cada vez.
+
+Play Tennis trae cuatro categorías y ningún faltante: \texttt{outlook}, \texttt{temperature}, \texttt{humidity} y \texttt{windy}. La clase \texttt{play} tiene 9~\texttt{yes} y 5~\texttt{no}. El ajuste sobre las 14 filas queda en 8 nodos y altura 2, y acierta las 14. El primer corte es \texttt{outlook}. Si el valor es \texttt{overcast}, la hoja es \texttt{yes}. Si es \texttt{rainy}, el árbol parte por \texttt{windy}: \texttt{false} va a \texttt{yes} y \texttt{true} va a \texttt{no}. Si es \texttt{sunny}, parte por \texttt{humidity}: \texttt{high} va a \texttt{no} y \texttt{normal} va a \texttt{yes}. \texttt{temperature} no entra: con las otras tres columnas las 14 filas ya quedan separadas. Cada categoría abre su rama y la columna no se vuelve a usar. Al dejar una fila afuera, el árbol acierta 12 de 14. La Figura~\ref{fig:tenis} es ese ajuste.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.72\textwidth]{../figuras/fig11_play_tennis.png}
+\caption{Árbol por defecto sobre las 14 filas de Play Tennis. Las ramas son los valores de la categoría.}
+\label{fig:tenis}
+\end{figure}
+
+Iris trae cuatro continuos y ningún faltante: \texttt{sepal\_length}, \texttt{sepal\_width}, \texttt{petal\_length} y \texttt{petal\_width}. Hay 50 filas de cada especie. El ajuste sobre las 150 filas usa las cuatro columnas, una vez cada una, y queda en 13 nodos, 7 hojas y altura 4. El primer corte es \texttt{petal\_length} \(\le 2{,}45\): esa rama es una hoja \texttt{setosa}. El siguiente es \texttt{petal\_width} \(\le 1{,}75\). La accuracy de ese ajuste es 0,9733, no 1. Un continuo no se vuelve a cortar, y con un solo umbral por columna quedan 4 de las 150 filas del lado de otra clase. En las mismas 25 particiones del protocolo, el F1 macro es \(0{,}9518 \pm 0{,}0349\) para el árbol y \(0{,}9532 \pm 0{,}0334\) para el bosque. La diferencia entra en el desvío. La accuracy de prueba es \(0{,}9520 \pm 0{,}0348\) y \(0{,}9533 \pm 0{,}0333\).
+
+Heart Disease mezcla los dos cortes y agrega faltantes. Cinco columnas son continuas y ocho son códigos. El árbol abre una rama por código y un umbral por continuo, y después saca la columna. Por eso la altura media de las 25 particiones es 13, con desvío 0. La accuracy de entrenamiento es 0,9285 y no 1: pesan el corte único y los 1759 faltantes repartidos entre las ramas. En el holdout ya citado de la semilla 42, el de 448 nodos y accuracy de prueba 0,7880, el primer corte es \texttt{age} \(\le 30{,}50\).
+
+La Tabla~\ref{tab:tipos} junta las tres lecturas. En Play Tennis y en Iris el tamaño es el de un ajuste con todas las filas. En Heart Disease los nodos, la altura, la accuracy de entrenamiento y el F1 son las medias ya publicadas.
+
+\begin{table}[ht]
+\centering
+\caption{El mismo árbol por defecto en un conjunto de cada tipo. El F1 de Iris usa las 25 particiones. El de Heart Disease es el de la Tabla~\ref{tab:dt-vs-rf}.}
+\label{tab:tipos}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrl}
+\toprule
+Conjunto & Corte & Filas & Nodos & Altura & Ajuste & Otra lectura \\
+\midrule
+Play Tennis & 4 categorías & 14 & 8 & 2 & 1,0000 & 12 de 14 \\
+Iris & 4 continuos & 150 & 13 & 4 & 0,9733 & F1 \(0{,}9518 \pm 0{,}0349\) \\
+Heart Disease & 5 continuos, 8 códigos & 920 & 452 & 13 & 0,9285 & F1 \(0{,}7809 \pm 0{,}0271\) \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\FloatBarrier
 \section{Discusión}
 \label{sec:discusion}
 
@@ -179,6 +216,8 @@ Tres grillas siguen subiendo en el extremo más complejo. Publicar profundidad 2
 
 El tiempo de ajuste no se lee como una propiedad del algoritmo en abstracto. El árbol está escrito en Python. El bosque llama a una implementación compilada. Los 50,6 segundos frente a 0,48 segundos son el costo medido en esta corrida, con 4 procesos.
 
+En columnas solo categóricas y sin faltantes, el árbol puede separar el ajuste: en Play Tennis la accuracy es 1 y la altura es 2. En continuos la altura no pasa de la cantidad de columnas, y en Iris el ajuste deja 4 filas mal. En el mixto se suman las dos restricciones y el reparto de faltantes: altura 13 y accuracy de entrenamiento 0,9285. En Iris el F1 del bosque y el del árbol quedan dentro del desvío. La ventaja del bosque que muestran las tablas es la de Heart Disease.
+
 \FloatBarrier
 \section{Conclusiones}
 \label{sec:conclusiones}
@@ -187,7 +226,7 @@ En Heart Disease, con las cuatro sedes, clase binaria, semilla 42 y los valores 
 
 La poda pesimista con \(\mathit{CF} = 0{,}25\) reduce nodos, hojas, altura y la brecha. En las 25 particiones la accuracy media de prueba baja. En el holdout de la semilla 42, sube.
 
-El árbol implementa gain ratio, umbrales continuos, faltantes fraccionarios y la estimación AddErrs. Sigue en deuda con un C4.5 completo en tres puntos: un solo corte por atributo, poda sin \emph{subtree raising} y un factor \(t\) propio. Los barridos se corrieron sobre el entrenamiento. Donde la accuracy sigue subiendo hasta el modelo más grande, el valor elegido por la regla del más chico dentro de un desvío no queda como un óptimo cerrado.
+El árbol implementa gain ratio, umbrales continuos, faltantes fraccionarios y la estimación AddErrs. Sigue en deuda con un C4.5 completo en tres puntos: un solo corte por atributo, poda sin \emph{subtree raising} y un factor \(t\) propio. Los barridos se corrieron sobre el entrenamiento. Donde la accuracy sigue subiendo hasta el modelo más grande, el valor elegido por la regla del más chico dentro de un desvío no queda como un óptimo cerrado. Con el mismo código, un conjunto de categorías se separa en el ajuste, uno de continuos queda con altura igual a la cantidad de columnas, y el mixto muestra las dos cosas junto con los faltantes.
 
 \bibliographystyle{splncs04}
 \bibliography{referencias}
