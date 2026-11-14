@@ -11,6 +11,42 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-14 — El paper cuenta el proceso
+
+### Qué se hizo
+
+Se reescribió `informe/main.tex`. El texto cuenta las decisiones, la medición y el impacto. En el relato quedan el F1 macro, la altura 13, el achique de la poda y el doble resultado de su accuracy. El resto de las cifras pasó a las tablas. Se agregaron la tabla de las grillas y la del holdout. No se reentrenó nada y no se tocaron las figuras.
+
+### Qué se probó
+
+Dos pasadas de `pdflatex`. Se miró que no quedaran referencias sin resolver ni líneas desbordadas, y que el PDF siguiera en 12 páginas.
+
+### Resultado
+
+`informe/main.pdf` queda en 12 páginas. La Tabla 2 y la Tabla 5 siguen siendo las del notebook. La Tabla 3 es la de las grillas, la 4 es el holdout y la 6 es la de los tres tipos de datos.
+
+### Conclusión
+
+El informe se puede leer como un relato. Los números de la corrida del 11 de noviembre siguen siendo los de las tablas.
+
+## 2026-11-14 — El panel queda antes de las métricas
+
+### Qué se hizo
+
+El notebook pasa a **Versión 16**. El panel de Gradio y la función `metricas()` quedan después del bosque y antes de la celda de las 25 particiones. Esa celda, la Tabla 5, la Fig. 7 y los barridos siguen abajo.
+
+### Qué se probó
+
+Se releyó el orden de las celdas y se parseó el código movido. No se volvió a entrenar ni se abrió el panel en Colab.
+
+### Resultado
+
+`metricas()` quedó en una sola celda, arriba del panel. El panel sigue pidiendo el árbol, el bosque, `metricas()` y la semilla antes de armar la pantalla.
+
+### Conclusión
+
+Se puede correr hasta el panel y usarlo sin esperar las 25 particiones. Un Run all sigue de largo y el kernel queda ocupado: el panel no responde hasta que esas celdas terminan. Falta abrirlo en Colab.
+
 ## 2026-11-12 — Tres conjuntos en el paper
 
 ### Qué se hizo

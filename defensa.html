@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TPI IA 2026 — Para defender el proyecto · Equipo Buy(Milk)</title>
+<style>
+  :root {
+    --ink: #1c1917;
+    --muted: #57534e;
+    --line: #e7e0d6;
+    --paper: #f7f4ef;
+    --card: #fffdf9;
+    --red: #8f2d2d;
+    --redbg: #f8ece8;
+    --green: #1f4d3a;
+    --greenbg: #e7f2ec;
+    --amber: #8a5a12;
+    --amberbg: #f8f1e2;
+    --blue: #1e3a5f;
+    --bluebg: #e8eef6;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font: 17.5px/1.6 Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  }
+  header.top { background: #1c1917; color: #f7f4ef; padding: 2.4rem 1.4rem 1.8rem; }
+  header.top .wrap, main, nav.toc .wrap { max-width: 980px; margin: 0 auto; }
+  header.top p.kicker {
+    letter-spacing: .14em; text-transform: uppercase;
+    font: 12px/1.4 "Segoe UI", sans-serif; color: #d6d3d1; margin: 0 0 .6rem;
+  }
+  header.top h1 { font-weight: 500; font-size: 2.15rem; line-height: 1.15; margin: 0 0 .7rem; }
+  header.top .meta { font: 14px/1.45 "Segoe UI", sans-serif; color: #d6d3d1; margin: 0; }
+  nav.toc {
+    background: #fffdf9; border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 2;
+  }
+  nav.toc .wrap {
+    display: flex; flex-wrap: wrap; gap: .35rem .9rem;
+    padding: .7rem 1.2rem; font: 13px/1.4 "Segoe UI", sans-serif;
+  }
+  nav.toc a { color: var(--blue); text-decoration: none; }
+  nav.toc a:hover { text-decoration: underline; }
+  main { padding: 1.6rem 1.2rem 4rem; }
+  section { margin: 0 0 2.6rem; }
+  h2 {
+    font-weight: 500; font-size: 1.55rem; margin: 0 0 .8rem;
+    padding-top: .4rem; border-top: 1px solid var(--line);
+  }
+  h3 { font-weight: 500; font-size: 1.18rem; margin: 1.4rem 0 .4rem; }
+  p { margin: .45rem 0 .75rem; }
+  .lead { font-size: 1.08rem; }
+  ul, ol { margin: .3rem 0 .9rem; padding-left: 1.25rem; }
+  li { margin: .28rem 0; }
+  table {
+    width: 100%; border-collapse: collapse; background: var(--card);
+    font: 14.5px/1.4 "Segoe UI", sans-serif; margin: .6rem 0 1rem;
+  }
+  th, td { border: 1px solid var(--line); padding: .45rem .55rem; text-align: left; vertical-align: top; }
+  th { background: #efeae2; font-weight: 650; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .call {
+    border-left: 4px solid var(--amber); background: var(--amberbg);
+    padding: .75rem .95rem; margin: .9rem 0 1rem;
+  }
+  .call.ok { border-left-color: var(--green); background: var(--greenbg); }
+  .call.bad { border-left-color: var(--red); background: var(--redbg); }
+  .call.info { border-left-color: var(--blue); background: var(--bluebg); }
+  figure { margin: .8rem 0 1.1rem; background: var(--card); border: 1px solid var(--line); padding: .6rem; }
+  figure img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  figcaption { font: 13px/1.4 "Segoe UI", sans-serif; color: var(--muted); margin-top: .45rem; }
+  code, .mono { font: 13.5px/1.45 Consolas, "Cascadia Mono", monospace; }
+  .q { background: var(--card); border: 1px solid var(--line); padding: .15rem .9rem .2rem; margin: .8rem 0; }
+  .q h3 { margin-top: .7rem; }
+  footer {
+    max-width: 980px; margin: 0 auto; padding: 0 1.2rem 2.5rem;
+    color: var(--muted); font: 13px/1.45 "Segoe UI", sans-serif;
+  }
+  @media print {
+    nav.toc { position: static; }
+    header.top { background: white; color: black; }
+    header.top .meta, header.top p.kicker { color: #333; }
+    body { background: white; }
+    a { color: black; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="kicker">Inteligencia Artificial · 5º ISI · UTN FRRe · 2026 · Equipo Buy(Milk)</p>
+    <h1>Para defender el proyecto,<br>desde cero</h1>
+    <p class="meta">Celeste Martin Rodich, Matías Emmanuel Machado Benítez, Camila Aylen Zeniquel Martinelli, Nadine Andrea Peralta Ruiz, Mauricio Nicolás Castro. Una sola institución: UTN, Facultad Regional Resistencia.</p>
+    <p class="meta">14 de noviembre de 2026. Notebook en Versión 16. El informe de entrega es <span class="mono">informe/main.pdf</span>, 12 carillas. Este archivo es la guía para leer, fundamentar y contar el trabajo.</p>
+  </div>
+</header>
+<nav class="toc">
+  <div class="wrap">
+    <a href="#como">Cómo leerlo</a>
+    <a href="#pedido">Qué pidieron</a>
+    <a href="#clasificar">Clasificar</a>
+    <a href="#datos">Los datos</a>
+    <a href="#arbol">El árbol</a>
+    <a href="#entropia">Entropía</a>
+    <a href="#continuos">Continuos</a>
+    <a href="#faltantes">Faltantes</a>
+    <a href="#poda">Poda</a>
+    <a href="#deuda">Qué debemos</a>
+    <a href="#bosque">El bosque</a>
+    <a href="#medir">Cómo se midió</a>
+    <a href="#colab">El Colab</a>
+    <a href="#panel">El panel</a>
+    <a href="#numeros">Los números</a>
+    <a href="#tipos">Tres tipos de datos</a>
+    <a href="#problemas">Problemas</a>
+    <a href="#decir">Qué decir</a>
+    <a href="#preguntas">Preguntas</a>
+    <a href="#cuidado">Cuidado</a>
+    <a href="#falta">Qué falta</a>
+  </div>
+</nav>
+<main>
+
+<section id="como">
+  <h2>Cómo leer este texto</h2>
+  <p class="lead">Está escrito para alguien que nunca vio un árbol de decisión. Se puede leer de arriba abajo. Cada número es el de la corrida que está en el PDF. Si un número no aparece acá, en el coloquio no se inventa.</p>
+  <p>Hay dos documentos distintos. <span class="mono">informe/main.pdf</span> es el que se entrega: 12 carillas, formato LNCS, en español. Este HTML es la explicación larga para el equipo. El estado del repo, con lo que falta subir y lo del Trello, sigue en <span class="mono">informe_avance.html</span>.</p>
+  <p>Los números de Heart Disease salieron el 11 de noviembre de 2026, en una corrida local del notebook, semilla 42. Play Tennis e Iris se midieron el 12 de noviembre, con el mismo árbol y la misma semilla, y no reemplazan esas tablas. El notebook de hoy es la Versión 16: el panel quedó antes de las métricas largas. Esa mudanza no reentrenó nada.</p>
+  <div class="call info">
+    Breast Cancer Wisconsin aparece en la historia del proyecto, como respaldo de cuando todavía no estaba el CSV del corazón. Sus números (accuracy cerca de 0,93, 569 filas) no son esta corrida. Si preguntan por el resultado, la respuesta es Heart Disease.
+  </div>
+</section>
+
+<section id="pedido">
+  <h2>Qué nos pidieron</h2>
+  <p>El trabajo pide comparar dos clasificadores sobre el mismo protocolo. El árbol de decisión lo escribe el equipo, al estilo C4.5 de Quinlan. Para el bosque aleatorio, la consigna habilita un modelo de biblioteca. La frase del enunciado dice «para el algoritmo RF se podrá utilizar un modelo de la libraría Scikit-learn». En el PDF se conserva la grafía <em>libraría</em>, porque así está escrito.</p>
+  <p>La pregunta del trabajo es concreta. Con los mismos datos y la misma semilla: cuál clasifica mejor, de qué tamaño queda y cuánto tarda en ajustarse. La métrica que decide la comparación es el F1 macro. Accuracy, precisión, recall, ROC-AUC, tiempo y tamaño se publican en la misma tabla y no eligen al ganador.</p>
+  <p>El árbol no se presenta como un C4.5 completo. El resumen del PDF lo dice en la primera página: un atributo se corta una sola vez, la poda solo reemplaza un subárbol por una hoja, y el factor <em>t</em> es propio del equipo. En el coloquio conviene decirlo nosotros, antes de que lo pregunten.</p>
+</section>
+
+<section id="clasificar">
+  <h2>Clasificar, sin jerga</h2>
+  <p>Tenemos filas. Cada fila es un caso. En Heart Disease, un caso es un paciente. Cada columna, menos una, es un dato de ese paciente: la edad, el colesterol, el tipo de dolor. La columna que queda es la clase: ausencia o presencia de enfermedad. El programa mira casos cuya clase ya se conoce y aprende una regla. Después, ante un caso nuevo, propone una clase.</p>
+  <p>Eso se llama clasificación supervisada. Supervisada quiere decir que durante el aprendizaje la clase correcta está a la vista. No se le pide al programa que descubra solo cuántos grupos hay.</p>
+  <p>Hay que separar dos momentos. Ajustar, o entrenar, es mirar los casos conocidos y construir la regla. Predecir es aplicar esa regla a casos que el ajuste no usó para decidir los cortes. Si se mide el acierto sobre los mismos casos que se usaron para armar la regla, el número sale alto y no dice cómo le va a ir a un paciente nuevo. Por eso el protocolo guarda filas afuera.</p>
+  <p>Una línea base es la regla tonta con la que hay que compararse. En estos datos la clase mayoritaria es presencia: 509 de 920, el 55,3 %. Si alguien respondiera siempre «presencia», acertaría el 55,3 % y no habría mirado ningún atributo. El árbol y el bosque tienen que quedar claramente por encima de eso. Quedan: la accuracy de prueba del árbol es 0,7850 y la del bosque 0,8187.</p>
+</section>
+
+<section id="datos">
+  <h2>De dónde salen los datos</h2>
+  <p>El archivo es Heart Disease, del repositorio de la UCI, donado por David W. Aha en julio de 1988. Hay cuatro sedes, reunidas por cuatro investigadores. El archivo de nombres pide que cualquier publicación los nombre, y el PDF lo hace:</p>
+  <ul>
+    <li>Andras Janosi, Instituto Húngaro de Cardiología, Budapest.</li>
+    <li>William Steinbrunn, Hospital Universitario de Zúrich.</li>
+    <li>Matthias Pfisterer, Hospital Universitario de Basilea.</li>
+    <li>Robert Detrano, Centro Médico de Long Beach y Cleveland Clinic.</li>
+  </ul>
+  <p>Cada sede tenía 76 atributos crudos. Los experimentos publicados usan 14: 13 datos y la clase. El notebook no baja un CSV de Kaggle en el momento de la corrida. Lee, desde <span class="mono">data/heart+disease</span>, los cuatro archivos ya procesados: Cleveland (303 filas), Hungría (294), Suiza (123) y Long Beach (200). Sumados son 920. La celda 1.2 los junta, escribe <span class="mono">data/dataset.csv</span> y sigue. Ese armado vive dentro del notebook.</p>
+  <p>En esos archivos procesados el faltante es un signo de pregunta. El archivo de nombres, al hablar de los archivos sin procesar, dice que el faltante era −9. Nosotros leemos los procesados, así que el faltante que ve el árbol es el signo de pregunta. Conviene tener esa distinción a mano si alguien leyó el <span class="mono">.names</span>.</p>
+  <p>La clase original se llama <span class="mono">num</span> y vale 0, 1, 2, 3 o 4. El 0 es estrechamiento menor al 50 % del diámetro de un vaso. Del 1 al 4 hay enfermedad, con gravedad creciente. El propio archivo de nombres dice que los experimentos se concentraron en separar ausencia (0) de presencia (1, 2, 3 o 4). Eso es lo que hace el notebook. La columna queda con el nombre <span class="mono">target</span>. Ausencia: 411 filas, 44,7 %. Presencia: 509 filas, 55,3 %.</p>
+  <p>Detrano y sus coautores, en 1989, publicaron una discriminación logística de alrededor del 77 % sobre sedes separadas. Ese número es de ellos. Los nuestros salen de la corrida del 11 de noviembre. En la bibliografía, los coautores que en el artículo figuran solo con inicial siguen con inicial: J. Schmid, S. Sandhu, K. Guppy, S. Lee y V. Froelicher. No se les inventa el nombre de pila.</p>
+
+  <h3>Qué es cada columna</h3>
+  <p>Los nombres salen del archivo de la UCI. Ocho columnas son códigos: el número es una etiqueta, no una magnitud. Cinco son continuas: el número mide algo y el orden importa. El árbol no decide eso por el nombre. Lo decide por el valor, y más abajo se explica la regla. En este archivo el resultado de esa regla coincide con la lectura clínica.</p>
+  <table>
+    <thead><tr><th>Columna</th><th>Qué mide</th><th>Cómo entra al árbol</th></tr></thead>
+    <tbody>
+      <tr><td><span class="mono">age</span></td><td>Edad en años.</td><td>Continua. En el holdout de la semilla 42 el primer corte es edad ≤ 30,50.</td></tr>
+      <tr><td><span class="mono">sex</span></td><td>1 varón, 0 mujer.</td><td>Código. Una rama por valor.</td></tr>
+      <tr><td><span class="mono">cp</span></td><td>Tipo de dolor de pecho: 1 angina típica, 2 atípica, 3 dolor no anginoso, 4 asintomático.</td><td>Código. Es el atributo que más pesa en el bosque (0,150).</td></tr>
+      <tr><td><span class="mono">trestbps</span></td><td>Presión arterial en reposo, al ingreso, en mm Hg.</td><td>Continua. El mínimo 0 no se recodificó.</td></tr>
+      <tr><td><span class="mono">chol</span></td><td>Colesterol sérico en mg/dl.</td><td>Continua. El 0 aparece 172 veces y se deja: el archivo de nombres no lo define como faltante.</td></tr>
+      <tr><td><span class="mono">fbs</span></td><td>Glucemia en ayunas mayor que 120 mg/dl: 1 sí, 0 no.</td><td>Código.</td></tr>
+      <tr><td><span class="mono">restecg</span></td><td>Electrocardiograma en reposo: 0 normal, 1 anormalidad del ST-T, 2 hipertrofia ventricular izquierda probable o definida.</td><td>Código.</td></tr>
+      <tr><td><span class="mono">thalach</span></td><td>Frecuencia cardíaca máxima alcanzada.</td><td>Continua.</td></tr>
+      <tr><td><span class="mono">exang</span></td><td>Angina inducida por el ejercicio: 1 sí, 0 no.</td><td>Código. Es el atributo que el árbol usa en más nodos: 35.</td></tr>
+      <tr><td><span class="mono">oldpeak</span></td><td>Depresión del segmento ST inducida por el ejercicio, respecto del reposo.</td><td>Continua.</td></tr>
+      <tr><td><span class="mono">slope</span></td><td>Pendiente del ST en el pico del ejercicio: 1 ascendente, 2 plana, 3 descendente.</td><td>Código. Falta en el 33,6 % de las filas.</td></tr>
+      <tr><td><span class="mono">ca</span></td><td>Número de vasos principales (0 a 3) coloreados por fluoroscopía.</td><td>Código. Falta en el 66,4 % de las filas.</td></tr>
+      <tr><td><span class="mono">thal</span></td><td>3 normal, 6 defecto fijo, 7 defecto reversible.</td><td>Código. Falta en el 52,8 % de las filas.</td></tr>
+      <tr><td><span class="mono">target</span></td><td>Ausencia o presencia. Sale de <span class="mono">num</span>.</td><td>Es la clase. No es un atributo.</td></tr>
+    </tbody>
+  </table>
+  <p>En total hay 1759 faltantes. <span class="mono">ca</span> y <span class="mono">thal</span> faltan en más de la mitad de las filas, sobre todo fuera de Cleveland. El árbol no completa esos huecos antes de ver el cuadro. El bosque sí imputa, y eso se explica cuando se compara a los dos. El colesterol 0, dejado a propósito, alcanza para ser el mejor corte de un solo atributo: <span class="mono">chol</span> ≤ 42,50, con accuracy 0,5978 en un test del 30 %. Ese corte separa los ceros del resto. No es un umbral clínico y no se presenta como tal.</p>
+</section>
+
+<section id="arbol">
+  <h2>Qué es un árbol de decisión</h2>
+  <p>Un árbol es una serie de preguntas. Cada pregunta mira un atributo. Según la respuesta, el caso baja por una rama. Cuando llega a una hoja, la hoja dice la clase. En nuestro código, la clase de una hoja es la clase mayoritaria de los casos que cayeron ahí. Todo nodo, también los internos, guarda esa clase mayoritaria. Sirve cuando un valor no se vio en el entrenamiento: la predicción se queda en el nodo donde se cortó el camino, en vez de devolver un vacío.</p>
+  <p>La forma más clara de verlo es Play Tennis, 14 días, cuatro datos y la clase «¿se juega?». El archivo es <span class="mono">data/play+tennis+dataset/weather.csv</span>. Nueve días son <em>yes</em> y cinco son <em>no</em>. No hay faltantes. El árbol por defecto, ajustado sobre las 14 filas con semilla 42, queda así. Es el de la Figura 11 del PDF, medido el 12 de noviembre: 8 nodos, 5 hojas, altura 2, acierta las 14.</p>
+  <figure>
+    <img src="figuras/fig11_play_tennis.png" alt="Árbol de Play Tennis: outlook en la raíz, humidity y windy en el segundo nivel">
+    <figcaption>Árbol por defecto sobre las 14 filas de Play Tennis. La raíz es outlook. Temperature no entra.</figcaption>
+  </figure>
+  <p>Se lee así. Si el cielo está nublado (<em>overcast</em>), se juega. Si llueve, se mira el viento: sin viento se juega, con viento no. Si está soleado, se mira la humedad: alta no se juega, normal sí. La temperatura no se usa. Con las otras tres columnas las 14 filas ya quedan separadas, y el árbol no abre una pregunta que no necesita.</p>
+  <p>Altura 2 quiere decir que el camino más largo hace dos preguntas. Ocho nodos son la raíz, dos preguntas del segundo nivel y cinco hojas. Cada categoría abre su propia rama, y esa columna no se vuelve a preguntar más abajo.</p>
+  <p>Si se saca una fila, se ajusta con las otras trece y se predice la que quedó afuera, el árbol acierta 12 de 14. Ese número es más honesto que el 14 de 14: el ajuste completo vio todas las filas, así que acertarlas todas solo dice que las hojas quedaron puras.</p>
+</section>
+
+<section id="entropia">
+  <h2>Cómo elige la pregunta: entropía, ganancia y gain ratio</h2>
+  <p>El árbol no prueba preguntas al azar y se queda con la que «se ve bien». Mide cuánta duda sobre la clase desaparece al partir por un atributo. Esa duda es la entropía. Se mide en bits. Si todos los casos son de la misma clase, la entropía es 0: no hay nada que preguntar. Si hay dos clases y cada una tiene la mitad de los casos, la entropía es 1 bit.</p>
+  <p>La fórmula, con <em>p</em> la proporción de cada clase, es la suma de −<em>p</em> log₂ <em>p</em>, salteando las clases que no aparecen. En Play Tennis, al empezar, hay 9 <em>yes</em> y 5 <em>no</em> sobre 14. La entropía de ese conjunto es 0,9403 bits. Una clase sola da 0. Dos etiquetas distintas, una de cada una, dan 1. Por eso un test viejo que le pasaba a la entropía la lista <span class="mono">[1, 1]</span> y esperaba 1 bit estaba mal: esas dos etiquetas son la misma clase, y la entropía es 0. Para 1 bit hacen falta dos clases, <span class="mono">[0, 1]</span>. La función se dejó como está y se corrigió el test. La entropía lee etiquetas, no conteos. Si leyera conteos, un target 0/1 se interpretaría al revés.</p>
+  <p>Partir por un atributo deja varios grupos. La entropía de la partición es el promedio de las entropías de los grupos, pesado por el tamaño de cada uno. La ganancia es lo que baja esa entropía. Cuanto más baja, más informa el atributo.</p>
+  <p>Esta cuenta está hecha a mano sobre las 14 filas del CSV, para poder explicarla. No es una línea que haya impreso el notebook.</p>
+  <p>Outlook parte los 14 días en tres grupos. Soleado: 2 <em>yes</em> y 3 <em>no</em>, entropía 0,9710. Nublado: 4 <em>yes</em> y 0 <em>no</em>, entropía 0. Lluvia: 3 <em>yes</em> y 2 <em>no</em>, entropía 0,9710. El promedio pesado es 5/14 × 0,9710 + 4/14 × 0 + 5/14 × 0,9710 = 0,6935. La ganancia es 0,9403 − 0,6935 = 0,2467 bits. El cielo nublado queda puro, y eso es lo que más empuja la ganancia.</p>
+  <p>Si se mirara solo la ganancia, un atributo con muchísimos valores distintos saldría favorecido: cada valor puede aislar uno o dos casos y la entropía de esos grupos chicos cae fácil. Gain ratio corrige eso. Divide la ganancia por el <em>split info</em>, que es la entropía de la partición misma: qué tan repartidos quedaron los casos entre las ramas, sin mirar la clase. Un atributo que abre muchas ramas chicas tiene un split info grande, y el cociente baja. La cita del PDF es Liu, página 67.</p>
+  <p>En las 14 filas, las cuatro cuentas quedan así:</p>
+  <table>
+    <thead>
+      <tr><th>Atributo</th><th class="num">Ganancia</th><th class="num">Split info</th><th class="num">Gain ratio</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>outlook</td><td class="num">0,2467</td><td class="num">1,5774</td><td class="num">0,1564</td></tr>
+      <tr><td>humidity</td><td class="num">0,1518</td><td class="num">1,0000</td><td class="num">0,1518</td></tr>
+      <tr><td>windy</td><td class="num">0,0481</td><td class="num">0,9852</td><td class="num">0,0488</td></tr>
+      <tr><td>temperature</td><td class="num">0,0292</td><td class="num">1,5567</td><td class="num">0,0188</td></tr>
+    </tbody>
+  </table>
+  <p>Ganancia y gain ratio eligen el mismo primer corte: outlook. La temperatura queda última, y el árbol ajustado no la usa. En este conjunto chico el gain ratio no cambia la decisión. Su trabajo se nota cuando una categoría tiene muchos valores. En Heart Disease los códigos tienen pocos valores, el corte continuo es de dos ramas, y el PDF dice que el sesgo de un split info chico casi no aparece. Igual el criterio del árbol es gain ratio, no la ganancia pelada.</p>
+  <p>Si el split info da 0, el código devuelve gain ratio 0. No divide por cero. Si dos atributos empatan el gain ratio, el desempate lo hace el generador de la semilla, no el orden alfabético del nombre.</p>
+  <p>Después del primer corte, el algoritmo se repite dentro de cada rama, con los casos de esa rama y sin la columna ya usada. En la rama soleada la siguiente pregunta es la humedad. En la de lluvia, el viento. En la nublada ya no hay duda: los cuatro días son <em>yes</em>, la entropía es 0 y esa rama es una hoja.</p>
+</section>
+
+<section id="continuos">
+  <h2>Un número continuo no abre una rama por valor</h2>
+  <p>La edad, el colesterol o el largo de un pétalo toman muchos valores. Abrir una rama por cada uno memorizaría la tabla. C4.5 parte un continuo en dos: a la izquierda <em>valor ≤ umbral</em>, a la derecha <em>valor &gt; umbral</em>. El umbral es el punto medio entre dos valores ordenados y distintos.</p>
+  <p>El ejemplo que usa el propio notebook como control es este. Los valores son 1, 2, 3, 10, 11 y 12. Las clases son a, a, a, b, b, b. Ordenados, el único lugar donde cambia la clase es entre 3 y 10. El punto medio es (3 + 10) / 2 = 6,5. A la izquierda quedan las tres a, a la derecha las tres b. La ganancia es 1 bit: la duda desaparece por completo. Los puntos medios entre 1 y 2, o entre 10 y 11, separan casos de la misma clase y no mejoran nada.</p>
+  <p>Fayyad e Irani demostraron que el umbral de máxima ganancia de información siempre cae en una frontera de clase: entre dos ejemplos de clases distintas, sin otro ejemplo en el medio. El PDF está en <span class="mono">libros/fayyad-discretization (1).pdf</span>. El título es <em>Multi-Interval Discretization of Continuous-Valued Attributes for Classification Learning</em>, IJCAI 1993, páginas 1022 a 1027. El teorema que usamos es el de la discretización binaria: alcanza con evaluar esas fronteras y el umbral de máxima ganancia es el mismo. El comentario de la celda 3.1 dice 1992. El archivo es el de 1993. El PDF de entrega describe el método y todavía no cita ese trabajo en la bibliografía. Si en el coloquio se nombra a Fayyad, se dice de dónde sale: la celda y ese PDF de la carpeta <span class="mono">libros</span>.</p>
+  <p>El código elige el umbral por ganancia, que es lo mismo que minimizar la entropía de las dos ramas. El gain ratio se calcula después, para comparar ese atributo contra los demás. El otro aporte del paper de Fayyad, partir el rango en varios intervalos con un criterio de descripción mínima, no está en el árbol. Cada continuo se corta una sola vez.</p>
+  <p>En Heart Disease, sobre el entrenamiento de un corte al 30 %, los umbrales de las fronteras coincidieron con los de revisar todos los puntos medios: 374 candidatos en lugar de 454. El mejor corte de una sola columna fue <span class="mono">chol</span> ≤ 42,50, gain ratio 0,122, accuracy 0,5978. Un control viejo pedía que ese corte superara 0,85. Ese piso lo cumplía un atributo de Breast Cancer. En el corazón no se cumple, y el informe publica 0,5978.</p>
+  <p>Iris muestra el costo de cortar una sola vez. Son 150 flores, 50 de cada especie, cuatro medidas continuas y ningún faltante. El ajuste sobre las 150 filas usa las cuatro columnas, una vez cada una: 13 nodos, 7 hojas, altura 4. El primer corte es <span class="mono">petal_length</span> ≤ 2,45 y esa rama es <em>setosa</em>. El siguiente es <span class="mono">petal_width</span> ≤ 1,75. La accuracy de ese ajuste es 0,9733: 146 de 150. Las 4 que quedan mal no se pueden rescatar cortando de nuevo la misma columna. Un C4.5 de libro podría volver a cortar un continuo más abajo, con otro umbral. El nuestro no.</p>
+</section>
+
+<section id="faltantes">
+  <h2>Qué pasa cuando falta un dato</h2>
+  <p>En Play Tennis e Iris no falta nada. En Heart Disease faltan 1759 celdas. El cuadro que ve el árbol no se imputa: no se reemplaza el hueco por una mediana ni por una moda antes de crecer.</p>
+  <p>Al elegir el corte, el código mira los casos en los que el atributo sí está. La ganancia de ese corte se multiplica por la proporción de valores conocidos. Eso es de C4.5: un atributo que casi siempre falta informa menos, aunque el corte de los conocidos sea lindo. Si el caso no tiene el valor, durante el crecimiento se reparte entre las ramas en proporción a la masa que ya cayó en cada una. Baja por todas, con un peso menor en cada una. No se lo tira y no se lo manda a una rama inventada.</p>
+  <p>Cada nodo de decisión guarda <em>t</em> = masa conocida / masa total del atributo que lo parte. En una hoja, que no pregunta nada, <em>t</em> = 1. Al predecir, si el valor falta o si la categoría no se vio en el entrenamiento, el caso se reparte con esos mismos pesos. Si no hay por dónde seguir, se responde la clase mayoritaria del nodo.</p>
+  <p>Guardar <em>t</em> y usarlo en la poda es el agregado del equipo. La rutina AddErrs de Quinlan no tiene ese factor. En la poda, el error y el tamaño que entran a la fórmula se calculan sobre la masa conocida, <em>t</em> por el peso del nodo, y la tasa que sale se aplica otra vez al peso completo. La idea es no tratar como casos plenamente observados una masa que llegó repartida desde un faltante. En el coloquio: el reparto del faltante y el descuento de la ganancia son de C4.5; el <em>t</em> dentro de la poda es nuestro.</p>
+</section>
+
+<section id="poda">
+  <h2>Cuándo deja de crecer, y la poda</h2>
+  <p>Crecer sin freno memoriza el entrenamiento. El árbol se detiene, y convierte el nodo en hoja, cuando pasa alguna de estas cosas. Ya hay una sola clase. No quedan atributos. El peso del nodo es menor que <span class="mono">min_samples_split</span>, que por defecto vale 2. Se llegó a <span class="mono">max_depth</span>, que por defecto no tiene tope. No hay ningún corte candidato. Un candidato se descarta si alguna rama quedaría con menos peso que <span class="mono">min_samples_leaf</span>, que por defecto vale 1, o si su gain ratio no llega a <span class="mono">min_gain_ratio</span>, que por defecto vale 0. Con ese 0, el criterio no exige una ganancia mínima. La poda, por defecto, está apagada.</p>
+  <p>Quinlan, para una hoja, pide al menos dos casos. Nuestro default de <span class="mono">min_samples_leaf</span> es 1, más permisivo. Se puede subir desde el panel o desde los barridos. En la grilla, la hoja mínima que elige la regla es 50.</p>
+  <p>La poda pesimista corre después de crecer, si <span class="mono">pruning=True</span>. Recorre el árbol desde las hojas hacia la raíz. En cada nodo compara dos errores estimados: el de dejar el subárbol, y el de convertir ese nodo en hoja. Si la hoja no es peor, el nodo se vuelve hoja y se olvidan los hijos. No hay otro movimiento. Quinlan también puede reemplazar el nodo por su rama más usada, el <em>subtree raising</em>. El código no lo hace.</p>
+  <p>El error estimado es el error observado más una pena <em>u</em>(<em>e</em>, <em>N</em>, CF). Esa función sigue el listado AddErrs del libro, páginas 278 y 279. El factor de confianza de la corrida es CF = 0,25. Hay dos convenciones dando vuelta. Una nota al pie del libro arma la cola con CF/2 y eso da un <em>z</em> cerca de 1,15. El listado de AddErrs interpola <em>z</em> directamente con CF, y para 0,25 da <em>z</em> = 0,6925. El código sigue el listado. No mezcla las dos. La Tabla 5 enciende la poda a propósito, con ese 0,25. La Tabla 2 es el árbol por defecto, sin poda.</p>
+  <p>La poda mira el entrenamiento para decidir qué rama cortar. Por eso puede mejorar o empeorar la accuracy de prueba, según el corte. En las 25 particiones, la accuracy media de prueba baja de 0,7850 a 0,7741, y el árbol pasa de 452 nodos a 71,2. En el único holdout de la semilla 42, la accuracy de prueba sube de 0,7880 a 0,7989, y el árbol pasa de 448 nodos a 71. Las dos lecturas se dicen juntas. Un control viejo exigía que en ese holdout la accuracy no bajara. Ahora admite una baja de hasta 3 puntos y sigue exigiendo que el árbol quede con menos nodos.</p>
+</section>
+
+<section id="deuda">
+  <h2>Qué es nuestro C4.5, y qué le debemos al libro</h2>
+  <p>El árbol implementa gain ratio, el corte binario de un continuo en el punto medio de una frontera de clase, el reparto de faltantes, la multiplicación de la ganancia por la proporción conocida, y la estimación AddErrs con <em>z</em> = 0,6925. Los códigos se tratan como categorías. El desempate usa la semilla.</p>
+  <p>Tres diferencias están en el código y en el PDF. Hay que poder decirlas sin mirar el papel.</p>
+  <ol>
+    <li>Después de usar un atributo, sale de la lista, también si era continuo. En cada rama hay un solo corte por columna. C4.5 puede volver a cortar un continuo más abajo. Por eso, con 13 atributos, la altura de las 25 particiones es exactamente 13, con desvío 0. El camino más largo usa una vez cada columna. En Iris, cuatro continuos, la altura del ajuste completo es 4.</li>
+    <li>La poda reemplaza un subárbol por una hoja. No hace subtree raising.</li>
+    <li>El factor <em>t</em> dentro de la poda es del equipo. No se lo atribuye a AddErrs.</li>
+  </ol>
+  <p>El nombre de la clase en el notebook es <span class="mono">DecisionTreeC45</span>. El árbol vive en <span class="mono">modelo.arbol_.raiz</span>. La poda por defecto está apagada. <span class="mono">min_samples_leaf</span> vale 1 y no hay un gain ratio mínimo.</p>
+</section>
+
+<section id="bosque">
+  <h2>Qué es el bosque aleatorio</h2>
+  <p>Un solo árbol se parece a una entrevista: una pregunta, y el caso se va para un lado. Si esa pregunta está muy ajustada a los pacientes que se vieron, el árbol se equivoca con el siguiente. Un bosque entrena muchos árboles y se queda con el voto de la mayoría. Cada árbol ve una muestra distinta de las filas, armada con reemplazo: un paciente puede salir dos veces y otro puede no salir. En cada pregunta, el árbol del bosque no mira todos los atributos. Mira un subconjunto al azar. Así los árboles no hacen todos la misma primera pregunta.</p>
+  <p>Esa idea es de Leo Breiman, 2001. El código no la reescribe. Usa <span class="mono">RandomForestClassifier</span> de scikit-learn, envuelto en <span class="mono">RandomForestWrap</span>, para que tenga la misma firma que el árbol: <span class="mono">fit(X, y)</span>, <span class="mono">predict</span>, <span class="mono">predict_proba</span> y <span class="mono">score</span>. <span class="mono">X</span> es una tabla de pandas.</p>
+  <p>La corrida publicada usa 100 árboles, semilla 42, remuestreo, hoja mínima 1 y sin tope de profundidad. En cada corte, cada árbol ve la raíz cuadrada de la cantidad de atributos. El enunciado permite esta biblioteca. El trabajo del equipo en el bosque es el protocolo común, el wrapper y la comparación, no inventar otro bosque.</p>
+  <p>El wrapper imputa. Las columnas numéricas se completan con la mediana. Las que no son numéricas, con la moda, y después se parten en columnas de ceros y unos, una por categoría. Eso ocurre dentro de <span class="mono">fit</span> y de <span class="mono">predict</span>. El cuadro que ve el árbol no pasa por ahí. Los dos modelos reciben las mismas columnas y no resuelven el faltante del mismo modo. El árbol reparte la masa. El bosque completa el hueco con el valor más común de las filas donde el dato sí está. Con <span class="mono">ca</span> faltando en el 66,4 %, esa diferencia importa, y hay que decirla cuando se compara el F1.</p>
+  <p>El bosque memoriza el entrenamiento: accuracy 1 en las 25 particiones. Su accuracy de prueba es mejor que la del árbol, 0,8187 contra 0,7850, y aun así la brecha queda más ancha, 0,1813 contra 0,1435, porque el entrenamiento del bosque no deja ningún error. El árbol no llega a 1 en el entrenamiento (0,9285) precisamente por el corte único y por los faltantes repartidos: las hojas no quedan todas puras.</p>
+  <p>El tiempo no se lee como una propiedad abstracta del algoritmo. El árbol está escrito en Python y prueba muchos umbrales. El bosque llama a una implementación compilada. En esta corrida, ajustar el árbol lleva 50,59 ± 9,80 segundos por partición y el bosque 0,484 ± 0,041. Predecir es barato en los dos: 0,1510 ± 0,0324 segundos el árbol y 0,1355 ± 0,0228 el bosque. El tamaño va al revés del tiempo. El árbol tiene 452 nodos. El bosque, sumando sus 100 árboles, tiene unos 28 876.</p>
+</section>
+
+<section id="medir">
+  <h2>Cómo se midió, y qué quiere decir cada número</h2>
+  <h3>La semilla y las 25 particiones</h3>
+  <p>La semilla global es 42. Todo lo que usa azar la recibe explícita: el corte de entrenamiento y prueba, el bosque, el árbol, el validador. Así otra persona, con el mismo código y los mismos datos, obtiene el mismo experimento.</p>
+  <p>El validador compartido es un <span class="mono">RepeatedStratifiedKFold</span>: parte las 920 filas en 5 bloques, guarda la proporción de ausencia y presencia dentro de cada bloque, y repite eso 5 veces. Son 25 scores. En cada vuelta, el modelo se ajusta con 4 bloques y se mide en el quinto. <span class="mono">evaluar_cv</span> rechaza cualquier otro tipo de partición. Estratificar importa porque, si un bloque se queda sin una de las dos clases, varias métricas se rompen o mienten.</p>
+  <p>Esas 25 mediciones describen el comportamiento. El número de cierre, para los valores por defecto, es otro: un holdout estratificado 80/20 armado una sola vez, con la misma semilla. Quedan 736 filas de entrenamiento y 184 de prueba. Los barridos ven solo las 736. Las 184 se predicen una vez, al final, y no se usan para elegir parámetros. El resultado está en <span class="mono">figuras/holdout_final.json</span>.</p>
+  <p>La Tabla 2, la Tabla 5 y la figura de la brecha se calcularon sobre las 920 filas, con las 25 particiones. El holdout es la evaluación final de los valores por defecto. Son dos lecturas y se nombran por separado. 452 nodos es la media de las 25. 448 nodos es ese holdout solo. No se mezclan.</p>
+  <p>Esa corrida del 11 de noviembre usó 4 procesos. Con 8, la máquina de 8 GB se quedaba sin memoria y la corrida se frenaba. Después, en la Versión 12, el código pasó a 2 procesos como máximo, para que un Colab o una máquina chica no se cuelgue. Esa celda no se volvió a correr. Los números del PDF son los de los 4 procesos. Si alguien aprieta Run all ahora, la celda puede pisar <span class="mono">figuras/tabla2_dt_vs_rf.tex</span> y la Figura 4, y los números nuevos no tienen por qué coincidir carácter por carácter con el PDF, aunque el protocolo sea el mismo.</p>
+
+  <h3>Accuracy, precisión, recall y F1</h3>
+  <p>Accuracy es la fracción de filas bien clasificadas. Es fácil de decir y se deja engañar por una clase grande. Acá la clase grande es el 55,3 %, así que una accuracy de 0,78 sí dice algo: está lejos de la línea base. Igual no es la métrica que decide.</p>
+  <p>Para precisión y recall hay que elegir una clase positiva. En el holdout, la positiva es la segunda de <span class="mono">classes_</span>. En este archivo es presencia. Precisión de presencia: de los que el modelo llamó presencia, cuántos lo eran. Recall de presencia: de los que sí tenían presencia, a cuántos el modelo encontró.</p>
+  <p>El F1 es la media armónica de precisión y recall. Si una de las dos es mala, el F1 cae. Macro quiere decir: se calcula el F1 de cada clase y se promedian, y las dos clases pesan igual. Weighted pesa cada clase por la cantidad de filas. Con 44,7 % y 55,3 % los dos se parecen, y los dos se publican. El que decide la comparación es el macro, para no regalarle el empate a la clase mayoritaria.</p>
+  <p>En el holdout de 184 filas hay 82 ausencia y 102 presencia. El árbol, con positiva presencia, tiene TN 57, FP 25, FN 14 y TP 88. En criollo: de las 82 ausencias, llama presencia a 25 (30,5 %). De las 102 presencias, se le escapan 14 (13,7 %). El bosque: 67, 15, 10 y 92. Se equivoca en 15 de 82 ausencias (18,3 %) y en 10 de 102 presencias (9,8 %). Los dos se equivocan más cuando dicen que hay enfermedad y no la hay, que cuando se les pasa una enfermedad. El bosque se equivoca menos en las dos.</p>
+
+  <h3>ROC-AUC</h3>
+  <p>El modelo no solo dice una clase. Puede dar una probabilidad. La curva ROC mueve el umbral de esa probabilidad y anota, en cada umbral, cuántas presencias encuentra y cuántas ausencias marca al pasar. El AUC es el área bajo esa curva. 0,5 es adivinar. 1 es separar perfecto. El del árbol en las 25 particiones es 0,8195 ± 0,0295. El del bosque, 0,8839 ± 0,0254.</p>
+  <p>Con dos clases, scikit-learn rechaza <span class="mono">multi_class="ovr"</span> si se le pasa la matriz de dos columnas. El valor publicado es el promedio de una curva por clase, que es lo que dibuja la Figura 10. Con tres o más clases, como Iris, sí se usa el promedio uno-contra-el-resto.</p>
+
+  <h3>El desvío</h3>
+  <p>0,7809 ± 0,0271 quiere decir: la media de los 25 F1 es 0,7809, y el desvío estándar de esos 25 números, con la división por 24, es 0,0271. El desvío dice cuánto se movió el número al cambiar el bloque. Si la diferencia entre dos modelos entra adentro de esos desvíos, no se la presenta como una ventaja firme. En Iris pasa eso: el F1 del bosque y el del árbol quedan a 0,0014 de distancia, y los desvíos son de unos 0,03. En Heart Disease la diferencia de F1 es 0,0348, del orden del desvío de cada uno. Se publica como está, con las dos medias y los dos desvíos, y la discusión dice que el bosque queda arriba. No se dice que la diferencia sea enorme.</p>
+
+  <h3>Los barridos, y por qué no son «el óptimo»</h3>
+  <p>Un barrido mueve un solo parámetro y deja el resto en el valor por defecto. Se mide con las 25 particiones, solo sobre las 736 filas de entrenamiento. La regla elige el modelo más chico cuya accuracy media de prueba queda a menos de un desvío del máximo de esa grilla. La comparación entre árbol y bosque, en el PDF, sigue siendo el F1 macro. La regla de la grilla usa accuracy. Son dos decisiones distintas y hay que nombrarlas así.</p>
+  <p>Si la accuracy sigue subiendo hasta el valor más complejo, la grilla no tiene un óptimo asentado. La regla igual elige el más chico dentro de la banda, y el informe lo dice. Pasó en tres grillas.</p>
+  <table>
+    <thead><tr><th>Grilla</th><th>Qué se vio</th><th>Qué eligió la regla</th></tr></thead>
+    <tbody>
+      <tr><td>Profundidad del árbol</td><td>Sube de 0,6127 con tope 1 hasta 0,7677 sin tope. Sigue subiendo al final.</td><td>Profundidad 2: 0,7286 ± 0,0344, 7 nodos.</td></tr>
+      <tr><td>Hoja mínima</td><td>El máximo está en 5 ejemplos, con 0,7772.</td><td>Hoja mínima 50: es el árbol más chico que entra en la banda.</td></tr>
+      <tr><td>Gain ratio mínimo</td><td>Sube hasta el umbral 0. Con 0,2 el árbol queda en un nodo y la accuracy baja a 0,5530, la línea base.</td><td>0,1, con 0,7432 ± 0,0293.</td></tr>
+      <tr><td>Cantidad de árboles</td><td>Sube hasta 200, con 0,8134 ± 0,0322.</td><td>10 árboles, con 0,7859 ± 0,0347.</td></tr>
+      <tr><td>Atributos por corte</td><td>El máximo es la raíz cuadrada.</td><td><span class="mono">log2</span>, que entra en la banda.</td></tr>
+    </tbody>
+  </table>
+  <p>Esos cinco valores se eligieron de a uno. Juntarlos no es una grilla cruzada: nadie midió las combinaciones intermedias. El holdout de esa combinación, guardado aparte de <span class="mono">holdout_final.json</span>, da un árbol con accuracy 0,7935, F1 macro 0,7926 y ROC-AUC 0,8057, y un bosque de 10 árboles con <span class="mono">log2</span> de 0,8370, 0,8336 y 0,8923. El bosque por defecto, en el mismo holdout, tiene F1 macro 0,8616. El bosque chico que eligió la regla no le gana al bosque por defecto. Publicar profundidad 2, gain ratio 0,1 o 10 árboles como «el» óptimo sería más de lo que la regla dice.</p>
+</section>
+
+<section id="colab">
+  <h2>El Colab, celda por celda</h2>
+  <p>El archivo es <span class="mono">TPI_Inteligencia_Artificial.ipynb</span>. Colab es el entorno de Google que ejecuta ese archivo en un kernel de Python. El título dice Versión 16. Si en Colab el título dice un número menor, el archivo que está abierto es viejo: hay que volver a abrirlo desde el repositorio.</p>
+  <p>Una celda de texto explica. Una celda de código se ejecuta. El orden de ejecución es el orden de las celdas, de arriba abajo. Los números 1.4 y 1.3 están cruzados a propósito en el archivo: la limpieza de tipos corre antes de la exploración, aunque el título de la exploración diga 1.3. Abajo está el orden real de la Versión 16.</p>
+  <p>Correr todo de una, Run all, lanza el panel y después sigue con las celdas lentas. Mientras esas celdas corren, el kernel está ocupado y el panel no responde. Para usar el panel, se corre hasta esa celda y se frena.</p>
+
+  <h3>Preparar los datos</h3>
+  <p><strong>1.1 Setup.</strong> Instala Gradio y el paquete de Graphviz. En Colab, además, instala el programa <span class="mono">dot</span> con <span class="mono">apt-get</span>. En Windows ese comando no existe y se saltea. Imprime las versiones, fija <span class="mono">SEED = 42</span>, la ruta <span class="mono">data/dataset.csv</span>, la carpeta <span class="mono">figuras</span> y el validador de 25 particiones. Si <span class="mono">dot</span> no está en el camino, busca <span class="mono">C:\Program Files\Graphviz\bin</span>.</p>
+  <p><strong>1.2 Carga.</strong> Si están los cuatro archivos procesados, arma las 920 filas, mapea la clase a ausencia o presencia y escribe el CSV. Si falta alguno y el CSV existe, lee el CSV. Si no hay nada, carga Breast Cancer como respaldo. La clase es <span class="mono">target</span> si esa columna existe, y si no la última. Los nombres de las columnas del corazón están escritos en esta celda porque esos archivos no traen encabezado. Es la única lista de nombres que queda. El resto del código no decide el tipo por el nombre.</p>
+  <p><strong>1.4 Tipos.</strong> Texto y bool son categorías. Un entero con hasta 10 valores distintos es un código. El resto numérico es continuo. No se imputa. Un bool se convierte en el texto <span class="mono">true</span> o <span class="mono">false</span> antes de intentar leerlo como número, porque en Python <span class="mono">True</span> es 1. Pandas 3 guarda el texto como <span class="mono">StringDtype</span>. Preguntar solo si el tipo es <span class="mono">object</span> o <span class="mono">category</span> no ve esas columnas. El código trata el texto como categoría.</p>
+  <p><strong>1.3 Exploración.</strong> Arma la Tabla 1 y las figuras de clases, distribuciones y correlación. Sirve para mirar el archivo antes de modelar. No elige el modelo.</p>
+  <p><strong>1.5 Widgets.</strong> Una prueba mínima de ipywidgets, la de la tarjeta 11. En Colab se vio: versión 7.7.1, el botón responde. El panel de verdad ya no es esta celda.</p>
+
+  <h3>Construir el árbol</h3>
+  <p><strong>2.1 El nodo.</strong> Un nodo interno tiene atributo y ramas. Una hoja tiene clase. En el árbol que se mide, todo nodo guarda la clase mayoritaria, el peso, y si parte un continuo, el umbral.</p>
+  <p><strong>2.2 Entropía, ganancia y gain ratio.</strong> Las funciones del apartado anterior. La entropía recibe etiquetas.</p>
+  <p><strong>2.3 Partir discretos.</strong> Una rama por valor de la categoría.</p>
+  <p><strong>2.4 Árbol mínimo.</strong> La primera versión, la que aprende con un cuadro y el nombre de la columna clase. Sirve para entender la recursión. No es el árbol de las tablas.</p>
+  <p>Hay una celda que antes pedía permiso para entrar a Drive. Un Run all no puede quedar esperando ese diálogo. La celda avisa y sigue. Los archivos se leen del disco.</p>
+  <p><strong>3.1 Continuos.</strong> Busca el umbral. Por defecto solo evalúa fronteras de clase. El modo de mirar todos los puntos medios sigue disponible. El control del 6,5 está acá.</p>
+  <p><strong>3.2 en varias celdas.</strong> La función <em>u</em> y el <em>z</em> de AddErrs. El árbol parametrizable, con las paradas. El reparto de faltantes y el factor <em>t</em>. La poda pesimista. Después, <span class="mono">DecisionTreeC45</span>, que hereda de las clases de scikit-learn para que el mismo validador pueda llamar a <span class="mono">fit</span> y a <span class="mono">predict</span>.</p>
+  <p><strong>Verificación.</strong> Entropía, un caso de varias clases, XOR para obligar a un árbol de al menos dos niveles, y una comparación de cordura contra el árbol de scikit-learn sobre Iris. No se exige que los árboles sean iguales: scikit-learn usa Gini y este modelo usa gain ratio. En un ajuste completo, el comentario histórico del notebook dice Iris C4.5 con accuracy 0,973 y el de scikit-learn con 1. El 0,9733 medido el 12 de noviembre es el mismo hecho.</p>
+  <p><strong>Prueba de la poda en un solo corte.</strong> Tres configuraciones sobre el holdout de la semilla 42: sin poda, con poda, y con hoja mínima 10. Es la lectura de 448 nodos, 71 nodos y accuracy 0,8370. No reemplaza la Tabla 5, que son las 25 particiones.</p>
+
+  <h3>El bosque, el panel y después lo lento</h3>
+  <p><strong>RandomForestWrap.</strong> El wrapper. Tiene que estar ejecutado antes del panel, porque el panel arma un bosque.</p>
+  <p><strong>Métricas de una predicción.</strong> La función <span class="mono">metricas()</span>. Arma accuracy, precisión, recall, F1 y, si hay probabilidades, el ROC. No entrena. Se movió acá en la Versión 16 para que el panel pueda usarla sin correr las 25 particiones. <span class="mono">METRICA_COMPARACION</span> es <span class="mono">f1_macro</span>.</p>
+  <p><strong>6.1 Panel.</strong> La pantalla de Gradio. Se explica en la sección siguiente. Está antes de lo lento a propósito.</p>
+  <p><strong>4. Las 25 particiones.</strong> Esta es la celda que más tarda. Un <span class="mono">cross_validate</span> por modelo, con las métricas de entrenamiento también, para poder ver la brecha. Desde la Versión 12 hay una sola pasada y como máximo 2 procesos. Durante varios minutos no imprime nada: los procesos trabajadores no escriben en la pantalla. Al terminar tiene que decir que hay 25 filas por métrica. Escribe la Tabla 2 y la Figura 4. El aviso de que la poda sigue en otra celda es un mensaje, no un cálculo colgado.</p>
+  <p><strong>Tabla 5.</strong> Las mismas 25 particiones, con poda y sin poda. Tarda porque vuelve a ajustar el árbol.</p>
+  <p><strong>Figuras 9 y 10.</strong> Matrices de confusión y curvas ROC del holdout. Comparadas con lo anterior, son rápidas: un ajuste por modelo.</p>
+  <p><strong>Figura 7.</strong> La brecha de entrenamiento contra prueba, otra vez con validación cruzada. Tarda del orden de la Tabla 5. No reutiliza la Tabla 2.</p>
+  <p><strong>Holdout.</strong> El corte 736/184 de los valores por defecto. Si el archivo ya existe, la idea del protocolo es no volver a tocar las 184 filas.</p>
+  <p><strong>Barridos.</strong> Lo más largo de todo, del orden de una hora y media a dos en Colab. Cada valor de cada grilla son 25 ajustes del árbol, y el árbol tarda unos 50 segundos por ajuste. Mueven un parámetro por vez, solo sobre las 736. No se bajó la cantidad de particiones para que tarde menos.</p>
+  <p><strong>Exportar figuras.</strong> Si el archivo de destino ya existe, lo deja. Si el dataset no es el de mama, no copia las figuras viejas de Breast Cancer encima de las del corazón.</p>
+  <p><strong>Discreto, continuo y mixto.</strong> Play Tennis, Iris y un holdout del corazón para mostrar el primer corte. Iris sí hace sus propias 25 particiones. El corazón de esta celda no rehace la Tabla 2: ajusta una vez el holdout para imprimir la raíz. La figura nueva es <span class="mono">figuras/fig11_play_tennis.png</span>.</p>
+  <p><strong>6.2 Demo.</strong> Lee <span class="mono">holdout_final.json</span> y lo muestra. No vuelve a entrenar.</p>
+  <p><strong>6.3 Informe.</strong> Apunta al PDF en LaTeX.</p>
+</section>
+
+<section id="panel">
+  <h2>El panel, qué se puede tocar</h2>
+  <p>Es una aplicación de Gradio. El menú lista los CSV que encuentra bajo <span class="mono">data/</span>. Con la carpeta del repo, aparecen el corazón (<span class="mono">data/dataset.csv</span>, clase <span class="mono">target</span>), Iris (clase <span class="mono">species</span>) y Play Tennis (clase <span class="mono">play</span>). Si en Colab esa carpeta no se subió, el menú se queda solo con Breast Cancer. El tipo de cada columna sale de los valores. La clase inicial es <span class="mono">target</span> si existe y, si no, la última. Se puede cambiar la clase y los atributos.</p>
+  <p><strong>Ver árbol</strong> ajusta una sola vez, sobre la parte de entrenamiento de un holdout con semilla 42. No corre las 25 particiones. En Heart Disease eso es cerca de un minuto y un árbol de unos 450 nodos. En Play Tennis es inmediato.</p>
+  <p>El dibujo es de Graphviz. Si el árbol tiene menos de 30 nodos, se ve entero. Si tiene más, se ven los primeros tres niveles y el total de nodos. Los nodos de ese tercer nivel que todavía tendrían hijos se marcan con puntos suspensivos. El camino de la fila elegida va en amarillo. Las decisiones van en azul y las hojas en verde. Si falta el paquete o el programa <span class="mono">dot</span>, el dibujo cae a matplotlib y el panel avisa. No corta el notebook.</p>
+  <p><strong>Camino de esta fila</strong> no vuelve a entrenar. Recorre el último árbol. En un continuo, la rama es <span class="mono">&lt;=</span> o <span class="mono">&gt;</span>, igual que en el código. En una categoría, la rama es el valor. Si el dato falta, el recorrido se detiene y lo dice.</p>
+  <p><strong>Comparar</strong> mide el árbol y el bosque con un tope de 10 particiones. Ese tope existe porque 25 ajustes del árbol son más de veinte minutos. El validador de 25 del informe no se toca: el panel arma el suyo, local, y no lo guarda en la variable global. <strong>Bajar CSV</strong> guarda la tabla de esa comparación.</p>
+  <p>El dibujo se probó en local: el árbol completo de Play Tennis, un árbol de mentira de 63 nodos recortado a 3 niveles, y el ajuste de entrenamiento del corazón, 448 nodos, con la fila de edad 63 siguiendo la rama mayor que 30,50. El click dentro de Colab, en la sesión de Mauricio, no se vio desde acá. Para verlo allá hay que correr el setup de esta versión, así <span class="mono">dot</span> queda instalado, y correr hasta el panel.</p>
+</section>
+
+<section id="numeros">
+  <h2>Los números, leídos</h2>
+  <p>Tabla 2. Veinticinco particiones, valores por defecto, las 920 filas. Desvío con división por 24.</p>
+  <table>
+    <thead>
+      <tr><th>Métrica</th><th class="num">Árbol</th><th class="num">Bosque</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Accuracy</td><td class="num">0,7850 ± 0,0265</td><td class="num">0,8187 ± 0,0305</td></tr>
+      <tr><td>Precisión macro</td><td class="num">0,7848 ± 0,0275</td><td class="num">0,8185 ± 0,0317</td></tr>
+      <tr><td>Recall macro</td><td class="num">0,7796 ± 0,0270</td><td class="num">0,8145 ± 0,0303</td></tr>
+      <tr><td>F1 macro, el que decide</td><td class="num">0,7809 ± 0,0271</td><td class="num">0,8157 ± 0,0308</td></tr>
+      <tr><td>F1 ponderado</td><td class="num">0,7840 ± 0,0266</td><td class="num">0,8182 ± 0,0304</td></tr>
+      <tr><td>ROC-AUC</td><td class="num">0,8195 ± 0,0295</td><td class="num">0,8839 ± 0,0254</td></tr>
+      <tr><td>Ajuste, segundos</td><td class="num">50,59 ± 9,80</td><td class="num">0,484 ± 0,041</td></tr>
+      <tr><td>Nodos</td><td class="num">452,00 ± 36,44</td><td class="num">28 876 ± 665</td></tr>
+      <tr><td>Hojas</td><td class="num">247,36 ± 18,63</td><td class="num">14 488 ± 332</td></tr>
+      <tr><td>Altura</td><td class="num">13 ± 0</td><td class="num">23,04 ± 1,31</td></tr>
+    </tbody>
+  </table>
+  <p>El bosque gana F1, accuracy y ROC, y se ajusta en una fracción del tiempo. El árbol queda dos órdenes de magnitud más chico. La altura 13 con desvío 0 es la firma del corte único: 13 atributos, una vez cada uno, en el camino más largo.</p>
+  <p>Tabla 5, las mismas 25 particiones, CF = 0,25.</p>
+  <table>
+    <thead>
+      <tr><th></th><th class="num">Sin poda</th><th class="num">Con poda</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Nodos</td><td class="num">452,00 ± 36,44</td><td class="num">71,20 ± 15,74</td></tr>
+      <tr><td>Hojas</td><td class="num">247,36 ± 18,63</td><td class="num">39,04 ± 8,43</td></tr>
+      <tr><td>Altura</td><td class="num">13 ± 0</td><td class="num">8,84 ± 0,90</td></tr>
+      <tr><td>Accuracy de entrenamiento</td><td class="num">0,9285 ± 0,0086</td><td class="num">0,8663 ± 0,0151</td></tr>
+      <tr><td>Accuracy de prueba</td><td class="num">0,7850 ± 0,0265</td><td class="num">0,7741 ± 0,0284</td></tr>
+      <tr><td>Brecha</td><td class="num">0,1435 ± 0,0310</td><td class="num">0,0922 ± 0,0353</td></tr>
+    </tbody>
+  </table>
+  <p>La poda achica el árbol a menos de la sexta parte, baja la brecha y baja la accuracy de prueba cerca de un punto. En el holdout de la semilla 42 la historia del tamaño es la misma y la de la accuracy se da vuelta: sin poda, 448 nodos, 244 hojas, altura 13, entrenamiento 0,9130, prueba 0,7880, brecha 0,1250. Con poda, 71 nodos, 39 hojas, altura 10, entrenamiento 0,8546, prueba 0,7989, brecha 0,0557. El 90,2 % de las predicciones de prueba coincidió entre los dos. Con hoja mínima 10, ese mismo corte tuvo 84 nodos, altura 9, prueba 0,8370 y una brecha de −0,0027: el entrenamiento y la prueba quedaron parejos, y el acuerdo con el árbol sin podar fue del 88,6 %.</p>
+  <p>Holdout de los valores por defecto, 736 y 184. Árbol: accuracy 0,7880, F1 macro 0,7819, ROC-AUC 0,8192. Bosque: 0,8641, 0,8616, 0,9219. Este bosque le gana en F1 al bosque chico de la combinación elegida (0,8616 contra 0,8336).</p>
+  <p>Curva de aprendizaje, fracciones de las 736. El árbol en prueba: 0,707 con 147 filas, 0,762 con 294, 0,757 con 441, 0,766 con 588 y 0,768 con 736. El bosque: 0,771, 0,817, 0,823 con 441, 0,819 y 0,813 con 736. El bosque llega a su mejor prueba antes de usar todas las filas de entrenamiento. El árbol casi no se mueve después de las 294. El entrenamiento del bosque se queda en 1.</p>
+  <p>Importancias, un ajuste sobre las 736. En el bosque, de mayor a menor: <span class="mono">cp</span> 0,150, <span class="mono">chol</span> 0,132, <span class="mono">exang</span> 0,116, <span class="mono">age</span> 0,113, <span class="mono">thalach</span> 0,106, <span class="mono">oldpeak</span> 0,086, <span class="mono">trestbps</span> 0,073, y después sexo, <span class="mono">thal</span>, electrocardiograma, pendiente, <span class="mono">ca</span> y glucemia. En el árbol se cuenta en cuántos nodos se usó cada atributo: <span class="mono">exang</span> 35, <span class="mono">fbs</span> 28, <span class="mono">trestbps</span> 25, <span class="mono">chol</span> 24, <span class="mono">slope</span> 21, <span class="mono">restecg</span> 20, <span class="mono">thal</span> 16, <span class="mono">sex</span> 11, <span class="mono">thalach</span> 9, <span class="mono">ca</span> 8, <span class="mono">oldpeak</span> 5, <span class="mono">age</span> 1, <span class="mono">cp</span> 1. El dolor de pecho manda en el bosque y casi no se parte en el árbol. La edad es la raíz de ese holdout y después no se vuelve a usar, porque un continuo sale de la lista. Las dos columnas no miden lo mismo: una es peso en el voto del bosque, la otra es cuántas veces el árbol hizo esa pregunta. Con un solo corte por columna, la edad puede ser la primera pregunta y aparecer en un solo nodo.</p>
+  <figure>
+    <img src="figuras/fig4_dt_vs_rf.png" alt="Barras de métricas de prueba, árbol contra bosque">
+    <figcaption>Figura 4. Métricas de prueba, media y desvío, en las 25 particiones.</figcaption>
+  </figure>
+  <figure>
+    <img src="figuras/fig7_brecha_train_test.png" alt="Brecha entre accuracy de entrenamiento y de prueba">
+    <figcaption>Figura 7. Accuracy de entrenamiento y de prueba. La brecha del bosque es la más ancha, y su prueba es la más alta.</figcaption>
+  </figure>
+  <figure>
+    <img src="figuras/fig9_matrices_confusion.png" alt="Matrices de confusión del holdout">
+    <figcaption>Figura 9. Matrices del holdout de 184 filas, normalizadas por fila. La positiva es presencia.</figcaption>
+  </figure>
+</section>
+
+<section id="tipos">
+  <h2>Discretos, continuos y mixtos</h2>
+  <p>El 12 de noviembre se leyó el mismo árbol por defecto, semilla 42, sobre un archivo de cada tipo. Play Tennis e Iris no entran en la Tabla 2. En esos dos, el tamaño es un ajuste con todas las filas. En Heart Disease, los nodos, la altura y el F1 de esta tabla son las medias ya publicadas.</p>
+  <table>
+    <thead>
+      <tr><th>Conjunto</th><th>Corte</th><th class="num">Filas</th><th class="num">Nodos</th><th class="num">Altura</th><th class="num">Ajuste</th><th>Otra lectura</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Play Tennis</td><td>4 categorías</td><td class="num">14</td><td class="num">8</td><td class="num">2</td><td class="num">1,0000</td><td>12 de 14 al dejar una fila afuera</td></tr>
+      <tr><td>Iris</td><td>4 continuos</td><td class="num">150</td><td class="num">13</td><td class="num">4</td><td class="num">0,9733</td><td>F1 0,9518 ± 0,0349 el árbol; 0,9532 ± 0,0334 el bosque</td></tr>
+      <tr><td>Heart Disease</td><td>5 continuos, 8 códigos</td><td class="num">920</td><td class="num">452</td><td class="num">13</td><td class="num">0,9285</td><td>F1 0,7809 ± 0,0271</td></tr>
+    </tbody>
+  </table>
+  <p>La frase para cerrar esta parte: con categorías y sin faltantes, el ajuste se puede separar del todo. Con continuos, la altura no pasa de la cantidad de columnas, y en Iris quedan 4 filas mal. Con el mixto se suman las dos restricciones y el reparto de los 1759 faltantes: altura 13 y accuracy de entrenamiento 0,9285. La ventaja del bosque que muestran las tablas grandes es la de Heart Disease. En Iris, la diferencia entra en el desvío.</p>
+</section>
+
+<section id="problemas">
+  <h2>Problemas que hubo que cerrar</h2>
+  <p>El PDF tiene un apartado con esto. En el coloquio alcanza con contar el problema y qué se cambió. El detalle está en la bitácora de Mauricio.</p>
+  <ul>
+    <li>El primer bosque se entrenaba con la firma del árbol mínimo, cuadro más nombre de columna. El árbol de las tablas separa atributos y clase. Con las dos firmas, una sola función de evaluación no podía llamar a los dos. El bosque pasó a <span class="mono">fit(X, y)</span>.</li>
+    <li>La entropía recibe etiquetas. El test que esperaba 1 bit con <span class="mono">[1, 1]</span> medía mal. Se corrigió el test.</li>
+    <li>Una prueba llamaba a <span class="mono">DecisionTreeC45</span> antes de la celda que define la clase. En el kernel el nombre no existía. La prueba quedó debajo de la definición.</li>
+    <li><span class="mono">predict</span> devolvía las clases en un arreglo de tipo objeto. Con las etiquetas 0, 1 y 2 de Iris, scikit-learn las toma como destino desconocido y corta la accuracy, aunque el ajuste hubiera terminado bien. Si el arreglo es de tipo objeto, se rearma: los números quedan como números y el texto sigue siendo texto.</li>
+    <li>El ROC de dos clases no acepta la firma de varias clases sobre una matriz de dos columnas. El valor publicado es el promedio de una curva por clase.</li>
+    <li>Un control de la poda exigía que la accuracy de prueba no bajara en el holdout. La poda decide mirando el entrenamiento. El control ahora admite hasta 3 puntos de baja y exige menos nodos.</li>
+    <li>Otro control pedía accuracy mayor que 0,85 en un solo corte continuo. Era un piso de Breast Cancer. En el corazón el número es 0,5978 y se publica.</li>
+    <li>Pandas 3 y el texto como <span class="mono">StringDtype</span> dejaban al árbol categórico sin columnas. Un nodo interno sin clase mayoritaria devolvía vacío ante una categoría nueva, y ese vacío se mezclaba con las etiquetas de texto. El texto cuenta como categoría, y todo nodo guarda la clase.</li>
+    <li>Un Run all no espera el permiso de Drive.</li>
+    <li>Ocho procesos dejaban la máquina de 8 GB sin memoria. La corrida publicada usó 4. El código de ahora usa 2, y esa celda no se reejecutó.</li>
+    <li>En Colab, una pasada de la celda de métricas cortó a los 50 minutos porque la primera tanda nombraba el modelo <span class="mono">DT</span> y la segunda <span class="mono">DecisionTreeC45</span>. La comparación ni siquiera llegó a mirar los scores: murió en el nombre. Esa salida se descartó. La Versión 12 sacó la segunda pasada.</li>
+  </ul>
+</section>
+
+<section id="decir">
+  <h2>Qué decir, en tres minutos</h2>
+  <p>Comparamos un árbol escrito por el equipo, al estilo C4.5, con un bosque de scikit-learn. Los datos de la comparación son las cuatro sedes de Heart Disease: 920 pacientes, clase binaria ausencia o presencia, 1759 faltantes. La semilla es 42. La métrica que decide es el F1 macro, en 25 particiones estratificadas.</p>
+  <p>El bosque llega a 0,8157 ± 0,0308 y el árbol a 0,7809 ± 0,0271. El bosque también gana accuracy y ROC, y se ajusta en medio segundo contra unos 51 del árbol. El árbol queda en 452 nodos de altura 13. El bosque, en unos 28 900 nodos. La altura 13 es exacta porque cada atributo se corta una sola vez.</p>
+  <p>El árbol no imputa. Reparte el faltante entre las ramas. El bosque imputa mediana y moda dentro del wrapper. La poda pesimista, con confianza 0,25, baja el árbol a 71 nodos y achica la brecha. En las 25 particiones la accuracy de prueba baja cerca de un punto. En el holdout de la misma semilla, sube. No escondemos ninguna de las dos.</p>
+  <p>Los barridos se hicieron solo sobre el entrenamiento, un parámetro por vez. Donde la accuracy sigue subiendo, no publicamos un óptimo cerrado. El bosque chico que eligió la regla no le gana, en el holdout, al bosque por defecto.</p>
+  <p>Le debemos al C4.5 de libro tres cosas: volver a cortar un continuo, el subtree raising, y no presentar el factor <em>t</em> como si fuera de AddErrs. Con el mismo código, Play Tennis se separa entero, Iris queda en altura 4, y el corazón muestra las dos restricciones junto con los faltantes.</p>
+</section>
+
+<section id="preguntas">
+  <h2>Preguntas que pueden hacer</h2>
+
+  <div class="q">
+    <h3>¿Por qué F1 macro y no accuracy?</h3>
+    <p>Accuracy cuenta filas. La clase presencia es el 55,3 %, así que una regla que siempre dice presencia ya tiene esa accuracy y no miró ningún atributo. El F1 macro calcula el equilibrio entre precisión y recall en cada clase y después promedia las clases con el mismo peso. Accuracy, el F1 ponderado y el ROC se publican al lado. No eligen al ganador. La regla de los barridos, en cambio, mira accuracy: es otra decisión, y está dicha así en el informe.</p>
+  </div>
+  <div class="q">
+    <h3>¿El árbol es un C4.5?</h3>
+    <p>Es un árbol al estilo C4.5. Tiene gain ratio, umbral continuo en la frontera de clase, faltantes fraccionarios y la estimación AddErrs del listado, con <em>z</em> = 0,6925 para CF = 0,25. No vuelve a cortar un continuo, la poda no hace subtree raising, y el factor <em>t</em> de la poda es nuestro. <span class="mono">min_samples_leaf</span> por defecto es 1, no 2. La poda por defecto está apagada.</p>
+  </div>
+  <div class="q">
+    <h3>¿Por qué la altura es siempre 13?</h3>
+    <p>Hay 13 atributos. Después de partir por uno, sale de la lista, también si era continuo. El camino más largo usa una vez cada columna. El desvío de la altura en las 25 particiones es 0. En Iris, cuatro continuos, la altura del ajuste completo es 4. Eso es una consecuencia del código, no una propiedad de los pacientes.</p>
+  </div>
+  <div class="q">
+    <h3>¿Por qué el bosque gana si el árbol es interpretable?</h3>
+    <p>El bosque promedia 100 árboles, cada uno con una muestra distinta y un subconjunto distinto de atributos. Eso baja la varianza. El precio es el tamaño, unos 28 900 nodos, y que no hay una sola pregunta para mostrarle a alguien. El árbol cabe en una figura cuando es chico, como Play Tennis, y en el corazón se puede mostrar el primer corte y el camino de una fila. En F1, en estas 25 particiones, el bosque queda arriba.</p>
+  </div>
+  <div class="q">
+    <h3>¿La poda mejora?</h3>
+    <p>Achica. De 452 a 71,2 nodos en la media, y la brecha de accuracy baja de 0,1435 a 0,0922. La accuracy media de prueba baja de 0,7850 a 0,7741. En el holdout de la semilla 42 la accuracy de prueba sube de 0,7880 a 0,7989. La poda decide con el entrenamiento. Un corte solo no repite la media. Nos quedamos con las dos lecturas. La Tabla 2 es sin poda, porque ese es el default.</p>
+  </div>
+  <div class="q">
+    <h3>¿Profundidad 2 es el mejor árbol?</h3>
+    <p>No. Es el más chico cuya accuracy, en la grilla de un solo parámetro, cae a menos de un desvío del máximo. El máximo de esa grilla es el árbol sin tope, 0,7677, y la curva sigue subiendo. Gain ratio 0,1 y 10 árboles tienen la misma salvedad. Además se eligieron de a uno. En el holdout, el bosque por defecto le gana en F1 al bosque de esa combinación.</p>
+  </div>
+  <div class="q">
+    <h3>¿Por qué no imputan el árbol, si faltan tantos datos?</h3>
+    <p>C4.5 no completa el hueco con un valor inventado. Reparte el caso entre las ramas en proporción a lo que sí se vio, y descuenta la ganancia por la proporción de conocidos. Imputar la moda de <span class="mono">ca</span>, que falta en dos tercios de las filas, le estaría diciendo al árbol que ese valor se observó. El bosque sí imputa, dentro del wrapper, y por eso la comparación no es «el mismo tratamiento del faltante». Es el mismo cuadro de entrada y dos maneras de resolver el hueco. Está escrito en la discusión.</p>
+  </div>
+  <div class="q">
+    <h3>¿El colesterol 0 es un faltante?</h3>
+    <p>El archivo de nombres no lo define así. Aparece 172 veces y se deja. El mejor corte de una sola columna, <span class="mono">chol</span> ≤ 42,50, cae entre esos ceros y el resto, con accuracy 0,5978. No es un umbral clínico. El mínimo 0 de la presión tampoco se recodificó.</p>
+  </div>
+  <div class="q">
+    <h3>¿Por qué juntaron las cuatro sedes y no solo Cleveland?</h3>
+    <p>Cleveland es la sede que más usó la bibliografía de aprendizaje automático, y es la más completa. El archivo de la UCI trae las cuatro, y el trabajo usa el conjunto que el donante publicó como Heart Disease. La clase se binarizó como dicen los propios experimentos del archivo de nombres: 0 contra 1–4. El costo es el faltante: <span class="mono">ca</span> y <span class="mono">thal</span> faltan sobre todo fuera de Cleveland. El 77 % de Detrano es otra medición, sobre sedes separadas, con regresión logística. No es el nuestro.</p>
+  </div>
+  <div class="q">
+    <h3>¿Qué es el gain ratio, en una frase?</h3>
+    <p>Es la ganancia de información dividida por la información de la partición. La ganancia mide cuánta duda sobre la clase desaparece. El divisor castiga al atributo que abre muchas ramas solo por tener muchos valores. En Play Tennis, las dos cuentas eligen outlook. La temperatura queda última y el árbol no la usa.</p>
+  </div>
+  <div class="q">
+    <h3>¿Por qué el árbol tarda tanto?</h3>
+    <p>Por cada continuo ordena los valores y evalúa las fronteras. Está escrito en Python. El bosque llama a código compilado y, en cada pregunta, mira solo un subconjunto de atributos. 50 segundos contra medio segundo es el costo medido en esta corrida, no una ley del algoritmo. Por eso el panel compara con un tope de 10 particiones, y por eso el panel está arriba de la celda de 25.</p>
+  </div>
+  <div class="q">
+    <h3>¿El 0,86 del holdout contradice el 0,82 de la Tabla 2?</h3>
+    <p>No. 0,8187 es la media de 25 bloques, sobre todas las filas, cada vez entrenando con el 80 % de un bloqueo distinto. 0,8641 es un solo corte, el de la semilla 42, 736 contra 184. Un corte puede salir más alto o más bajo que la media. Los dos están en el informe, con su nombre.</p>
+  </div>
+  <div class="q">
+    <h3>¿Por qué en Iris el bosque casi no gana?</h3>
+    <p>Iris tiene 150 filas, cuatro continuos y ningún faltante. El F1 macro del árbol es 0,9518 ± 0,0349 y el del bosque 0,9532 ± 0,0334. La diferencia entra en el desvío. El corte único duele, porque quedan 4 de 150 mal en el ajuste completo, y aun así los dos clasificadores quedan muy arriba. La ventaja del bosque que defendemos es la de Heart Disease, donde hay faltantes, códigos y 920 filas.</p>
+  </div>
+  <div class="q">
+    <h3>¿Qué pasa si en el panel elijo otro dataset?</h3>
+    <p>El código se adapta al valor de las columnas. Texto y bool son categorías, un entero con hasta 10 valores distintos es un código, el resto numérico es continuo. Ver árbol ajusta una vez. Comparar usa como máximo 10 particiones y no pisa el validador del informe. Las tablas del PDF siguen siendo las de Heart Disease. Play Tennis e Iris están en el PDF como lectura aparte, en la sección de discretos, continuos y mixtos.</p>
+  </div>
+  <div class="q">
+    <h3>¿Usaron Fayyad?</h3>
+    <p>Sí, para no evaluar todos los puntos medios. El teorema dice que el corte de máxima ganancia está en una frontera de clase. El umbral se elige por ganancia. El gain ratio se usa para comparar atributos. No implementamos la discretización en muchos intervalos de ese paper. El comentario de la celda dice 1992 y el PDF de la carpeta <span class="mono">libros</span> es el de IJCAI 1993. La bibliografía del informe de entrega todavía no lo incluye.</p>
+  </div>
+</section>
+
+<section id="cuidado">
+  <h2>Frases que no hay que decir</h2>
+  <ul>
+    <li>«Es un C4.5 completo.» Le faltan el segundo corte de un continuo, el subtree raising, y el <em>t</em> no es de AddErrs.</li>
+    <li>«La poda mejora la accuracy.» En la media de las 25, la baja. En un holdout, la sube. Se dicen las dos.</li>
+    <li>«El óptimo es profundidad 2», o 10 árboles, o gain ratio 0,1. Esos son el modelo más chico dentro de la banda, y la banda llega hasta el extremo más complejo.</li>
+    <li>«452 nodos» hablando del dibujo del panel, o «448» hablando de la Tabla 2. 452 es la media. 448 es el holdout.</li>
+    <li>«El colesterol menor que 42,5 es un criterio médico.» Es el corte que separa los ceros.</li>
+    <li>«Llegamos al 77 % de Detrano.» Ese 77 % es de ellos. El nuestro, en accuracy de las 25 particiones, es 0,7850 el árbol y 0,8187 el bosque, con otro protocolo y las cuatro sedes juntas.</li>
+    <li>Cualquier número de Breast Cancer como si fuera esta corrida.</li>
+    <li>«En Iris el bosque es claramente mejor.» La diferencia entra en el desvío.</li>
+    <li>«El Run all de Colab ya produjo la Tabla 2.» La pasada que cortó a los 50 minutos se descartó. Los números del PDF son la corrida local del 11 de noviembre.</li>
+  </ul>
+</section>
+
+<section id="falta">
+  <h2>Qué falta, para no prometerlo</h2>
+  <p>Falta una pasada humana de ortografía del PDF, subirlo junto con el notebook, y mover el Trello. El coloquio es este texto. En Colab falta correr el setup de la Versión 16, para que instale <span class="mono">dot</span>, y abrir el panel. El dibujo ya se vio en local.</p>
+  <p>No hace falta volver a correr las 25 particiones para defender los números: ya están en el PDF y en <span class="mono">figuras/</span>. Volver a correrlas puede pisar la Tabla 2 y la Figura 4. Si se corre, que sea a sabiendas.</p>
+  <div class="call ok">
+    La frase corta, si hay que elegir una: con las cuatro sedes, semilla 42 y los valores por defecto, el bosque gana el F1 macro, la accuracy y el ROC, y el árbol queda en 452 nodos de altura 13. La poda lo achica. El árbol debe tres cosas para ser el C4.5 del libro, y esas tres están escritas.
+  </div>
+</section>
+
+</main>
+<footer>
+  Guía de lectura del equipo Buy(Milk), 14 de noviembre de 2026. Los números de Heart Disease son la corrida del 11 de noviembre. Play Tennis e Iris son la lectura del 12. El notebook está en Versión 16. El documento que se entrega es <span class="mono">informe/main.pdf</span>.
+</footer>
+</body>
+</html>
