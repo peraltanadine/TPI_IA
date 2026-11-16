@@ -111,12 +111,12 @@ Todo lo que usa azar recibe la semilla 42.
   \item \textbf{Selección de parámetros:} grillas de un parámetro por vez, solo sobre las 736 filas. Se elige el modelo más chico cuya accuracy media de prueba queda a menos de un desvío del máximo. Si la curva sigue subiendo hasta el extremo más complejo, no hay óptimo cerrado y se aplica igual la regla. La combinación no es una búsqueda cruzada.
   \item \textbf{Métrica de comparación:} F1 macro (la regla de las grillas usa accuracy).
 \end{itemize}
-La Tabla~\ref{tab:dt-vs-rf}, la Tabla~\ref{tab:poda} y la Figura~\ref{fig:brecha} se calcularon sobre las 920 filas, con cuatro procesos.
+La Tabla~\ref{tab:dt-vs-rf}, la Tabla~\ref{tab:poda} y la Figura~\ref{fig:brecha} se calcularon sobre las 920 filas, con cuatro procesos. Los tiempos de la Tabla~\ref{tab:dt-vs-rf} son de la corrida del 16 de noviembre, con dos procesos y el árbol optimizado; el resto de sus cifras coincide con la corrida anterior.
 
 \section{Resultados}
 \label{sec:resultados}
 
-En F1 macro el bosque queda arriba: \(0{,}8157 \pm 0{,}0308\) contra \(0{,}7809 \pm 0{,}0271\) del árbol. También queda arriba en accuracy y en ROC-AUC, y se ajusta en una fracción del tiempo. El árbol necesita del orden de cincuenta segundos por partición; el bosque, menos de medio. A cambio, el árbol cabe en 452 nodos y el bosque suma cerca de veintinueve mil entre sus cien árboles. La altura del árbol es 13, con desvío cero: trece atributos, una vez cada uno, en el camino más largo. El resto de las métricas está en la Tabla~\ref{tab:dt-vs-rf} y en la Figura~\ref{fig:barras}.
+En F1 macro el bosque queda arriba: \(0{,}8157 \pm 0{,}0308\) contra \(0{,}7809 \pm 0{,}0271\) del árbol. También queda arriba en accuracy y en ROC-AUC, y se ajusta en una fracción del tiempo. El árbol necesita unos ocho segundos por partición; el bosque, menos de uno. A cambio, el árbol cabe en 452 nodos y el bosque suma cerca de veintinueve mil entre sus cien árboles. La altura del árbol es 13, con desvío cero: trece atributos, una vez cada uno, en el camino más largo. El resto de las métricas está en la Tabla~\ref{tab:dt-vs-rf} y en la Figura~\ref{fig:barras}.
 
 
 \input{../figuras/tabla2_dt_vs_rf}
@@ -259,7 +259,7 @@ Heart Disease & 5 continuos, 8 códigos & 920 & 452 & 13 & 0,9285 & F1 \(0{,}780
 
 \textbf{Faltantes.} Los vasos y el centellograma faltan en más de la mitad de las filas, sobre todo fuera de Cleveland. El árbol reparte esa masa y el bosque la imputa con la moda, de modo que parte de la diferencia observada puede deberse a este tratamiento. El colesterol en cero, conservado a propósito, basta para ser el mejor corte de una columna, y no debe leerse como un umbral médico.
 
-\textbf{Tiempo.} Los 50\,s frente a menos de 0,5\,s reflejan la implementación (árbol en Python, bosque en código compilado) y el uso de cuatro procesos, no una propiedad del algoritmo.
+\textbf{Tiempo.} Los 8\,s frente a menos de 1\,s reflejan la implementación (árbol en Python, bosque en código compilado), no una propiedad del algoritmo. Antes de optimizar el cálculo de conteos y candidatos del árbol eran 50\,s; la optimización no cambió ningún árbol ni ninguna métrica.
 
 \textbf{Tipos de datos.} Con categorías sin faltantes el ajuste es perfecto; con continuos, la altura queda acotada por la cantidad de columnas; en el mixto se suman ambos efectos y los faltantes. En Iris el F1 del bosque y el del árbol quedan dentro del desvío: la ventaja que muestran las tablas es la de Heart Disease.
 

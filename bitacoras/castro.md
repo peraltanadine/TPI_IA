@@ -11,6 +11,34 @@ Cómo se llena cada entrada:
 
 Hasta que Mauricio corre la prueba, la entrada queda en “pendiente de prueba”.
 
+## 2026-11-16 — Árbol más rápido y panel que no pisa nombres
+
+### Qué se hizo
+
+1. **Optimización del árbol (§3.2).** `_conteos_ponderados` usa NumPy en lugar de DataFrame y `groupby`. `_candidatos` calcula la entropía del padre una vez por atributo, no una vez por umbral, y arma la tabla de clases por grupo con `np.add.reduceat`, sin bucles anidados. La lógica de C4.5 no cambia.
+2. **Panel de Gradio (§6.1).** La interfaz se arma dentro de `_armar_panel()`. Antes sus controles eran globales y pisaban nombres del notebook: el deslizador `gain` reemplazaba la función `gain` de la §2.2, y lo mismo pasaba con `clase`, `tabla`, `prueba` y `atributos`. Desde la Versión 16, con el panel antes de las métricas, toda celda con validación cruzada en paralelo fallaba con `PicklingError: Could not pickle the task to send it to the workers`: §4 (25 particiones), Tabla 5, Fig. 7 y barridos.
+3. **§3.1.** El corte único se compara contra la línea base, que es predecir siempre la clase mayoritaria del entrenamiento. Es un aviso y no un `assert`, para no cortar un Run all con datasets chicos.
+4. Se actualizaron los tiempos en el notebook, en `informe/main.tex`, en `figuras/tabla2_dt_vs_rf.tex` y en `defensa.html`. Se agregó la sección de la optimización en `bitacoras/TPI - Inteligencia Artificial (1).md`.
+
+Las otras tres fallas que figuraban como pendientes ya estaban corregidas: `nodo.clase` en la 2.4, `entropy([0, 1])` en la 2.5 y el `assert _acc > 0.85` de la 3.1.
+
+### Qué se probó
+
+- Árbol viejo contra árbol nuevo en 24 entrenamientos: cuatro datasets sintéticos (con y sin faltantes, dos y tres clases) y seis configuraciones (sin poda, con poda, `max_depth`, `min_samples_leaf`, `min_gain_ratio` y una combinada).
+- Run all completo en un entorno limpio: Python 3.12, pandas 3.1, scikit-learn 1.9, Gradio 6.32, semilla 42 y dos procesos. Sin acceso a Kaggle, `kagglehub` se redirigió a los mismos archivos de `data/`.
+- `pyflakes` sobre todo el código del notebook.
+
+### Resultado
+
+- Los 24 árboles son idénticos. La diferencia máxima en `predict_proba` es 2,2e-16, que es redondeo. El tiempo bajó de 84 s a 8,4 s.
+- Heart Disease, 25 particiones: las mismas métricas que la corrida del 11 de noviembre al cuarto decimal (F1 macro 0,7809 contra 0,8157), 452 nodos y altura 13. La Tabla 5 y las matrices de confusión también son idénticas. El ajuste del árbol pasó de 50,59 ± 9,80 s a 8,37 ± 1,23 s por partición. La celda de las 25 particiones tarda 2,4 min; antes se anunciaban 15.
+- Antes del arreglo del panel, la §4, la Tabla 5, la Fig. 7 y los barridos daban `PicklingError`. Después del arreglo, el Run all completo termina sin errores en 33 min: las 31 celdas de código dan OK. Los barridos E2–E11 tardan 21,6 min y sus CSV, `barridos_eleccion.json` y los dos holdout son idénticos a los del repo.
+- `pyflakes` no encontró nombres sin definir. Los dos avisos que dio son falsos positivos.
+
+### Conclusión
+
+Se deja así. Los números del informe siguen valiendo: solo cambiaron los tiempos. Falta abrir el panel en Colab y recompilar el PDF del informe.
+
 ## 2026-11-14 — El paper cuenta el proceso
 
 ### Qué se hizo

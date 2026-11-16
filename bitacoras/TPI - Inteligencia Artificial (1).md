@@ -68,6 +68,18 @@ En predicción, predict\_proba sigue la rama correspondiente cuando el valor es 
 
 La celda de comprobación usa un ejemplo categórico con masas conocidas en proporción 2/3 y 1/3, y una fila faltante. Verifica que la contribución de esa fila se reparta como 2/3 y 1/3 entre los hijos, que la masa total de los hijos se conserve, que la entropía ponderada coincida con el cálculo esperado y que la predicción con faltantes produzca probabilidades que suman 1\. También compara esa predicción con la obtenida al entrenar eliminando la fila incompleta.
 
+### Optimización de rendimiento (16/11/2026)
+
+El entrenamiento del árbol tardaba unos 50 s por partición en Heart Disease. Se cambiaron dos funciones sin tocar la lógica de C4.5: mismos candidatos, mismas fórmulas y mismo desempate.
+
+* \_conteos\_ponderados(y, pesos): antes armaba un DataFrame y hacía un groupby en cada llamada, más de 3.000 veces por entrenamiento. Ahora usa np.unique y np.bincount. Devuelve las clases en el orden en que aparecen por primera vez, igual que el groupby(sort=False) anterior, porque ese orden decide los empates de la clase mayoritaria.  
+* \_candidatos(...): la entropía del nodo padre se calculaba una vez por cada umbral candidato, aunque es la misma para todos. Ahora se calcula una vez por atributo. La masa de cada clase por grupo de valores iguales se obtiene con np.add.reduceat, en lugar de dos bucles de Python anidados.
+
+Verificación:
+
+* Se comparó la versión anterior con la nueva en 24 entrenamientos: cuatro datasets sintéticos (con y sin faltantes, dos y tres clases) y seis configuraciones (sin poda, con poda, max\_depth, min\_samples\_leaf, min\_gain\_ratio y una combinada). Los 24 árboles son idénticos: mismos atributos, umbrales, ramas, pesos y conteos en cada nodo. La diferencia máxima en predict\_proba es 2,2e-16, que es error de redondeo. El tiempo bajó de 84 s a 8,4 s.  
+* Con Heart Disease, las 25 particiones del protocolo dan las mismas métricas que la corrida del 11 de noviembre (F1 macro 0,7809), los mismos 452 nodos y la misma altura 13. La Tabla 5 (poda) y las matrices de confusión también son idénticas. El ajuste del árbol pasó de 50,6 s a 8,4 s por partición.
+
 ## 3\. Proporción conocida por nodo (t; tarea 24\)
 
 ### Explicación sencilla
